@@ -101,7 +101,7 @@ update msg model =
         (x, y) =
           Maybe.withDefault defaultPosition <| List.head model.positions
         delta =
-          3
+          6
         newPosition step pos =
           case step of
             Left ->
