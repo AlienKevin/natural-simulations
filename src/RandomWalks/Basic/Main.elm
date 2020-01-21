@@ -1,4 +1,4 @@
-module Main exposing (..)
+module RandomWalks.Basic.Main exposing (..)
 
 import Browser
 import Color
