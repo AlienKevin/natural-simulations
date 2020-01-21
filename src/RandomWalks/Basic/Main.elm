@@ -42,11 +42,16 @@ defaultPosition =
   (300, 300)
 
 
+stepCmd : Cmd Msg
+stepCmd =
+  Random.generate NewStep <| Random.uniform Up [ Down, Left, Right ]
+
+
 init : () -> (Model, Cmd Msg)
 init _ =
   ( { positions = [defaultPosition]
   }
-  , Random.generate NewStep <| Random.uniform Up [ Down, Left, Right ]
+  , stepCmd
   )
   
 
@@ -86,7 +91,7 @@ update msg model =
   case msg of
     GetStep _ ->
       ( model
-      , Random.generate NewStep <| Random.uniform Up [ Down, Left, Right ]
+      , stepCmd
       )
     NewStep step ->
       let
