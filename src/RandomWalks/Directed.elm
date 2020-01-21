@@ -1,4 +1,4 @@
-module RandomWalks.Basic.Main exposing (..)
+module RandomWalks.Directed exposing (..)
 
 import Browser
 import Color
@@ -18,14 +18,13 @@ type alias Model =
   }
 
 type Step
-  = Up
-  | Down
-  | Left
+  = Left
+  | Middle
   | Right
 
 type Msg
   = GetStep Time.Posix
-  | NewStep Step
+  | NewStep (Step, Step)
 
 main : Program () Model Msg
 main =
@@ -42,9 +41,17 @@ defaultPosition =
   (300, 300)
 
 
+{-| Directed to the right 
+-}
 stepCmd : Cmd Msg
 stepCmd =
-  Random.generate NewStep <| Random.uniform Up [ Down, Left, Right ]
+  let
+    xStepGenerator =
+      Random.weighted (20, Left) [ (20, Middle), (40, Right) ]
+    yStepGenerator =
+      Random.weighted (20, Left) [ (40, Middle), (20, Right) ]
+  in
+  Random.generate NewStep <| Random.pair xStepGenerator yStepGenerator
 
 
 init : () -> (Model, Cmd Msg)
@@ -93,26 +100,24 @@ update msg model =
       ( model
       , stepCmd
       )
-    NewStep step ->
+    NewStep (xStep, yStep) ->
       let
         (x, y) =
           Maybe.withDefault defaultPosition <| List.head model.positions
         delta =
           6
-        newPosition =
+        newPosition step pos =
           case step of
-            Up ->
-              (x, y + delta)
-            Down ->
-              (x, y - delta)
             Left ->
-              (x - delta, y)
+              pos - delta
+            Middle ->
+              pos
             Right ->
-              (x + delta, y)
+              pos + delta
       in
       ({ model |
         positions =
-          newPosition :: model.positions
+          (newPosition xStep x, newPosition yStep y) :: model.positions
       }
       , Cmd.none
       )

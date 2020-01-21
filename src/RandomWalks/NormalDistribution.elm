@@ -1,4 +1,4 @@
-module NormalDistribution.Main exposing (..)
+module RandomWalks.NormalDistribution exposing (..)
 
 import Browser
 import Color

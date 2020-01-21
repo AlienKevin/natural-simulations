@@ -1,10 +1,9 @@
-module RandomWalks.Gaussian.Main exposing (..)
+module RandomWalks.Basic exposing (..)
 
 import Browser
 import Color
 import Html exposing (Html)
 import Random
-import Random.Float
 import Time
 import TypedSvg as Svg
 import TypedSvg.Core exposing (Svg)
@@ -18,9 +17,15 @@ type alias Model =
   { positions : List Position
   }
 
+type Step
+  = Up
+  | Down
+  | Left
+  | Right
+
 type Msg
   = GetStep Time.Posix
-  | NewStep (Float, Float)
+  | NewStep Step
 
 main : Program () Model Msg
 main =
@@ -37,15 +42,9 @@ defaultPosition =
   (300, 300)
 
 
-{-| Directed to the right 
--}
 stepCmd : Cmd Msg
 stepCmd =
-  let
-    stepGenerator =
-        Random.Float.normal 0 2
-  in
-  Random.generate NewStep <| Random.pair stepGenerator stepGenerator
+  Random.generate NewStep <| Random.uniform Up [ Down, Left, Right ]
 
 
 init : () -> (Model, Cmd Msg)
@@ -85,7 +84,7 @@ point position =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-  Time.every 50 GetStep
+  Time.every 10 GetStep
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -94,16 +93,26 @@ update msg model =
       ( model
       , stepCmd
       )
-    NewStep (xStep, yStep) ->
+    NewStep step ->
       let
         (x, y) =
           Maybe.withDefault defaultPosition <| List.head model.positions
         delta =
           6
+        newPosition =
+          case step of
+            Up ->
+              (x, y + delta)
+            Down ->
+              (x, y - delta)
+            Left ->
+              (x - delta, y)
+            Right ->
+              (x + delta, y)
       in
       ({ model |
         positions =
-          ( x + toFloat (round xStep) * delta, y + toFloat (round yStep) * delta ) :: model.positions
+          newPosition :: model.positions
       }
       , Cmd.none
       )

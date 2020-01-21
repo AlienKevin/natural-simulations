@@ -1,4 +1,4 @@
-module RandomWalks.Directed.Main exposing (..)
+module RandomWalks.Improved exposing (..)
 
 import Browser
 import Color
@@ -41,17 +41,13 @@ defaultPosition =
   (300, 300)
 
 
-{-| Directed to the right 
--}
 stepCmd : Cmd Msg
 stepCmd =
   let
-    xStepGenerator =
-      Random.weighted (20, Left) [ (20, Middle), (40, Right) ]
-    yStepGenerator =
-      Random.weighted (20, Left) [ (40, Middle), (20, Right) ]
+    stepGenerator =
+      Random.uniform Left [ Middle, Right ]
   in
-  Random.generate NewStep <| Random.pair xStepGenerator yStepGenerator
+  Random.generate NewStep <| Random.pair stepGenerator stepGenerator
 
 
 init : () -> (Model, Cmd Msg)
