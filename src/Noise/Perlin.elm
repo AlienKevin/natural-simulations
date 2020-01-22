@@ -1,4 +1,4 @@
-port module Noise.Perlin exposing (..)
+module Noise.Perlin exposing (..)
 
 import Browser
 import Color
@@ -8,9 +8,8 @@ import TypedSvg as Svg
 import TypedSvg.Core exposing (Svg)
 import TypedSvg.Attributes as Attributes
 import TypedSvg.Types exposing (Fill(..), px)
-
-port perlin1d : Float -> Cmd msg
-port getPerlin : (Float -> msg) -> Sub msg
+import Random
+import Noise.SimplexNoise as Noise
 
 type alias Model =
   { lengths : List Length
@@ -21,8 +20,7 @@ type alias Length =
   (Float, Float)
 
 type Msg
-  = GetPerlin Float
-  | NewLength Time.Posix
+  = NewLength Time.Posix
 
 main : Program () Model Msg
 main =
@@ -34,11 +32,18 @@ main =
     }
 
 
+permutationTable =
+  Tuple.first <| Noise.permutationTable (Random.initialSeed 42)
+
+
+newLength time =
+  lerp -1 1 300 600 <| Noise.noise1d permutationTable time
+
 lerp : Float -> Float -> Float -> Float -> Float -> Float
 lerp min1 max1 min2 max2 num =
   let
     ratio =
-      abs <| num / (max1 - min1)
+      abs <| (num - min1) / (max1 - min1)
   in
   min2 + ratio * (max2 - min2)
 
@@ -78,19 +83,11 @@ subscriptions : Model -> Sub Msg
 subscriptions _ =
   Sub.batch
     [ Time.every 10 NewLength
-    , getPerlin GetPerlin
     ]
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
   case msg of
-    GetPerlin n ->
-      ({ model |
-        lengths =
-          (model.time, lerp 0 1 0 600 n) :: model.lengths
-      }
-      , Cmd.none
-      )
     NewLength _ ->
       let
         newTime =
@@ -98,6 +95,8 @@ update msg model =
       in
       ( { model |
         time = newTime
+        , lengths =
+          (newTime, newLength newTime) :: model.lengths
       }
-      , perlin1d newTime
+      , Cmd.none
       )
