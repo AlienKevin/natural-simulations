@@ -33,11 +33,9 @@ Search for the package names listed in `elm.json` and click install.
 
 3. Don't forget to change the module name in the Elm initialization of the Html section of Ellie.
 
-```html
-<script>
+```js
     // remember to change `RandomWalks.Basic` to the current module name
     var app = Elm.RandomWalks.Basic.init({ node: document.querySelector('main') })
-  </script>
 ```
 
 Example of the basic random walker in Ellie:
