@@ -2,17 +2,57 @@
 Natural simulations in Elm based on "Advanced JS: Natural Simulations" from Khan Academy.
 
 # How to run simulations
-Pick one of the following simulations and copy the elm code to [Ellie](https://ellie-app.com/new). See the below example on what necessary dependencies to install. Don't forget to change the module name in the Elm initialization in Html.
+## Run online in Ellie
+1. Pick one of the following simulations and copy the elm code to [Ellie](https://ellie-app.com/new). 
+
+2. Reference the direct dependencies section of the `elm.json` file to install necessary packages on Ellie.
+
+Sample elm.json
+```json
+{ ...
+  "dependencies": {
+    "direct": {
+      "avh4/elm-color": "1.0.0",
+      "elm/browser": "1.0.2",
+      "elm/core": "1.0.4",
+      "elm/html": "1.0.0",
+      "elm/random": "1.0.0",
+      "elm/time": "1.0.0",
+      "elm-community/random-extra": "3.1.0",
+      "elm-community/typed-svg": "5.2.0"
+    },
+    ...
+  }
+  ...
+}
+```
+
+Search for the package names listed in `elm.json` and click install.
+
+![Ellie dependencies demo](./media/ellie-dependencies-demo.png)
+
+3. Don't forget to change the module name in the Elm initialization of the Html section of Ellie.
 
 ```html
 <script>
     // remember to change `RandomWalks.Basic` to the current module name
     var app = Elm.RandomWalks.Basic.init({ node: document.querySelector('main') })
-    // you can use ports and stuff here
   </script>
 ```
 
-<iframe src="https://ellie-app.com/embed/7Q8sWsv5KH3a1" style="width:100%; height:400px; border:0; overflow:hidden;" sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"></iframe>
+Example of the basic random walker in Ellie:
+https://ellie-app.com/7Q8sWsv5KH3a1
+
+# Run locally
+1. Clone this repository in a folder of your choice
+```bash
+git clone https://github.com/AlienKevin/natural-simulations
+```
+2. In the command line, run simulations with
+```bash
+elm reactor
+```
+3. Navigate to `http://localhost:8000` and select the simulation you want
 
 # Table of Contents
 ## Randomness
