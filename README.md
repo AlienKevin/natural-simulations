@@ -82,6 +82,24 @@ Challenge: Lévy walker
 Project: Paint splatter
   - [Paint Splatter](./src/RandomWalks/PaintSplatter.elm)
 
+## Noise
+Perlin noise
+  - [Perlin Mountains](./src/Noise/Perlin.elm)
+  - [Perlin Walker](./src/Noise/PerlinWalker.elm)
+
+Challenge: Noisy step walker
+  - [Perlin Step Walker](./src/Noise/PerlinStepWalker.elm)
+
+Two dimensional noise
+  - [Random Box](./src/Noise/RandomBox.elm)
+  - [Perlin Box](./src/Noise/PerlinBox.elm)
+
+Challenge: Animated noise
+  - [Animated Box](./src/Noise/AnimatedBox.elm)
+
+Project: Mountain range
+  - [Mountain Range](./src/Noise/MountainRange.elm)
+
 # Licenses
 All code are made available under the following license: MIT license.
 
