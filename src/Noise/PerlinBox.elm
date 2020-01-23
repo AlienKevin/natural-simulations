@@ -17,9 +17,6 @@ type alias Model =
 type alias Position =
   (Int, Int)
 
-type Msg
-  = GetRowOfShades (List Float)
-
 width : Int
 width =
   100
@@ -28,7 +25,7 @@ height : Int
 height =
   100
 
-main : Program () Model Msg
+main : Program () Model msg
 main =
   Browser.element
     { init = init
@@ -38,7 +35,7 @@ main =
     }
 
 
-init : () -> (Model, Cmd Msg)
+init : () -> (Model, Cmd msg)
 init _ =
   ( { shades = initShades
   }
@@ -66,11 +63,6 @@ initShades =
     <| List.range 0 height
   
 
-
-getShades : Float -> Float -> Float
-getShades x y =
-  Noise.noise2d permutationTable x y
-  
 
 view : Model -> Html msg
 view model =
@@ -100,11 +92,11 @@ point shade =
     ]
     []
 
-subscriptions : Model -> Sub Msg
+subscriptions : Model -> Sub msg
 subscriptions _ =
   Sub.none
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : msg -> Model -> ( Model, Cmd msg )
 update msg model =
   ( model, Cmd.none)
   
