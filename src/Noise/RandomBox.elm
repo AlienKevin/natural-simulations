@@ -14,7 +14,7 @@ type alias Model =
   }
 
 type Msg
-  = GetShades (List Float)
+  = GetRowOfShades (List Float)
 
 width : Float
 width =
@@ -38,8 +38,12 @@ init : () -> (Model, Cmd Msg)
 init _ =
   ( { shades = []
   }
-  , Random.generate GetShades <| Random.list (round <| width * height) (Random.float 0 1)
+  , getRowOfShades
   )
+
+getRowOfShades : Cmd Msg
+getRowOfShades =
+  Random.generate GetRowOfShades <| Random.list (round <| width) (Random.float 0 1)
   
 
 view : Model -> Html msg
@@ -76,10 +80,18 @@ subscriptions _ =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-  ( case msg of
-    GetShades shades ->
-      { model |
-        shades = shades
-      }
-  , Cmd.none
-  )
+  case msg of
+    GetRowOfShades row ->
+      let
+        newShades =
+          model.shades ++ row
+      in
+      ( { model |
+        shades = newShades
+        }
+        , if List.length newShades >= (round <| width * height) then
+          Cmd.none
+        else
+          getRowOfShades
+      )
+  
