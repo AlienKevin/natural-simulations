@@ -157,7 +157,7 @@ moveBall : Ball -> Ball
 moveBall b =
   let
     r =
-      (ballRadiusFromMass b.mass) / 2
+      ballRadiusFromMass b.mass
     windForce =
       Vector2.vec2 0.01 0
     gravityForce =
