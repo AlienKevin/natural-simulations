@@ -100,6 +100,52 @@ Challenge: Animated noise
 Project: Mountain range
   - [Mountain Range](./src/Noise/MountainRange.elm)
 
+# Vector
+Intro to vectors
+  - [Bouncing Ball](./src/Vector/BouncingBall.elm)
+  - [Bouncing Ball With Vector](./src/Vector/BouncingBallWithVector.elm)
+
+Challenge: Vector walker
+  - [Walker With Vector](./src/Vector/WalkerWithVector.elm)
+
+More vector math
+  - [Mouse Tracing](./src/Vector/MouseTracing.elm)
+  - [Mouse Tracing Halfed](./src/Vector/MouseTracingScaled.elm)
+
+Challenge: Lightsaber
+  - [Scaling saber](./src/Vector/ScalingSaber.elm)
+
+Vector magnitude and normalization
+  - [Mouse Tracing Showing Magnitude](./src/Vector/MouseTracingWithMagnitude.elm)
+  - [Mouse Tracing Normalized](./src/Vector/MouseTracingNormalized.elm)
+
+Challenge: magnitude visualizer
+  - Try create it yourself!
+
+Vector motion
+  - [Constant Velocity](./src/Vector/ConstantVelocity.elm)
+  - [Constant Acceleration](./src/Vector/ConstantAcceleration.elm)
+  - [Random Acceleration](./src/Vector/RandomAcceleration.elm)
+
+Challenge: Braking car
+  - [Braking Car](./src/Vector/BrakingCar.elm)
+
+Static functions vs. instance methods
+  - There are no mutable states in Elm so all functions always return new values while keeping old values the same, similar to static functions in JavaScript.
+
+Challenge: Static functions
+  - We always use static functions in Elm. So nothing to do here.
+
+Interactive vector motion
+  - [Single Ball Accelerates Towards Mouse](./src/Vector/AccelerateTowardsMouse.elm)
+  - [Swarm of Balls Accelerates Towards Mouse](./src/Vector/GroupAccelerateTowardsMouse.elm)
+
+Challenge: mouse stalker
+  - [Mouse Stalker](./src/Vector/MouseStalker.elm)
+
+Project: Computational creatures
+  - Try create it yourself!
+
 # Licenses
 All code are made available under the following license: MIT license.
 
