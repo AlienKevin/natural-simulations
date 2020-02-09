@@ -146,6 +146,45 @@ Challenge: mouse stalker
 Project: Computational creatures
   - Try create it yourself!
 
+# Forces
+Newton's laws of motion
+  - [Ball Blown by Wind](./src/Forces/BlowingWind.elm)
+
+Challenge: Floating balloon
+  - [Floating Balloon](./src/Forces/FloatingBalloon.elm)
+
+Motion of many objects
+  - [Many Balls](./src/Forces/ManyBalls.elm)
+
+Challenge: Wall balls
+  - [Wall Balls](./src/Forces/WallBalls.elm)
+
+Modeling gravity and friction
+  - [Ball Blown by Wind obeying gravity](./src/Forces/BlowingWindWithGravity.elm)
+  - [Ball Blown by Wind obeying gravity with friction](./src/Forces/BlowingWindWithGravityAndFriction.elm)
+
+Challenge: Speed bumps
+  - Try it yourself!
+
+Air and fluid resistance
+  - [Fluid Resistance](./src/Forces/Resistance.elm)
+
+Challenge: Sinking logs
+  - [Sinking Logs](./src/Forces/SinkingLogs.elm)
+
+Gravitational attraction
+  - [Single Orbit](./src/Forces/SingleOrbit.elm)
+  - [Many Orbits](./src/Forces/ManyOrbits.elm)
+
+Challenge: Artwork generator
+  - [Artwork Generator with color gradients depending on speed](./src/Forces/ArtworkGenerator.elm)
+
+Mutual attraction
+  - [Mutual Attraction](./src/Forces/MutualAttraction.elm)
+
+Challenge: Mutual repulsion
+  - [Mutual Repulsion](./src/Forces/MutualRepulsion.elm)
+
 # Licenses
 All code are made available under the following license: MIT license.
 
