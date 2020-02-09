@@ -156,8 +156,8 @@ viewMoverPath moverPaths =
 
 
 viewMover : Mover -> Svg Msg
-viewMover { mass, position } =
-  viewPoint [] (radiusFromMass mass) position
+viewMover { mass, position, velocity } =
+  viewPointInMotion [] (radiusFromMass mass) position velocity
 
 
 viewAttractor : Attractor -> Svg Msg
@@ -166,15 +166,26 @@ viewAttractor { mass, position, fill } =
     ( [ Draggable.mouseTrigger () DragMsg
       , TypedSvg.Events.onMouseOver AttractorHovered
       , TypedSvg.Events.onMouseOut AttractorMouseOut
-      , Attributes.fill <| Fill fill
       ]
       ++ Draggable.touchTriggers () DragMsg
     )
     (radiusFromMass mass)
     position
+    fill
 
-viewPoint : List (TypedSvg.Core.Attribute Msg)  -> Float -> Vec2 -> Svg Msg
-viewPoint attributes radius position =
+
+viewPointInMotion : List (TypedSvg.Core.Attribute Msg)  -> Float -> Vec2 -> Vec2 -> Svg Msg
+viewPointInMotion attributes radius position velocity =
+  let
+    c =
+      1.5 * Vector2.length velocity
+    color =
+      Color.rgb c c c
+  in
+  viewPoint attributes radius position color
+
+viewPoint : List (TypedSvg.Core.Attribute Msg)  -> Float -> Vec2 -> Color.Color -> Svg Msg
+viewPoint attributes radius position color =
   let
     {x, y} =
       Vector2.toRecord position
@@ -183,7 +194,7 @@ viewPoint attributes radius position =
     ( [ Attributes.cx (px x)
     , Attributes.cy (px y)
     , Attributes.r (px radius)
-    , Attributes.fill <| Fill Color.grey
+    , Attributes.fill <| Fill color
     ] ++ attributes
     )
     []
