@@ -17,12 +17,7 @@ import List.Extra
 type alias Model =
   { movers : List Mover
   }
-  
-type alias Attractor =
-  { mass : Float
-  , position : Vec2
-  , fill : Color.Color
-  }
+
 
 type alias Mover =
   { mass : Float
