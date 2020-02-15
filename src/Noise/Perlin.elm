@@ -10,6 +10,7 @@ import TypedSvg.Attributes as Attributes
 import TypedSvg.Types exposing (Fill(..), px)
 import Random
 import Noise.SimplexNoise as Noise
+import Utils
 
 type alias Model =
   { lengths : List Length
@@ -37,15 +38,8 @@ permutationTable =
 
 
 newLength time =
-  lerp -1 1 300 600 <| Noise.noise1d permutationTable time
+  Utils.lerp -1 1 300 600 <| Noise.noise1d permutationTable time
 
-lerp : Float -> Float -> Float -> Float -> Float -> Float
-lerp min1 max1 min2 max2 num =
-  let
-    ratio =
-      abs <| (num - min1) / (max1 - min1)
-  in
-  min2 + ratio * (max2 - min2)
 
 init : () -> (Model, Cmd Msg)
 init _ =
