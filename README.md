@@ -185,6 +185,42 @@ Mutual attraction
 Challenge: Mutual repulsion
   - [Mutual Repulsion](./src/Forces/MutualRepulsion.elm)
 
+# Angular Movements
+Angles and Units
+  - No code examples
+
+Challenge: Spinning baton
+  - [Spinning Baton](./src/AngularMovement/SpinningBaton.elm)
+
+Angular velocity
+  - [Accelerating Baton](./src/AngularMovement/AcceleratingBaton.elm)
+  - [Many Orbits with Self-rotation](./src/AngularMovement/ManyOrbitsWithRotation.elm)
+  - [Many Orbits with Dynamic Self-rotation Depending on Acceleration in x Direction](./src/AngularMovement/ManyOrbitsWithDynamicRotation.elm)
+
+Challenge: Falling boulder
+  - [Falling Boulder](./src/AngularMovement/FallingBoulder.elm)
+
+Trigonometry
+  - No code examples
+
+Practice: Trigonometric ratios in right triangles
+  - No code examples
+
+Pointing towards movement
+  - [Accelerate Towards Mouse](./src/AngularMovement/AccelerateTowardsMouse.elm)
+
+Challenge: Turning car
+  - Try it yourself!
+
+Polar coordinates
+  - [Polar Swing](./src/AngularMovement/PolarSwing.elm)
+
+Challenge: spiral drawer
+  - [Spiral Drawer](./src/AngularMovement/SpiralDrawer.elm)
+
+Project: Asteroids spaceship
+  - [Asteroids](./src/AngularMovement/Asteroids.elm)
+
 # Licenses
 All code are made available under the following license: MIT license.
 
