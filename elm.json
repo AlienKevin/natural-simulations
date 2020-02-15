@@ -18,11 +18,13 @@
             "elm-community/random-extra": "3.1.0",
             "elm-community/typed-svg": "5.2.0",
             "elm-explorations/linear-algebra": "1.0.3",
+            "evancz/elm-playground": "1.0.3",
             "zaboco/elm-draggable": "4.0.5"
         },
         "indirect": {
             "elm/bytes": "1.0.8",
             "elm/file": "1.0.5",
+            "elm/svg": "1.0.1",
             "elm/url": "1.0.0",
             "elm/virtual-dom": "1.0.2",
             "mpizenberg/elm-pointer-events": "4.0.1",
@@ -31,8 +33,6 @@
     },
     "test-dependencies": {
         "direct": {},
-        "indirect": {
-            "elm/svg": "1.0.1"
-        }
+        "indirect": {}
     }
 }
