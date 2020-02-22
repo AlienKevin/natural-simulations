@@ -18,6 +18,7 @@ type alias Model =
   , amplitude : Float
   , ballRadius : Float
   , numberOfBalls : Int
+  , animationSpeed : Float
   }
 
 type Msg
@@ -46,20 +47,13 @@ main =
 
 init : () -> (Model, Cmd Msg)
 init _ =
-  let
-    numberOfBalls =
-      24
-  in
   ( { firstAngle = 0
   , positions = []
-  -- 0.02 : slow
-  -- 0.04 : medium
-  -- 0.08 : fast
-  , omega = 0.04
+  , omega = 0.20
   , amplitude = 200
   , ballRadius = 30
-  , numberOfBalls =
-    numberOfBalls
+  , numberOfBalls = 24
+  , animationSpeed = 0.015
   }
   , Cmd.none
   )
@@ -116,7 +110,7 @@ update msg model =
     Move _ ->
       let
         newFirstAngle =
-          model.firstAngle + model.omega
+          model.firstAngle + model.animationSpeed
       in
       ( { model |
         firstAngle =
