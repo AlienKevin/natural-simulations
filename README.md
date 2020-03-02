@@ -29,8 +29,6 @@ Sample elm.json
 
 Search for the package names listed in `elm.json` and click install.
 
-![Ellie dependencies demo](./media/ellie-dependencies-demo.png)
-
 3. Don't forget to change the module name in the Elm initialization of the Html section of Ellie.
 
 ```js
@@ -220,6 +218,35 @@ Challenge: spiral drawer
 
 Project: Asteroids spaceship
   - [Asteroids](./src/AngularMovement/Asteroids.elm)
+
+# Oscillations
+Oscillation amplitude and period
+  - [Simple Harmonic Motion](./src/Oscillations/SimpleHarmonicMotion.elm)
+
+Challenge: Rainbow slinky
+  - [Rainbow Slinky](./src/Oscillations/RainbowSlinky.elm)
+
+Oscillation with angular velocity
+  - [Simple Harmonic Motion with Angle](./src/Oscillations/SimpleHarmonicMotionWithAngle.elm)
+  - [Group of Oscillators](./src/Oscillations/Oscillators.elm)
+
+Challenge: Spaceship ride
+  - Try it yourself!
+
+Waves
+  - [Sine Wave](./src/Oscillations/SineWave.elm)
+  - [Static Sine Wave](./src/Oscillations/StaticSineWave.elm)
+
+Challenge: Many waves
+  - [Many Waves](./src/Oscillations/ManyWaves.elm)
+
+Trig and forces: the pendulum
+  - [Simple Pendulum](./src/Oscillations/Pendulum.elm)
+
+Challenge: Pendulum puppet
+  - Try it yourself! This one is very tricky.
+
+
 
 # Licenses
 All code are made available under the following license: MIT license.
