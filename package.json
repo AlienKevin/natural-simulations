@@ -1,0 +1,25 @@
+{
+  "name": "natural-simulations",
+  "version": "1.0.0",
+  "description": "Natural simulations in Elm based on \"Advanced JS: Natural Simulations\" from Khan Academy.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlienKevin/natural-simulations.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlienKevin/natural-simulations/issues"
+  },
+  "homepage": "https://github.com/AlienKevin/natural-simulations#readme",
+  "devDependencies": {
+    "esm": "^3.2.25",
+    "node-elm-compiler": "^5.0.4",
+    "showdown": "^1.9.1"
+  }
+}
