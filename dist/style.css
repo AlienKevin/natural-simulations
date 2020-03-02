@@ -1,0 +1,14 @@
+main {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+main > div {
+  flex: 50%;
+}
+
+#text-panel {
+  overflow-y: auto;
+  height: calc(100vh - 10px);
+}
