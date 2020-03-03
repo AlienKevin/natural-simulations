@@ -14,30 +14,34 @@
         if (ls[i].href.endsWith(".js")) {
           ls[i].onclick = function (clickEvent) {
             clickEvent.preventDefault();
-            runDemo(clickEvent.target.href);
+            runDemo(clickEvent.target.href, clickEvent.target.textContent);
           }
-        }
-        function runDemo(demoPath) {
-          import(demoPath)
-            .then((_) => {
-              const pathSegments = demoPath.split("/");
-              const elmModuleName = pathSegments[pathSegments.length - 1].replace(/.js/, "");
-              const elmModuleFolder = pathSegments[pathSegments.length - 2];
-              const containerDiv = document.getElementById("demo-container");
-              containerDiv.innerHTML = '';
-              const demoDiv = document.createElement("div");
-              demoDiv.id = "demo";
-              containerDiv.appendChild(demoDiv);
-              Elm[elmModuleFolder][elmModuleName].init({ node: document.getElementById('demo') })
-            });
         }
       }
     });
+    function runDemo(demoPath, demoName) {
+      import(demoPath)
+        .then((_) => {
+          const pathSegments = demoPath.split("/");
+          const elmModuleName = pathSegments[pathSegments.length - 1].replace(/.js/, "");
+          const elmModuleFolder = pathSegments[pathSegments.length - 2];
+          const containerDiv = document.getElementById("demo-container");
+          containerDiv.innerHTML = '';
+          const demoDiv = document.createElement("div");
+          demoDiv.id = "demo";
+          containerDiv.appendChild(demoDiv);
+          Elm[elmModuleFolder][elmModuleName].init({ node: document.getElementById('demo') });
+          document.getElementById("demo-name").textContent = demoName;
+        });
+    }
+    runDemo("./RandomWalks/Basic.js", "Basic Walker");
+
   </script>
   <main>
     <div id="demo-panel">
       <h1 id="naturalsimulations">Natural Simulations</h1>
       <p>Natural simulations in Elm based on "Advanced JS: Natural Simulations" from Khan Academy.</p>
+      <h2 id="demo-name"></h2>
       <div id="demo-container">
         <div id="demo"></div>
       </div>
