@@ -6,6 +6,15 @@ html {
   overflow-y: hidden;
 }
 
+html, body {
+  height: 100%;
+  overflow-y: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 main {
   display: flex;
   flex-direction: row;
@@ -15,7 +24,36 @@ main {
 main > div {
   flex: 50%;
   padding: 15px;
-  box-sizing: border-box;
+}
+
+@media only screen and (max-height: 650px) {
+  #demo-panel svg {
+    height: 45vh;
+  }
+}
+
+@media only screen and (min-height: 651px) {
+  #demo-panel svg {
+    height: 60vh;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  #demo-panel svg {
+    height: 50vh;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  main {
+    flex-direction: column;
+  }
+  main > div {
+    width: 100%;
+  }
+  #demo-panel svg {
+    height: 40vh;
+  }
 }
 
 h1, h2 {
@@ -26,6 +64,14 @@ h1, h2 {
   background: lightgreen;
   border-radius: 10px;
   padding: 10px;
+}
+
+#demo-panel {
+  height: calc(100vh - 15px);
+}
+
+#demo-panel svg {
+  width: 100%;
 }
 
 #text-panel {
