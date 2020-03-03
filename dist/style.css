@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Kalam&display=swap');
+
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 10px;
+  overflow-y: hidden;
+}
+
 main {
   display: flex;
   flex-direction: row;
@@ -6,9 +14,21 @@ main {
 
 main > div {
   flex: 50%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+h1, h2 {
+  font-family: Kalam, Arial, Helvetica, sans-serif;
+}
+
+#demo-panel h1 {
+  background: lightgreen;
+  border-radius: 10px;
+  padding: 10px;
 }
 
 #text-panel {
   overflow-y: auto;
-  height: calc(100vh - 10px);
+  height: calc(100vh - 15px);
 }
