@@ -1,8 +1,10 @@
 module Main exposing (main)
 
 import Browser
+import Browser.Dom exposing (Viewport)
+import Task
 import Color
-import Element as E
+import Element as E exposing (Device, DeviceClass(..), Orientation(..))
 import Element.Events exposing (onClick)
 import Html exposing (Html)
 import TypedSvg as Svg
@@ -20,32 +22,32 @@ import Forces.BlowingWindWithGravity as ForcesBlowingWindWithGravity
 import Noise.AnimatedBox as NoiseAnimatedBox
 import AngularMovement.ManyOrbitsWithDynamicRotation as AngularMovementManyOrbitsWithDynamicRotation
 import Forces.BlowingWindWithGravityAndFriction as ForcesBlowingWindWithGravityAndFriction
-import Oscillations.ManyWaves as OscillationsManyWaves
 import Noise.MountainRange as NoiseMountainRange
+import Oscillations.ManyWaves as OscillationsManyWaves
 import AngularMovement.ManyOrbitsWithRotation as AngularMovementManyOrbitsWithRotation
 import Forces.FloatingBalloon as ForcesFloatingBalloon
-import Oscillations.Oscillators as OscillationsOscillators
 import Noise.Perlin as NoisePerlin
+import Oscillations.Oscillators as OscillationsOscillators
 import AngularMovement.PolarSwing as AngularMovementPolarSwing
 import Forces.ManyBalls as ForcesManyBalls
-import Oscillations.Pendulum as OscillationsPendulum
 import Noise.PerlinBox as NoisePerlinBox
+import Oscillations.Pendulum as OscillationsPendulum
 import RandomWalks.Directed as RandomWalksDirected
 import AngularMovement.SpinningBaton as AngularMovementSpinningBaton
 import Forces.ManyOrbits as ForcesManyOrbits
-import Oscillations.RainbowSlinky as OscillationsRainbowSlinky
 import Noise.PerlinStepWalker as NoisePerlinStepWalker
+import Oscillations.RainbowSlinky as OscillationsRainbowSlinky
 import RandomWalks.Gaussian as RandomWalksGaussian
 import Vector.AccelerateTowardsMouse as VectorAccelerateTowardsMouse
 import AngularMovement.SpiralDrawer as AngularMovementSpiralDrawer
 import Forces.MutualAttraction as ForcesMutualAttraction
-import Oscillations.SimpleHarmonicMotion as OscillationsSimpleHarmonicMotion
 import Noise.PerlinWalker as NoisePerlinWalker
+import Oscillations.SimpleHarmonicMotion as OscillationsSimpleHarmonicMotion
 import RandomWalks.Improved as RandomWalksImproved
 import Vector.BouncingBall as VectorBouncingBall
 import Forces.MutualRepulsion as ForcesMutualRepulsion
-import Oscillations.SimpleHarmonicMotionWithAngle as OscillationsSimpleHarmonicMotionWithAngle
 import Noise.RandomBox as NoiseRandomBox
+import Oscillations.SimpleHarmonicMotionWithAngle as OscillationsSimpleHarmonicMotionWithAngle
 import RandomWalks.Levy as RandomWalksLevy
 import Vector.BouncingBallWithVector as VectorBouncingBallWithVector
 import Forces.Resistance as ForcesResistance
@@ -80,16 +82,28 @@ init _ =
     ( subModel, subCmd ) =
       RandomWalksBasic.init ()
   in
-  ( RandomWalksBasicAnim subModel
-  , subCmd
-    |> Cmd.map BasicWalkerMsg
+  ( {demoModel =
+    RandomWalksBasicAnim subModel
+  , device =
+    Nothing
+  }
+  , Cmd.batch
+    [ subCmd
+      |> Cmd.map BasicWalkerMsg
+    , Task.perform GotViewport Browser.Dom.getViewport
+    ]
   )
 
 
 -- MODEL
 
 
-type Model
+type alias Model =
+  { demoModel : DemoModel
+  , device: Maybe Device
+  }
+
+type DemoModel
   = RandomWalksBasicAnim RandomWalksBasic.Model
 
   | AngularMovementAccelerateTowardsMouseAnim AngularMovementAccelerateTowardsMouse.Model
@@ -101,32 +115,32 @@ type Model
   | NoiseAnimatedBoxAnim NoiseAnimatedBox.Model
   | AngularMovementManyOrbitsWithDynamicRotationAnim AngularMovementManyOrbitsWithDynamicRotation.Model
   | ForcesBlowingWindWithGravityAndFrictionAnim ForcesBlowingWindWithGravityAndFriction.Model
-  | OscillationsManyWavesAnim OscillationsManyWaves.Model
   | NoiseMountainRangeAnim NoiseMountainRange.Model
+  | OscillationsManyWavesAnim OscillationsManyWaves.Model
   | AngularMovementManyOrbitsWithRotationAnim AngularMovementManyOrbitsWithRotation.Model
   | ForcesFloatingBalloonAnim ForcesFloatingBalloon.Model
-  | OscillationsOscillatorsAnim OscillationsOscillators.Model
   | NoisePerlinAnim NoisePerlin.Model
+  | OscillationsOscillatorsAnim OscillationsOscillators.Model
   | AngularMovementPolarSwingAnim AngularMovementPolarSwing.Model
   | ForcesManyBallsAnim ForcesManyBalls.Model
-  | OscillationsPendulumAnim OscillationsPendulum.Model
   | NoisePerlinBoxAnim NoisePerlinBox.Model
+  | OscillationsPendulumAnim OscillationsPendulum.Model
   | RandomWalksDirectedAnim RandomWalksDirected.Model
   | AngularMovementSpinningBatonAnim AngularMovementSpinningBaton.Model
   | ForcesManyOrbitsAnim ForcesManyOrbits.Model
-  | OscillationsRainbowSlinkyAnim OscillationsRainbowSlinky.Model
   | NoisePerlinStepWalkerAnim NoisePerlinStepWalker.Model
+  | OscillationsRainbowSlinkyAnim OscillationsRainbowSlinky.Model
   | RandomWalksGaussianAnim RandomWalksGaussian.Model
   | VectorAccelerateTowardsMouseAnim VectorAccelerateTowardsMouse.Model
   | AngularMovementSpiralDrawerAnim AngularMovementSpiralDrawer.Model
   | ForcesMutualAttractionAnim ForcesMutualAttraction.Model
-  | OscillationsSimpleHarmonicMotionAnim OscillationsSimpleHarmonicMotion.Model
   | NoisePerlinWalkerAnim NoisePerlinWalker.Model
+  | OscillationsSimpleHarmonicMotionAnim OscillationsSimpleHarmonicMotion.Model
   | RandomWalksImprovedAnim RandomWalksImproved.Model
   | VectorBouncingBallAnim VectorBouncingBall.Model
   | ForcesMutualRepulsionAnim ForcesMutualRepulsion.Model
-  | OscillationsSimpleHarmonicMotionWithAngleAnim OscillationsSimpleHarmonicMotionWithAngle.Model
   | NoiseRandomBoxAnim NoiseRandomBox.Model
+  | OscillationsSimpleHarmonicMotionWithAngleAnim OscillationsSimpleHarmonicMotionWithAngle.Model
   | RandomWalksLevyAnim RandomWalksLevy.Model
   | VectorBouncingBallWithVectorAnim VectorBouncingBallWithVector.Model
   | ForcesResistanceAnim ForcesResistance.Model
@@ -163,32 +177,32 @@ type Animation
   | NoiseAnimatedBox
   | AngularMovementManyOrbitsWithDynamicRotation
   | ForcesBlowingWindWithGravityAndFriction
-  | OscillationsManyWaves
   | NoiseMountainRange
+  | OscillationsManyWaves
   | AngularMovementManyOrbitsWithRotation
   | ForcesFloatingBalloon
-  | OscillationsOscillators
   | NoisePerlin
+  | OscillationsOscillators
   | AngularMovementPolarSwing
   | ForcesManyBalls
-  | OscillationsPendulum
   | NoisePerlinBox
+  | OscillationsPendulum
   | RandomWalksDirected
   | AngularMovementSpinningBaton
   | ForcesManyOrbits
-  | OscillationsRainbowSlinky
   | NoisePerlinStepWalker
+  | OscillationsRainbowSlinky
   | RandomWalksGaussian
   | VectorAccelerateTowardsMouse
   | AngularMovementSpiralDrawer
   | ForcesMutualAttraction
-  | OscillationsSimpleHarmonicMotion
   | NoisePerlinWalker
+  | OscillationsSimpleHarmonicMotion
   | RandomWalksImproved
   | VectorBouncingBall
   | ForcesMutualRepulsion
-  | OscillationsSimpleHarmonicMotionWithAngle
   | NoiseRandomBox
+  | OscillationsSimpleHarmonicMotionWithAngle
   | RandomWalksLevy
   | VectorBouncingBallWithVector
   | ForcesResistance
@@ -218,6 +232,7 @@ type Animation
 
 type Msg
   = Select Animation
+  | GotViewport Viewport
   | BasicWalkerMsg RandomWalksBasic.Msg
   | AngularMovementAccelerateTowardsMouseMsg AngularMovementAccelerateTowardsMouse.Msg
   | AngularMovementAcceleratingBatonMsg AngularMovementAcceleratingBaton.Msg
@@ -228,32 +243,32 @@ type Msg
   | NoiseAnimatedBoxMsg NoiseAnimatedBox.Msg
   | AngularMovementManyOrbitsWithDynamicRotationMsg AngularMovementManyOrbitsWithDynamicRotation.Msg
   | ForcesBlowingWindWithGravityAndFrictionMsg ForcesBlowingWindWithGravityAndFriction.Msg
-  | OscillationsManyWavesMsg OscillationsManyWaves.Msg
   | NoiseMountainRangeMsg NoiseMountainRange.Msg
+  | OscillationsManyWavesMsg OscillationsManyWaves.Msg
   | AngularMovementManyOrbitsWithRotationMsg AngularMovementManyOrbitsWithRotation.Msg
   | ForcesFloatingBalloonMsg ForcesFloatingBalloon.Msg
-  | OscillationsOscillatorsMsg OscillationsOscillators.Msg
   | NoisePerlinMsg NoisePerlin.Msg
+  | OscillationsOscillatorsMsg OscillationsOscillators.Msg
   | AngularMovementPolarSwingMsg AngularMovementPolarSwing.Msg
   | ForcesManyBallsMsg ForcesManyBalls.Msg
-  | OscillationsPendulumMsg OscillationsPendulum.Msg
   | NoisePerlinBoxMsg NoisePerlinBox.Msg
+  | OscillationsPendulumMsg OscillationsPendulum.Msg
   | RandomWalksDirectedMsg RandomWalksDirected.Msg
   | AngularMovementSpinningBatonMsg AngularMovementSpinningBaton.Msg
   | ForcesManyOrbitsMsg ForcesManyOrbits.Msg
-  | OscillationsRainbowSlinkyMsg OscillationsRainbowSlinky.Msg
   | NoisePerlinStepWalkerMsg NoisePerlinStepWalker.Msg
+  | OscillationsRainbowSlinkyMsg OscillationsRainbowSlinky.Msg
   | RandomWalksGaussianMsg RandomWalksGaussian.Msg
   | VectorAccelerateTowardsMouseMsg VectorAccelerateTowardsMouse.Msg
   | AngularMovementSpiralDrawerMsg AngularMovementSpiralDrawer.Msg
   | ForcesMutualAttractionMsg ForcesMutualAttraction.Msg
-  | OscillationsSimpleHarmonicMotionMsg OscillationsSimpleHarmonicMotion.Msg
   | NoisePerlinWalkerMsg NoisePerlinWalker.Msg
+  | OscillationsSimpleHarmonicMotionMsg OscillationsSimpleHarmonicMotion.Msg
   | RandomWalksImprovedMsg RandomWalksImproved.Msg
   | VectorBouncingBallMsg VectorBouncingBall.Msg
   | ForcesMutualRepulsionMsg ForcesMutualRepulsion.Msg
-  | OscillationsSimpleHarmonicMotionWithAngleMsg OscillationsSimpleHarmonicMotionWithAngle.Msg
   | NoiseRandomBoxMsg NoiseRandomBox.Msg
+  | OscillationsSimpleHarmonicMotionWithAngleMsg OscillationsSimpleHarmonicMotionWithAngle.Msg
   | RandomWalksLevyMsg RandomWalksLevy.Msg
   | VectorBouncingBallWithVectorMsg VectorBouncingBallWithVector.Msg
   | ForcesResistanceMsg ForcesResistance.Msg
@@ -280,7 +295,7 @@ type Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-  case ( msg, model ) of
+  case ( msg, model.demoModel ) of
     ( Select anim, _ ) ->
       case anim of
         RandomWalksBasic ->
@@ -288,7 +303,10 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksBasic.init ()
           in
-          ( RandomWalksBasicAnim subModel
+          ( { model |
+            demoModel =
+              RandomWalksBasicAnim subModel
+          }
           , subCmd
             |> Cmd.map BasicWalkerMsg
           )
@@ -298,8 +316,11 @@ update msg model =
             ( subModel, subCmd ) =
               AngularMovementAccelerateTowardsMouse.init ()
           in
-          ( AngularMovementAccelerateTowardsMouseAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              AngularMovementAccelerateTowardsMouseAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map AngularMovementAccelerateTowardsMouseMsg
           )
@@ -309,8 +330,11 @@ update msg model =
             ( subModel, subCmd ) =
               AngularMovementAcceleratingBaton.init ()
           in
-          ( AngularMovementAcceleratingBatonAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              AngularMovementAcceleratingBatonAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map AngularMovementAcceleratingBatonMsg
           )
@@ -320,8 +344,11 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesArtworkGenerator.init ()
           in
-          ( ForcesArtworkGeneratorAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesArtworkGeneratorAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesArtworkGeneratorMsg
           )
@@ -331,8 +358,11 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesBlowingWind.init ()
           in
-          ( ForcesBlowingWindAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesBlowingWindAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesBlowingWindMsg
           )
@@ -342,8 +372,11 @@ update msg model =
             ( subModel, subCmd ) =
               AngularMovementFallingBoulder.init ()
           in
-          ( AngularMovementFallingBoulderAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              AngularMovementFallingBoulderAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map AngularMovementFallingBoulderMsg
           )
@@ -353,8 +386,11 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesBlowingWindWithGravity.init ()
           in
-          ( ForcesBlowingWindWithGravityAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesBlowingWindWithGravityAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesBlowingWindWithGravityMsg
           )
@@ -364,8 +400,11 @@ update msg model =
             ( subModel, subCmd ) =
               NoiseAnimatedBox.init ()
           in
-          ( NoiseAnimatedBoxAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              NoiseAnimatedBoxAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map NoiseAnimatedBoxMsg
           )
@@ -375,8 +414,11 @@ update msg model =
             ( subModel, subCmd ) =
               AngularMovementManyOrbitsWithDynamicRotation.init ()
           in
-          ( AngularMovementManyOrbitsWithDynamicRotationAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              AngularMovementManyOrbitsWithDynamicRotationAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map AngularMovementManyOrbitsWithDynamicRotationMsg
           )
@@ -386,21 +428,13 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesBlowingWindWithGravityAndFriction.init ()
           in
-          ( ForcesBlowingWindWithGravityAndFrictionAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesBlowingWindWithGravityAndFrictionAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesBlowingWindWithGravityAndFrictionMsg
-          )
-        
-        OscillationsManyWaves ->
-          let
-            ( subModel, subCmd ) =
-              OscillationsManyWaves.init ()
-          in
-          ( OscillationsManyWavesAnim <|
-            subModel
-          , subCmd
-            |> Cmd.map OscillationsManyWavesMsg
           )
         
         NoiseMountainRange ->
@@ -408,10 +442,27 @@ update msg model =
             ( subModel, subCmd ) =
               NoiseMountainRange.init ()
           in
-          ( NoiseMountainRangeAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              NoiseMountainRangeAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map NoiseMountainRangeMsg
+          )
+        
+        OscillationsManyWaves ->
+          let
+            ( subModel, subCmd ) =
+              OscillationsManyWaves.init ()
+          in
+          ( { model |
+            demoModel =
+              OscillationsManyWavesAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map OscillationsManyWavesMsg
           )
         
         AngularMovementManyOrbitsWithRotation ->
@@ -419,8 +470,11 @@ update msg model =
             ( subModel, subCmd ) =
               AngularMovementManyOrbitsWithRotation.init ()
           in
-          ( AngularMovementManyOrbitsWithRotationAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              AngularMovementManyOrbitsWithRotationAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map AngularMovementManyOrbitsWithRotationMsg
           )
@@ -430,21 +484,13 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesFloatingBalloon.init ()
           in
-          ( ForcesFloatingBalloonAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesFloatingBalloonAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesFloatingBalloonMsg
-          )
-        
-        OscillationsOscillators ->
-          let
-            ( subModel, subCmd ) =
-              OscillationsOscillators.init ()
-          in
-          ( OscillationsOscillatorsAnim <|
-            subModel
-          , subCmd
-            |> Cmd.map OscillationsOscillatorsMsg
           )
         
         NoisePerlin ->
@@ -452,10 +498,27 @@ update msg model =
             ( subModel, subCmd ) =
               NoisePerlin.init ()
           in
-          ( NoisePerlinAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              NoisePerlinAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map NoisePerlinMsg
+          )
+        
+        OscillationsOscillators ->
+          let
+            ( subModel, subCmd ) =
+              OscillationsOscillators.init ()
+          in
+          ( { model |
+            demoModel =
+              OscillationsOscillatorsAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map OscillationsOscillatorsMsg
           )
         
         AngularMovementPolarSwing ->
@@ -463,8 +526,11 @@ update msg model =
             ( subModel, subCmd ) =
               AngularMovementPolarSwing.init ()
           in
-          ( AngularMovementPolarSwingAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              AngularMovementPolarSwingAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map AngularMovementPolarSwingMsg
           )
@@ -474,21 +540,13 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesManyBalls.init ()
           in
-          ( ForcesManyBallsAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesManyBallsAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesManyBallsMsg
-          )
-        
-        OscillationsPendulum ->
-          let
-            ( subModel, subCmd ) =
-              OscillationsPendulum.init ()
-          in
-          ( OscillationsPendulumAnim <|
-            subModel
-          , subCmd
-            |> Cmd.map OscillationsPendulumMsg
           )
         
         NoisePerlinBox ->
@@ -496,10 +554,27 @@ update msg model =
             ( subModel, subCmd ) =
               NoisePerlinBox.init ()
           in
-          ( NoisePerlinBoxAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              NoisePerlinBoxAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map NoisePerlinBoxMsg
+          )
+        
+        OscillationsPendulum ->
+          let
+            ( subModel, subCmd ) =
+              OscillationsPendulum.init ()
+          in
+          ( { model |
+            demoModel =
+              OscillationsPendulumAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map OscillationsPendulumMsg
           )
         
         RandomWalksDirected ->
@@ -507,8 +582,11 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksDirected.init ()
           in
-          ( RandomWalksDirectedAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              RandomWalksDirectedAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map RandomWalksDirectedMsg
           )
@@ -518,8 +596,11 @@ update msg model =
             ( subModel, subCmd ) =
               AngularMovementSpinningBaton.init ()
           in
-          ( AngularMovementSpinningBatonAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              AngularMovementSpinningBatonAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map AngularMovementSpinningBatonMsg
           )
@@ -529,21 +610,13 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesManyOrbits.init ()
           in
-          ( ForcesManyOrbitsAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesManyOrbitsAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesManyOrbitsMsg
-          )
-        
-        OscillationsRainbowSlinky ->
-          let
-            ( subModel, subCmd ) =
-              OscillationsRainbowSlinky.init ()
-          in
-          ( OscillationsRainbowSlinkyAnim <|
-            subModel
-          , subCmd
-            |> Cmd.map OscillationsRainbowSlinkyMsg
           )
         
         NoisePerlinStepWalker ->
@@ -551,10 +624,27 @@ update msg model =
             ( subModel, subCmd ) =
               NoisePerlinStepWalker.init ()
           in
-          ( NoisePerlinStepWalkerAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              NoisePerlinStepWalkerAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map NoisePerlinStepWalkerMsg
+          )
+        
+        OscillationsRainbowSlinky ->
+          let
+            ( subModel, subCmd ) =
+              OscillationsRainbowSlinky.init ()
+          in
+          ( { model |
+            demoModel =
+              OscillationsRainbowSlinkyAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map OscillationsRainbowSlinkyMsg
           )
         
         RandomWalksGaussian ->
@@ -562,8 +652,11 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksGaussian.init ()
           in
-          ( RandomWalksGaussianAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              RandomWalksGaussianAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map RandomWalksGaussianMsg
           )
@@ -573,8 +666,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorAccelerateTowardsMouse.init ()
           in
-          ( VectorAccelerateTowardsMouseAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorAccelerateTowardsMouseAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorAccelerateTowardsMouseMsg
           )
@@ -584,8 +680,11 @@ update msg model =
             ( subModel, subCmd ) =
               AngularMovementSpiralDrawer.init ()
           in
-          ( AngularMovementSpiralDrawerAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              AngularMovementSpiralDrawerAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map AngularMovementSpiralDrawerMsg
           )
@@ -595,21 +694,13 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesMutualAttraction.init ()
           in
-          ( ForcesMutualAttractionAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesMutualAttractionAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesMutualAttractionMsg
-          )
-        
-        OscillationsSimpleHarmonicMotion ->
-          let
-            ( subModel, subCmd ) =
-              OscillationsSimpleHarmonicMotion.init ()
-          in
-          ( OscillationsSimpleHarmonicMotionAnim <|
-            subModel
-          , subCmd
-            |> Cmd.map OscillationsSimpleHarmonicMotionMsg
           )
         
         NoisePerlinWalker ->
@@ -617,10 +708,27 @@ update msg model =
             ( subModel, subCmd ) =
               NoisePerlinWalker.init ()
           in
-          ( NoisePerlinWalkerAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              NoisePerlinWalkerAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map NoisePerlinWalkerMsg
+          )
+        
+        OscillationsSimpleHarmonicMotion ->
+          let
+            ( subModel, subCmd ) =
+              OscillationsSimpleHarmonicMotion.init ()
+          in
+          ( { model |
+            demoModel =
+              OscillationsSimpleHarmonicMotionAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map OscillationsSimpleHarmonicMotionMsg
           )
         
         RandomWalksImproved ->
@@ -628,8 +736,11 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksImproved.init ()
           in
-          ( RandomWalksImprovedAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              RandomWalksImprovedAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map RandomWalksImprovedMsg
           )
@@ -639,8 +750,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorBouncingBall.init ()
           in
-          ( VectorBouncingBallAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorBouncingBallAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorBouncingBallMsg
           )
@@ -650,21 +764,13 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesMutualRepulsion.init ()
           in
-          ( ForcesMutualRepulsionAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesMutualRepulsionAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesMutualRepulsionMsg
-          )
-        
-        OscillationsSimpleHarmonicMotionWithAngle ->
-          let
-            ( subModel, subCmd ) =
-              OscillationsSimpleHarmonicMotionWithAngle.init ()
-          in
-          ( OscillationsSimpleHarmonicMotionWithAngleAnim <|
-            subModel
-          , subCmd
-            |> Cmd.map OscillationsSimpleHarmonicMotionWithAngleMsg
           )
         
         NoiseRandomBox ->
@@ -672,10 +778,27 @@ update msg model =
             ( subModel, subCmd ) =
               NoiseRandomBox.init ()
           in
-          ( NoiseRandomBoxAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              NoiseRandomBoxAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map NoiseRandomBoxMsg
+          )
+        
+        OscillationsSimpleHarmonicMotionWithAngle ->
+          let
+            ( subModel, subCmd ) =
+              OscillationsSimpleHarmonicMotionWithAngle.init ()
+          in
+          ( { model |
+            demoModel =
+              OscillationsSimpleHarmonicMotionWithAngleAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map OscillationsSimpleHarmonicMotionWithAngleMsg
           )
         
         RandomWalksLevy ->
@@ -683,8 +806,11 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksLevy.init ()
           in
-          ( RandomWalksLevyAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              RandomWalksLevyAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map RandomWalksLevyMsg
           )
@@ -694,8 +820,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorBouncingBallWithVector.init ()
           in
-          ( VectorBouncingBallWithVectorAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorBouncingBallWithVectorAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorBouncingBallWithVectorMsg
           )
@@ -705,8 +834,11 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesResistance.init ()
           in
-          ( ForcesResistanceAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesResistanceAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesResistanceMsg
           )
@@ -716,8 +848,11 @@ update msg model =
             ( subModel, subCmd ) =
               OscillationsSineWave.init ()
           in
-          ( OscillationsSineWaveAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              OscillationsSineWaveAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map OscillationsSineWaveMsg
           )
@@ -727,8 +862,11 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksMonteCarlo.init ()
           in
-          ( RandomWalksMonteCarloAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              RandomWalksMonteCarloAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map RandomWalksMonteCarloMsg
           )
@@ -738,8 +876,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorBrakingCar.init ()
           in
-          ( VectorBrakingCarAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorBrakingCarAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorBrakingCarMsg
           )
@@ -749,8 +890,11 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesSingleOrbit.init ()
           in
-          ( ForcesSingleOrbitAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesSingleOrbitAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesSingleOrbitMsg
           )
@@ -760,8 +904,11 @@ update msg model =
             ( subModel, subCmd ) =
               OscillationsStaticSineWave.init ()
           in
-          ( OscillationsStaticSineWaveAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              OscillationsStaticSineWaveAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map OscillationsStaticSineWaveMsg
           )
@@ -771,8 +918,11 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksNormalDistribution.init ()
           in
-          ( RandomWalksNormalDistributionAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              RandomWalksNormalDistributionAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map RandomWalksNormalDistributionMsg
           )
@@ -782,8 +932,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorConstantAcceleration.init ()
           in
-          ( VectorConstantAccelerationAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorConstantAccelerationAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorConstantAccelerationMsg
           )
@@ -793,8 +946,11 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesSinkingLogs.init ()
           in
-          ( ForcesSinkingLogsAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesSinkingLogsAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesSinkingLogsMsg
           )
@@ -804,8 +960,11 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksPaintSplatter.init ()
           in
-          ( RandomWalksPaintSplatterAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              RandomWalksPaintSplatterAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map RandomWalksPaintSplatterMsg
           )
@@ -815,8 +974,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorConstantVelocity.init ()
           in
-          ( VectorConstantVelocityAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorConstantVelocityAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorConstantVelocityMsg
           )
@@ -826,8 +988,11 @@ update msg model =
             ( subModel, subCmd ) =
               ForcesWallBalls.init ()
           in
-          ( ForcesWallBallsAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              ForcesWallBallsAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map ForcesWallBallsMsg
           )
@@ -837,8 +1002,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorGroupAccelerateTowardsMouse.init ()
           in
-          ( VectorGroupAccelerateTowardsMouseAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorGroupAccelerateTowardsMouseAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorGroupAccelerateTowardsMouseMsg
           )
@@ -848,8 +1016,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorMouseStalker.init ()
           in
-          ( VectorMouseStalkerAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorMouseStalkerAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorMouseStalkerMsg
           )
@@ -859,8 +1030,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorMouseTracing.init ()
           in
-          ( VectorMouseTracingAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorMouseTracingAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorMouseTracingMsg
           )
@@ -870,8 +1044,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorMouseTracingNormalized.init ()
           in
-          ( VectorMouseTracingNormalizedAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorMouseTracingNormalizedAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorMouseTracingNormalizedMsg
           )
@@ -881,8 +1058,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorMouseTracingScaled.init ()
           in
-          ( VectorMouseTracingScaledAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorMouseTracingScaledAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorMouseTracingScaledMsg
           )
@@ -892,8 +1072,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorMouseTracingWithMagnitude.init ()
           in
-          ( VectorMouseTracingWithMagnitudeAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorMouseTracingWithMagnitudeAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorMouseTracingWithMagnitudeMsg
           )
@@ -903,8 +1086,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorRandomAcceleration.init ()
           in
-          ( VectorRandomAccelerationAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorRandomAccelerationAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorRandomAccelerationMsg
           )
@@ -914,8 +1100,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorScalingSaber.init ()
           in
-          ( VectorScalingSaberAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorScalingSaberAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorScalingSaberMsg
           )
@@ -925,8 +1114,11 @@ update msg model =
             ( subModel, subCmd ) =
               VectorWalkerWithVector.init ()
           in
-          ( VectorWalkerWithVectorAnim <|
-            subModel
+          ( { model |
+            demoModel =
+              VectorWalkerWithVectorAnim <|
+              subModel
+          }
           , subCmd
             |> Cmd.map VectorWalkerWithVectorMsg
           )
@@ -937,7 +1129,10 @@ update msg model =
           subModel
             |> RandomWalksBasic.update subMsg
       in
-      ( RandomWalksBasicAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksBasicAnim newSubModel
+      }
       , subCmd
         |> Cmd.map BasicWalkerMsg
       )
@@ -948,7 +1143,10 @@ update msg model =
           subModel
             |> AngularMovementAccelerateTowardsMouse.update subMsg
       in
-      ( AngularMovementAccelerateTowardsMouseAnim newSubModel
+      ( { model |
+        demoModel =
+          AngularMovementAccelerateTowardsMouseAnim newSubModel
+      }
       , subCmd
         |> Cmd.map AngularMovementAccelerateTowardsMouseMsg
       )
@@ -959,7 +1157,10 @@ update msg model =
           subModel
             |> AngularMovementAcceleratingBaton.update subMsg
       in
-      ( AngularMovementAcceleratingBatonAnim newSubModel
+      ( { model |
+        demoModel =
+          AngularMovementAcceleratingBatonAnim newSubModel
+      }
       , subCmd
         |> Cmd.map AngularMovementAcceleratingBatonMsg
       )
@@ -970,7 +1171,10 @@ update msg model =
           subModel
             |> ForcesArtworkGenerator.update subMsg
       in
-      ( ForcesArtworkGeneratorAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesArtworkGeneratorAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesArtworkGeneratorMsg
       )
@@ -981,7 +1185,10 @@ update msg model =
           subModel
             |> ForcesBlowingWind.update subMsg
       in
-      ( ForcesBlowingWindAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesBlowingWindAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesBlowingWindMsg
       )
@@ -992,7 +1199,10 @@ update msg model =
           subModel
             |> AngularMovementFallingBoulder.update subMsg
       in
-      ( AngularMovementFallingBoulderAnim newSubModel
+      ( { model |
+        demoModel =
+          AngularMovementFallingBoulderAnim newSubModel
+      }
       , subCmd
         |> Cmd.map AngularMovementFallingBoulderMsg
       )
@@ -1003,7 +1213,10 @@ update msg model =
           subModel
             |> ForcesBlowingWindWithGravity.update subMsg
       in
-      ( ForcesBlowingWindWithGravityAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesBlowingWindWithGravityAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesBlowingWindWithGravityMsg
       )
@@ -1014,7 +1227,10 @@ update msg model =
           subModel
             |> NoiseAnimatedBox.update subMsg
       in
-      ( NoiseAnimatedBoxAnim newSubModel
+      ( { model |
+        demoModel =
+          NoiseAnimatedBoxAnim newSubModel
+      }
       , subCmd
         |> Cmd.map NoiseAnimatedBoxMsg
       )
@@ -1025,7 +1241,10 @@ update msg model =
           subModel
             |> AngularMovementManyOrbitsWithDynamicRotation.update subMsg
       in
-      ( AngularMovementManyOrbitsWithDynamicRotationAnim newSubModel
+      ( { model |
+        demoModel =
+          AngularMovementManyOrbitsWithDynamicRotationAnim newSubModel
+      }
       , subCmd
         |> Cmd.map AngularMovementManyOrbitsWithDynamicRotationMsg
       )
@@ -1036,20 +1255,12 @@ update msg model =
           subModel
             |> ForcesBlowingWindWithGravityAndFriction.update subMsg
       in
-      ( ForcesBlowingWindWithGravityAndFrictionAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesBlowingWindWithGravityAndFrictionAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesBlowingWindWithGravityAndFrictionMsg
-      )
-    
-    ( OscillationsManyWavesMsg subMsg, OscillationsManyWavesAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> OscillationsManyWaves.update subMsg
-      in
-      ( OscillationsManyWavesAnim newSubModel
-      , subCmd
-        |> Cmd.map OscillationsManyWavesMsg
       )
     
     ( NoiseMountainRangeMsg subMsg, NoiseMountainRangeAnim subModel ) ->
@@ -1058,9 +1269,26 @@ update msg model =
           subModel
             |> NoiseMountainRange.update subMsg
       in
-      ( NoiseMountainRangeAnim newSubModel
+      ( { model |
+        demoModel =
+          NoiseMountainRangeAnim newSubModel
+      }
       , subCmd
         |> Cmd.map NoiseMountainRangeMsg
+      )
+    
+    ( OscillationsManyWavesMsg subMsg, OscillationsManyWavesAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> OscillationsManyWaves.update subMsg
+      in
+      ( { model |
+        demoModel =
+          OscillationsManyWavesAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map OscillationsManyWavesMsg
       )
     
     ( AngularMovementManyOrbitsWithRotationMsg subMsg, AngularMovementManyOrbitsWithRotationAnim subModel ) ->
@@ -1069,7 +1297,10 @@ update msg model =
           subModel
             |> AngularMovementManyOrbitsWithRotation.update subMsg
       in
-      ( AngularMovementManyOrbitsWithRotationAnim newSubModel
+      ( { model |
+        demoModel =
+          AngularMovementManyOrbitsWithRotationAnim newSubModel
+      }
       , subCmd
         |> Cmd.map AngularMovementManyOrbitsWithRotationMsg
       )
@@ -1080,20 +1311,12 @@ update msg model =
           subModel
             |> ForcesFloatingBalloon.update subMsg
       in
-      ( ForcesFloatingBalloonAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesFloatingBalloonAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesFloatingBalloonMsg
-      )
-    
-    ( OscillationsOscillatorsMsg subMsg, OscillationsOscillatorsAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> OscillationsOscillators.update subMsg
-      in
-      ( OscillationsOscillatorsAnim newSubModel
-      , subCmd
-        |> Cmd.map OscillationsOscillatorsMsg
       )
     
     ( NoisePerlinMsg subMsg, NoisePerlinAnim subModel ) ->
@@ -1102,9 +1325,26 @@ update msg model =
           subModel
             |> NoisePerlin.update subMsg
       in
-      ( NoisePerlinAnim newSubModel
+      ( { model |
+        demoModel =
+          NoisePerlinAnim newSubModel
+      }
       , subCmd
         |> Cmd.map NoisePerlinMsg
+      )
+    
+    ( OscillationsOscillatorsMsg subMsg, OscillationsOscillatorsAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> OscillationsOscillators.update subMsg
+      in
+      ( { model |
+        demoModel =
+          OscillationsOscillatorsAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map OscillationsOscillatorsMsg
       )
     
     ( AngularMovementPolarSwingMsg subMsg, AngularMovementPolarSwingAnim subModel ) ->
@@ -1113,7 +1353,10 @@ update msg model =
           subModel
             |> AngularMovementPolarSwing.update subMsg
       in
-      ( AngularMovementPolarSwingAnim newSubModel
+      ( { model |
+        demoModel =
+          AngularMovementPolarSwingAnim newSubModel
+      }
       , subCmd
         |> Cmd.map AngularMovementPolarSwingMsg
       )
@@ -1124,20 +1367,12 @@ update msg model =
           subModel
             |> ForcesManyBalls.update subMsg
       in
-      ( ForcesManyBallsAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesManyBallsAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesManyBallsMsg
-      )
-    
-    ( OscillationsPendulumMsg subMsg, OscillationsPendulumAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> OscillationsPendulum.update subMsg
-      in
-      ( OscillationsPendulumAnim newSubModel
-      , subCmd
-        |> Cmd.map OscillationsPendulumMsg
       )
     
     ( NoisePerlinBoxMsg subMsg, NoisePerlinBoxAnim subModel ) ->
@@ -1146,9 +1381,26 @@ update msg model =
           subModel
             |> NoisePerlinBox.update subMsg
       in
-      ( NoisePerlinBoxAnim newSubModel
+      ( { model |
+        demoModel =
+          NoisePerlinBoxAnim newSubModel
+      }
       , subCmd
         |> Cmd.map NoisePerlinBoxMsg
+      )
+    
+    ( OscillationsPendulumMsg subMsg, OscillationsPendulumAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> OscillationsPendulum.update subMsg
+      in
+      ( { model |
+        demoModel =
+          OscillationsPendulumAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map OscillationsPendulumMsg
       )
     
     ( RandomWalksDirectedMsg subMsg, RandomWalksDirectedAnim subModel ) ->
@@ -1157,7 +1409,10 @@ update msg model =
           subModel
             |> RandomWalksDirected.update subMsg
       in
-      ( RandomWalksDirectedAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksDirectedAnim newSubModel
+      }
       , subCmd
         |> Cmd.map RandomWalksDirectedMsg
       )
@@ -1168,7 +1423,10 @@ update msg model =
           subModel
             |> AngularMovementSpinningBaton.update subMsg
       in
-      ( AngularMovementSpinningBatonAnim newSubModel
+      ( { model |
+        demoModel =
+          AngularMovementSpinningBatonAnim newSubModel
+      }
       , subCmd
         |> Cmd.map AngularMovementSpinningBatonMsg
       )
@@ -1179,20 +1437,12 @@ update msg model =
           subModel
             |> ForcesManyOrbits.update subMsg
       in
-      ( ForcesManyOrbitsAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesManyOrbitsAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesManyOrbitsMsg
-      )
-    
-    ( OscillationsRainbowSlinkyMsg subMsg, OscillationsRainbowSlinkyAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> OscillationsRainbowSlinky.update subMsg
-      in
-      ( OscillationsRainbowSlinkyAnim newSubModel
-      , subCmd
-        |> Cmd.map OscillationsRainbowSlinkyMsg
       )
     
     ( NoisePerlinStepWalkerMsg subMsg, NoisePerlinStepWalkerAnim subModel ) ->
@@ -1201,9 +1451,26 @@ update msg model =
           subModel
             |> NoisePerlinStepWalker.update subMsg
       in
-      ( NoisePerlinStepWalkerAnim newSubModel
+      ( { model |
+        demoModel =
+          NoisePerlinStepWalkerAnim newSubModel
+      }
       , subCmd
         |> Cmd.map NoisePerlinStepWalkerMsg
+      )
+    
+    ( OscillationsRainbowSlinkyMsg subMsg, OscillationsRainbowSlinkyAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> OscillationsRainbowSlinky.update subMsg
+      in
+      ( { model |
+        demoModel =
+          OscillationsRainbowSlinkyAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map OscillationsRainbowSlinkyMsg
       )
     
     ( RandomWalksGaussianMsg subMsg, RandomWalksGaussianAnim subModel ) ->
@@ -1212,7 +1479,10 @@ update msg model =
           subModel
             |> RandomWalksGaussian.update subMsg
       in
-      ( RandomWalksGaussianAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksGaussianAnim newSubModel
+      }
       , subCmd
         |> Cmd.map RandomWalksGaussianMsg
       )
@@ -1223,7 +1493,10 @@ update msg model =
           subModel
             |> VectorAccelerateTowardsMouse.update subMsg
       in
-      ( VectorAccelerateTowardsMouseAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorAccelerateTowardsMouseAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorAccelerateTowardsMouseMsg
       )
@@ -1234,7 +1507,10 @@ update msg model =
           subModel
             |> AngularMovementSpiralDrawer.update subMsg
       in
-      ( AngularMovementSpiralDrawerAnim newSubModel
+      ( { model |
+        demoModel =
+          AngularMovementSpiralDrawerAnim newSubModel
+      }
       , subCmd
         |> Cmd.map AngularMovementSpiralDrawerMsg
       )
@@ -1245,20 +1521,12 @@ update msg model =
           subModel
             |> ForcesMutualAttraction.update subMsg
       in
-      ( ForcesMutualAttractionAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesMutualAttractionAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesMutualAttractionMsg
-      )
-    
-    ( OscillationsSimpleHarmonicMotionMsg subMsg, OscillationsSimpleHarmonicMotionAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> OscillationsSimpleHarmonicMotion.update subMsg
-      in
-      ( OscillationsSimpleHarmonicMotionAnim newSubModel
-      , subCmd
-        |> Cmd.map OscillationsSimpleHarmonicMotionMsg
       )
     
     ( NoisePerlinWalkerMsg subMsg, NoisePerlinWalkerAnim subModel ) ->
@@ -1267,9 +1535,26 @@ update msg model =
           subModel
             |> NoisePerlinWalker.update subMsg
       in
-      ( NoisePerlinWalkerAnim newSubModel
+      ( { model |
+        demoModel =
+          NoisePerlinWalkerAnim newSubModel
+      }
       , subCmd
         |> Cmd.map NoisePerlinWalkerMsg
+      )
+    
+    ( OscillationsSimpleHarmonicMotionMsg subMsg, OscillationsSimpleHarmonicMotionAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> OscillationsSimpleHarmonicMotion.update subMsg
+      in
+      ( { model |
+        demoModel =
+          OscillationsSimpleHarmonicMotionAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map OscillationsSimpleHarmonicMotionMsg
       )
     
     ( RandomWalksImprovedMsg subMsg, RandomWalksImprovedAnim subModel ) ->
@@ -1278,7 +1563,10 @@ update msg model =
           subModel
             |> RandomWalksImproved.update subMsg
       in
-      ( RandomWalksImprovedAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksImprovedAnim newSubModel
+      }
       , subCmd
         |> Cmd.map RandomWalksImprovedMsg
       )
@@ -1289,7 +1577,10 @@ update msg model =
           subModel
             |> VectorBouncingBall.update subMsg
       in
-      ( VectorBouncingBallAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorBouncingBallAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorBouncingBallMsg
       )
@@ -1300,20 +1591,12 @@ update msg model =
           subModel
             |> ForcesMutualRepulsion.update subMsg
       in
-      ( ForcesMutualRepulsionAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesMutualRepulsionAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesMutualRepulsionMsg
-      )
-    
-    ( OscillationsSimpleHarmonicMotionWithAngleMsg subMsg, OscillationsSimpleHarmonicMotionWithAngleAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> OscillationsSimpleHarmonicMotionWithAngle.update subMsg
-      in
-      ( OscillationsSimpleHarmonicMotionWithAngleAnim newSubModel
-      , subCmd
-        |> Cmd.map OscillationsSimpleHarmonicMotionWithAngleMsg
       )
     
     ( NoiseRandomBoxMsg subMsg, NoiseRandomBoxAnim subModel ) ->
@@ -1322,9 +1605,26 @@ update msg model =
           subModel
             |> NoiseRandomBox.update subMsg
       in
-      ( NoiseRandomBoxAnim newSubModel
+      ( { model |
+        demoModel =
+          NoiseRandomBoxAnim newSubModel
+      }
       , subCmd
         |> Cmd.map NoiseRandomBoxMsg
+      )
+    
+    ( OscillationsSimpleHarmonicMotionWithAngleMsg subMsg, OscillationsSimpleHarmonicMotionWithAngleAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> OscillationsSimpleHarmonicMotionWithAngle.update subMsg
+      in
+      ( { model |
+        demoModel =
+          OscillationsSimpleHarmonicMotionWithAngleAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map OscillationsSimpleHarmonicMotionWithAngleMsg
       )
     
     ( RandomWalksLevyMsg subMsg, RandomWalksLevyAnim subModel ) ->
@@ -1333,7 +1633,10 @@ update msg model =
           subModel
             |> RandomWalksLevy.update subMsg
       in
-      ( RandomWalksLevyAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksLevyAnim newSubModel
+      }
       , subCmd
         |> Cmd.map RandomWalksLevyMsg
       )
@@ -1344,7 +1647,10 @@ update msg model =
           subModel
             |> VectorBouncingBallWithVector.update subMsg
       in
-      ( VectorBouncingBallWithVectorAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorBouncingBallWithVectorAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorBouncingBallWithVectorMsg
       )
@@ -1355,7 +1661,10 @@ update msg model =
           subModel
             |> ForcesResistance.update subMsg
       in
-      ( ForcesResistanceAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesResistanceAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesResistanceMsg
       )
@@ -1366,7 +1675,10 @@ update msg model =
           subModel
             |> OscillationsSineWave.update subMsg
       in
-      ( OscillationsSineWaveAnim newSubModel
+      ( { model |
+        demoModel =
+          OscillationsSineWaveAnim newSubModel
+      }
       , subCmd
         |> Cmd.map OscillationsSineWaveMsg
       )
@@ -1377,7 +1689,10 @@ update msg model =
           subModel
             |> RandomWalksMonteCarlo.update subMsg
       in
-      ( RandomWalksMonteCarloAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksMonteCarloAnim newSubModel
+      }
       , subCmd
         |> Cmd.map RandomWalksMonteCarloMsg
       )
@@ -1388,7 +1703,10 @@ update msg model =
           subModel
             |> VectorBrakingCar.update subMsg
       in
-      ( VectorBrakingCarAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorBrakingCarAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorBrakingCarMsg
       )
@@ -1399,7 +1717,10 @@ update msg model =
           subModel
             |> ForcesSingleOrbit.update subMsg
       in
-      ( ForcesSingleOrbitAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesSingleOrbitAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesSingleOrbitMsg
       )
@@ -1410,7 +1731,10 @@ update msg model =
           subModel
             |> OscillationsStaticSineWave.update subMsg
       in
-      ( OscillationsStaticSineWaveAnim newSubModel
+      ( { model |
+        demoModel =
+          OscillationsStaticSineWaveAnim newSubModel
+      }
       , subCmd
         |> Cmd.map OscillationsStaticSineWaveMsg
       )
@@ -1421,7 +1745,10 @@ update msg model =
           subModel
             |> RandomWalksNormalDistribution.update subMsg
       in
-      ( RandomWalksNormalDistributionAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksNormalDistributionAnim newSubModel
+      }
       , subCmd
         |> Cmd.map RandomWalksNormalDistributionMsg
       )
@@ -1432,7 +1759,10 @@ update msg model =
           subModel
             |> VectorConstantAcceleration.update subMsg
       in
-      ( VectorConstantAccelerationAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorConstantAccelerationAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorConstantAccelerationMsg
       )
@@ -1443,7 +1773,10 @@ update msg model =
           subModel
             |> ForcesSinkingLogs.update subMsg
       in
-      ( ForcesSinkingLogsAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesSinkingLogsAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesSinkingLogsMsg
       )
@@ -1454,7 +1787,10 @@ update msg model =
           subModel
             |> RandomWalksPaintSplatter.update subMsg
       in
-      ( RandomWalksPaintSplatterAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksPaintSplatterAnim newSubModel
+      }
       , subCmd
         |> Cmd.map RandomWalksPaintSplatterMsg
       )
@@ -1465,7 +1801,10 @@ update msg model =
           subModel
             |> VectorConstantVelocity.update subMsg
       in
-      ( VectorConstantVelocityAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorConstantVelocityAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorConstantVelocityMsg
       )
@@ -1476,7 +1815,10 @@ update msg model =
           subModel
             |> ForcesWallBalls.update subMsg
       in
-      ( ForcesWallBallsAnim newSubModel
+      ( { model |
+        demoModel =
+          ForcesWallBallsAnim newSubModel
+      }
       , subCmd
         |> Cmd.map ForcesWallBallsMsg
       )
@@ -1487,7 +1829,10 @@ update msg model =
           subModel
             |> VectorGroupAccelerateTowardsMouse.update subMsg
       in
-      ( VectorGroupAccelerateTowardsMouseAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorGroupAccelerateTowardsMouseAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorGroupAccelerateTowardsMouseMsg
       )
@@ -1498,7 +1843,10 @@ update msg model =
           subModel
             |> VectorMouseStalker.update subMsg
       in
-      ( VectorMouseStalkerAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorMouseStalkerAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorMouseStalkerMsg
       )
@@ -1509,7 +1857,10 @@ update msg model =
           subModel
             |> VectorMouseTracing.update subMsg
       in
-      ( VectorMouseTracingAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorMouseTracingAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorMouseTracingMsg
       )
@@ -1520,7 +1871,10 @@ update msg model =
           subModel
             |> VectorMouseTracingNormalized.update subMsg
       in
-      ( VectorMouseTracingNormalizedAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorMouseTracingNormalizedAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorMouseTracingNormalizedMsg
       )
@@ -1531,7 +1885,10 @@ update msg model =
           subModel
             |> VectorMouseTracingScaled.update subMsg
       in
-      ( VectorMouseTracingScaledAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorMouseTracingScaledAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorMouseTracingScaledMsg
       )
@@ -1542,7 +1899,10 @@ update msg model =
           subModel
             |> VectorMouseTracingWithMagnitude.update subMsg
       in
-      ( VectorMouseTracingWithMagnitudeAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorMouseTracingWithMagnitudeAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorMouseTracingWithMagnitudeMsg
       )
@@ -1553,7 +1913,10 @@ update msg model =
           subModel
             |> VectorRandomAcceleration.update subMsg
       in
-      ( VectorRandomAccelerationAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorRandomAccelerationAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorRandomAccelerationMsg
       )
@@ -1564,7 +1927,10 @@ update msg model =
           subModel
             |> VectorScalingSaber.update subMsg
       in
-      ( VectorScalingSaberAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorScalingSaberAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorScalingSaberMsg
       )
@@ -1575,11 +1941,26 @@ update msg model =
           subModel
             |> VectorWalkerWithVector.update subMsg
       in
-      ( VectorWalkerWithVectorAnim newSubModel
+      ( { model |
+        demoModel =
+          VectorWalkerWithVectorAnim newSubModel
+      }
       , subCmd
         |> Cmd.map VectorWalkerWithVectorMsg
       )
     
+    ( GotViewport {viewport}, _ ) ->
+      ({ model |
+        device =
+          Just <| E.classifyDevice
+            { width =
+              round viewport.width
+            , height =
+              round viewport.height
+            }
+      }
+      , Cmd.none
+      )
     ( _, _ ) ->
       ( model, Cmd.none )
 
@@ -1589,7 +1970,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions anim =
-  case anim of
+  case anim.demoModel of
     RandomWalksBasicAnim subModel ->
       RandomWalksBasic.subscriptions subModel
         |> Sub.map BasicWalkerMsg
@@ -1630,13 +2011,13 @@ subscriptions anim =
       ForcesBlowingWindWithGravityAndFriction.subscriptions subModel
         |> Sub.map ForcesBlowingWindWithGravityAndFrictionMsg
     
-    OscillationsManyWavesAnim subModel ->
-      OscillationsManyWaves.subscriptions subModel
-        |> Sub.map OscillationsManyWavesMsg
-    
     NoiseMountainRangeAnim subModel ->
       NoiseMountainRange.subscriptions subModel
         |> Sub.map NoiseMountainRangeMsg
+    
+    OscillationsManyWavesAnim subModel ->
+      OscillationsManyWaves.subscriptions subModel
+        |> Sub.map OscillationsManyWavesMsg
     
     AngularMovementManyOrbitsWithRotationAnim subModel ->
       AngularMovementManyOrbitsWithRotation.subscriptions subModel
@@ -1646,13 +2027,13 @@ subscriptions anim =
       ForcesFloatingBalloon.subscriptions subModel
         |> Sub.map ForcesFloatingBalloonMsg
     
-    OscillationsOscillatorsAnim subModel ->
-      OscillationsOscillators.subscriptions subModel
-        |> Sub.map OscillationsOscillatorsMsg
-    
     NoisePerlinAnim subModel ->
       NoisePerlin.subscriptions subModel
         |> Sub.map NoisePerlinMsg
+    
+    OscillationsOscillatorsAnim subModel ->
+      OscillationsOscillators.subscriptions subModel
+        |> Sub.map OscillationsOscillatorsMsg
     
     AngularMovementPolarSwingAnim subModel ->
       AngularMovementPolarSwing.subscriptions subModel
@@ -1662,13 +2043,13 @@ subscriptions anim =
       ForcesManyBalls.subscriptions subModel
         |> Sub.map ForcesManyBallsMsg
     
-    OscillationsPendulumAnim subModel ->
-      OscillationsPendulum.subscriptions subModel
-        |> Sub.map OscillationsPendulumMsg
-    
     NoisePerlinBoxAnim subModel ->
       NoisePerlinBox.subscriptions subModel
         |> Sub.map NoisePerlinBoxMsg
+    
+    OscillationsPendulumAnim subModel ->
+      OscillationsPendulum.subscriptions subModel
+        |> Sub.map OscillationsPendulumMsg
     
     RandomWalksDirectedAnim subModel ->
       RandomWalksDirected.subscriptions subModel
@@ -1682,13 +2063,13 @@ subscriptions anim =
       ForcesManyOrbits.subscriptions subModel
         |> Sub.map ForcesManyOrbitsMsg
     
-    OscillationsRainbowSlinkyAnim subModel ->
-      OscillationsRainbowSlinky.subscriptions subModel
-        |> Sub.map OscillationsRainbowSlinkyMsg
-    
     NoisePerlinStepWalkerAnim subModel ->
       NoisePerlinStepWalker.subscriptions subModel
         |> Sub.map NoisePerlinStepWalkerMsg
+    
+    OscillationsRainbowSlinkyAnim subModel ->
+      OscillationsRainbowSlinky.subscriptions subModel
+        |> Sub.map OscillationsRainbowSlinkyMsg
     
     RandomWalksGaussianAnim subModel ->
       RandomWalksGaussian.subscriptions subModel
@@ -1706,13 +2087,13 @@ subscriptions anim =
       ForcesMutualAttraction.subscriptions subModel
         |> Sub.map ForcesMutualAttractionMsg
     
-    OscillationsSimpleHarmonicMotionAnim subModel ->
-      OscillationsSimpleHarmonicMotion.subscriptions subModel
-        |> Sub.map OscillationsSimpleHarmonicMotionMsg
-    
     NoisePerlinWalkerAnim subModel ->
       NoisePerlinWalker.subscriptions subModel
         |> Sub.map NoisePerlinWalkerMsg
+    
+    OscillationsSimpleHarmonicMotionAnim subModel ->
+      OscillationsSimpleHarmonicMotion.subscriptions subModel
+        |> Sub.map OscillationsSimpleHarmonicMotionMsg
     
     RandomWalksImprovedAnim subModel ->
       RandomWalksImproved.subscriptions subModel
@@ -1726,13 +2107,13 @@ subscriptions anim =
       ForcesMutualRepulsion.subscriptions subModel
         |> Sub.map ForcesMutualRepulsionMsg
     
-    OscillationsSimpleHarmonicMotionWithAngleAnim subModel ->
-      OscillationsSimpleHarmonicMotionWithAngle.subscriptions subModel
-        |> Sub.map OscillationsSimpleHarmonicMotionWithAngleMsg
-    
     NoiseRandomBoxAnim subModel ->
       NoiseRandomBox.subscriptions subModel
         |> Sub.map NoiseRandomBoxMsg
+    
+    OscillationsSimpleHarmonicMotionWithAngleAnim subModel ->
+      OscillationsSimpleHarmonicMotionWithAngle.subscriptions subModel
+        |> Sub.map OscillationsSimpleHarmonicMotionWithAngleMsg
     
     RandomWalksLevyAnim subModel ->
       RandomWalksLevy.subscriptions subModel
@@ -1846,21 +2227,32 @@ view model =
     [ E.width E.fill
     , E.height E.fill
     ]
-    (E.row
+    ( ( case model.device of
+      Just device ->
+        let
+          _ = Debug.log "AL: device" device
+        in
+        case (device.class, device.orientation) of
+          (Phone, Portrait) ->
+            E.column
+          (_, _) ->
+            E.wrappedRow
+      Nothing ->
+        E.wrappedRow
+      )
       [ E.width E.fill
       , E.height E.fill
+      , E.spacing 20
       ]
       [ E.column
-        [ E.width E.fill
-        , E.height E.fill
+        [ E.height E.fill
         ]
         [ model
           |> demoView
           |> E.html
         ]
       , E.column
-        [ E.width E.fill
-        , E.height E.fill
+        [ E.height E.fill
         , E.spacing 20
         ]
         [ E.el
@@ -1914,15 +2306,15 @@ view model =
           ]
           (E.text "BlowingWindWithGravityAndFriction")
         , E.el
-          [ onClick (Select OscillationsManyWaves)
-          , E.pointer
-          ]
-          (E.text "ManyWaves")
-        , E.el
           [ onClick (Select NoiseMountainRange)
           , E.pointer
           ]
           (E.text "MountainRange")
+        , E.el
+          [ onClick (Select OscillationsManyWaves)
+          , E.pointer
+          ]
+          (E.text "ManyWaves")
         , E.el
           [ onClick (Select AngularMovementManyOrbitsWithRotation)
           , E.pointer
@@ -1934,15 +2326,15 @@ view model =
           ]
           (E.text "FloatingBalloon")
         , E.el
-          [ onClick (Select OscillationsOscillators)
-          , E.pointer
-          ]
-          (E.text "Oscillators")
-        , E.el
           [ onClick (Select NoisePerlin)
           , E.pointer
           ]
           (E.text "Perlin")
+        , E.el
+          [ onClick (Select OscillationsOscillators)
+          , E.pointer
+          ]
+          (E.text "Oscillators")
         , E.el
           [ onClick (Select AngularMovementPolarSwing)
           , E.pointer
@@ -1954,15 +2346,15 @@ view model =
           ]
           (E.text "ManyBalls")
         , E.el
-          [ onClick (Select OscillationsPendulum)
-          , E.pointer
-          ]
-          (E.text "Pendulum")
-        , E.el
           [ onClick (Select NoisePerlinBox)
           , E.pointer
           ]
           (E.text "PerlinBox")
+        , E.el
+          [ onClick (Select OscillationsPendulum)
+          , E.pointer
+          ]
+          (E.text "Pendulum")
         , E.el
           [ onClick (Select RandomWalksDirected)
           , E.pointer
@@ -1979,15 +2371,15 @@ view model =
           ]
           (E.text "ManyOrbits")
         , E.el
-          [ onClick (Select OscillationsRainbowSlinky)
-          , E.pointer
-          ]
-          (E.text "RainbowSlinky")
-        , E.el
           [ onClick (Select NoisePerlinStepWalker)
           , E.pointer
           ]
           (E.text "PerlinStepWalker")
+        , E.el
+          [ onClick (Select OscillationsRainbowSlinky)
+          , E.pointer
+          ]
+          (E.text "RainbowSlinky")
         , E.el
           [ onClick (Select RandomWalksGaussian)
           , E.pointer
@@ -2009,15 +2401,15 @@ view model =
           ]
           (E.text "MutualAttraction")
         , E.el
-          [ onClick (Select OscillationsSimpleHarmonicMotion)
-          , E.pointer
-          ]
-          (E.text "SimpleHarmonicMotion")
-        , E.el
           [ onClick (Select NoisePerlinWalker)
           , E.pointer
           ]
           (E.text "PerlinWalker")
+        , E.el
+          [ onClick (Select OscillationsSimpleHarmonicMotion)
+          , E.pointer
+          ]
+          (E.text "SimpleHarmonicMotion")
         , E.el
           [ onClick (Select RandomWalksImproved)
           , E.pointer
@@ -2034,15 +2426,15 @@ view model =
           ]
           (E.text "MutualRepulsion")
         , E.el
-          [ onClick (Select OscillationsSimpleHarmonicMotionWithAngle)
-          , E.pointer
-          ]
-          (E.text "SimpleHarmonicMotionWithAngle")
-        , E.el
           [ onClick (Select NoiseRandomBox)
           , E.pointer
           ]
           (E.text "RandomBox")
+        , E.el
+          [ onClick (Select OscillationsSimpleHarmonicMotionWithAngle)
+          , E.pointer
+          ]
+          (E.text "SimpleHarmonicMotionWithAngle")
         , E.el
           [ onClick (Select RandomWalksLevy)
           , E.pointer
@@ -2172,7 +2564,7 @@ demoView model =
     ]
   <|
     [ border
-    , case model of
+    , case model.demoModel of
       RandomWalksBasicAnim subModel ->
         RandomWalksBasic.view subModel
           |> Html.map BasicWalkerMsg
@@ -2212,13 +2604,13 @@ demoView model =
         ForcesBlowingWindWithGravityAndFriction.view subModel
           |> Html.map ForcesBlowingWindWithGravityAndFrictionMsg
       
-      OscillationsManyWavesAnim subModel ->
-        OscillationsManyWaves.view subModel
-          |> Html.map OscillationsManyWavesMsg
-      
       NoiseMountainRangeAnim subModel ->
         NoiseMountainRange.view subModel
           |> Html.map NoiseMountainRangeMsg
+      
+      OscillationsManyWavesAnim subModel ->
+        OscillationsManyWaves.view subModel
+          |> Html.map OscillationsManyWavesMsg
       
       AngularMovementManyOrbitsWithRotationAnim subModel ->
         AngularMovementManyOrbitsWithRotation.view subModel
@@ -2228,13 +2620,13 @@ demoView model =
         ForcesFloatingBalloon.view subModel
           |> Html.map ForcesFloatingBalloonMsg
       
-      OscillationsOscillatorsAnim subModel ->
-        OscillationsOscillators.view subModel
-          |> Html.map OscillationsOscillatorsMsg
-      
       NoisePerlinAnim subModel ->
         NoisePerlin.view subModel
           |> Html.map NoisePerlinMsg
+      
+      OscillationsOscillatorsAnim subModel ->
+        OscillationsOscillators.view subModel
+          |> Html.map OscillationsOscillatorsMsg
       
       AngularMovementPolarSwingAnim subModel ->
         AngularMovementPolarSwing.view subModel
@@ -2244,13 +2636,13 @@ demoView model =
         ForcesManyBalls.view subModel
           |> Html.map ForcesManyBallsMsg
       
-      OscillationsPendulumAnim subModel ->
-        OscillationsPendulum.view subModel
-          |> Html.map OscillationsPendulumMsg
-      
       NoisePerlinBoxAnim subModel ->
         NoisePerlinBox.view subModel
           |> Html.map NoisePerlinBoxMsg
+      
+      OscillationsPendulumAnim subModel ->
+        OscillationsPendulum.view subModel
+          |> Html.map OscillationsPendulumMsg
       
       RandomWalksDirectedAnim subModel ->
         RandomWalksDirected.view subModel
@@ -2264,13 +2656,13 @@ demoView model =
         ForcesManyOrbits.view subModel
           |> Html.map ForcesManyOrbitsMsg
       
-      OscillationsRainbowSlinkyAnim subModel ->
-        OscillationsRainbowSlinky.view subModel
-          |> Html.map OscillationsRainbowSlinkyMsg
-      
       NoisePerlinStepWalkerAnim subModel ->
         NoisePerlinStepWalker.view subModel
           |> Html.map NoisePerlinStepWalkerMsg
+      
+      OscillationsRainbowSlinkyAnim subModel ->
+        OscillationsRainbowSlinky.view subModel
+          |> Html.map OscillationsRainbowSlinkyMsg
       
       RandomWalksGaussianAnim subModel ->
         RandomWalksGaussian.view subModel
@@ -2288,13 +2680,13 @@ demoView model =
         ForcesMutualAttraction.view subModel
           |> Html.map ForcesMutualAttractionMsg
       
-      OscillationsSimpleHarmonicMotionAnim subModel ->
-        OscillationsSimpleHarmonicMotion.view subModel
-          |> Html.map OscillationsSimpleHarmonicMotionMsg
-      
       NoisePerlinWalkerAnim subModel ->
         NoisePerlinWalker.view subModel
           |> Html.map NoisePerlinWalkerMsg
+      
+      OscillationsSimpleHarmonicMotionAnim subModel ->
+        OscillationsSimpleHarmonicMotion.view subModel
+          |> Html.map OscillationsSimpleHarmonicMotionMsg
       
       RandomWalksImprovedAnim subModel ->
         RandomWalksImproved.view subModel
@@ -2308,13 +2700,13 @@ demoView model =
         ForcesMutualRepulsion.view subModel
           |> Html.map ForcesMutualRepulsionMsg
       
-      OscillationsSimpleHarmonicMotionWithAngleAnim subModel ->
-        OscillationsSimpleHarmonicMotionWithAngle.view subModel
-          |> Html.map OscillationsSimpleHarmonicMotionWithAngleMsg
-      
       NoiseRandomBoxAnim subModel ->
         NoiseRandomBox.view subModel
           |> Html.map NoiseRandomBoxMsg
+      
+      OscillationsSimpleHarmonicMotionWithAngleAnim subModel ->
+        OscillationsSimpleHarmonicMotionWithAngle.view subModel
+          |> Html.map OscillationsSimpleHarmonicMotionWithAngleMsg
       
       RandomWalksLevyAnim subModel ->
         RandomWalksLevy.view subModel

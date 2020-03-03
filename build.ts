@@ -70,8 +70,11 @@ async function buildMain(sourceDir: string) {
                 , "    ( subModel, subCmd ) ="
                 , "      " + demoName + ".init ()"
                 , "  in"
-                , "  ( " + demoAnimName + " <|"
-                , "    subModel"
+                , "  ( { model |"
+                , "    demoModel ="
+                , "      " + demoAnimName + " <|"
+                , "      subModel"
+                , "  }"
                 , "  , subCmd"
                 , "    |> Cmd.map " + demoMsgName
                 , "  )"
@@ -98,7 +101,10 @@ async function buildMain(sourceDir: string) {
                 , "      subModel"
                 , "        |> " + demoName + ".update subMsg"
                 , "  in"
-                , "  ( " + demoAnimName + " newSubModel"
+                , "  ( { model |"
+                , "    " + "demoModel ="
+                , "      " + demoAnimName + " newSubModel"
+                , "  }"
                 , "  , subCmd"
                 , "    |> Cmd.map " + demoMsgName
                 , "  )"
@@ -164,8 +170,10 @@ function outputMain() {
   return `module Main exposing (main)
 
 import Browser
+import Browser.Dom exposing (Viewport)
+import Task
 import Color
-import Element as E
+import Element as E exposing (Device, DeviceClass(..), Orientation(..))
 import Element.Events exposing (onClick)
 import Html exposing (Html)
 import TypedSvg as Svg
@@ -187,16 +195,28 @@ init _ =
     ( subModel, subCmd ) =
       RandomWalksBasic.init ()
   in
-  ( RandomWalksBasicAnim subModel
-  , subCmd
-    |> Cmd.map BasicWalkerMsg
+  ( {demoModel =
+    RandomWalksBasicAnim subModel
+  , device =
+    Nothing
+  }
+  , Cmd.batch
+    [ subCmd
+      |> Cmd.map BasicWalkerMsg
+    , Task.perform GotViewport Browser.Dom.getViewport
+    ]
   )
 
 
 -- MODEL
 
 
-type Model
+type alias Model =
+  { demoModel : DemoModel
+  , device: Maybe Device
+  }
+
+type DemoModel
   = RandomWalksBasicAnim RandomWalksBasic.Model
 `
     + demoModelDefinitions
@@ -213,13 +233,14 @@ type Animation
 
 type Msg
   = Select Animation
+  | GotViewport Viewport
   | BasicWalkerMsg RandomWalksBasic.Msg`
     + demoMsgDefinitions
     + `
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-  case ( msg, model ) of
+  case ( msg, model.demoModel ) of
     ( Select anim, _ ) ->
       case anim of
         RandomWalksBasic ->
@@ -227,7 +248,10 @@ update msg model =
             ( subModel, subCmd ) =
               RandomWalksBasic.init ()
           in
-          ( RandomWalksBasicAnim subModel
+          ( { model |
+            demoModel =
+              RandomWalksBasicAnim subModel
+          }
           , subCmd
             |> Cmd.map BasicWalkerMsg
           )
@@ -240,13 +264,28 @@ update msg model =
           subModel
             |> RandomWalksBasic.update subMsg
       in
-      ( RandomWalksBasicAnim newSubModel
+      ( { model |
+        demoModel =
+          RandomWalksBasicAnim newSubModel
+      }
       , subCmd
         |> Cmd.map BasicWalkerMsg
       )
 `
     + demoUpdates
     + `
+    ( GotViewport {viewport}, _ ) ->
+      ({ model |
+        device =
+          Just <| E.classifyDevice
+            { width =
+              round viewport.width
+            , height =
+              round viewport.height
+            }
+      }
+      , Cmd.none
+      )
     ( _, _ ) ->
       ( model, Cmd.none )
 
@@ -256,7 +295,7 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions anim =
-  case anim of
+  case anim.demoModel of
     RandomWalksBasicAnim subModel ->
       RandomWalksBasic.subscriptions subModel
         |> Sub.map BasicWalkerMsg
@@ -283,21 +322,32 @@ view model =
     [ E.width E.fill
     , E.height E.fill
     ]
-    (E.row
+    ( ( case model.device of
+      Just device ->
+        let
+          _ = Debug.log "AL: device" device
+        in
+        case (device.class, device.orientation) of
+          (Phone, Portrait) ->
+            E.column
+          (_, _) ->
+            E.wrappedRow
+      Nothing ->
+        E.wrappedRow
+      )
       [ E.width E.fill
       , E.height E.fill
+      , E.spacing 20
       ]
       [ E.column
-        [ E.width E.fill
-        , E.height E.fill
+        [ E.height E.fill
         ]
         [ model
           |> demoView
           |> E.html
         ]
       , E.column
-        [ E.width E.fill
-        , E.height E.fill
+        [ E.height E.fill
         , E.spacing 20
         ]
         [ E.el
@@ -321,7 +371,7 @@ demoView model =
     ]
   <|
     [ border
-    , case model of
+    , case model.demoModel of
       RandomWalksBasicAnim subModel ->
         RandomWalksBasic.view subModel
           |> Html.map BasicWalkerMsg`
