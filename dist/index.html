@@ -41,11 +41,42 @@
           });
       }
       runDemo("./RandomWalks/Basic.js", "Basic Walker");
+      // viewed on mobile
+      if (window.innerWidth <= 450) {
+        // show down navigation button
+        let btn = document.createElement("button");
+        btn.id = "nav-btn";
+        document.body.appendChild(btn);
+        const downArrowSvg = `
+        <svg class="feather">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <polyline points="19 12 12 19 5 12" />
+        </svg>
+        `;
+        const upArrowSvg = `
+        <svg class="feather">
+          <line x1="12" y1="19" x2="12" y2="5" />
+          <polyline points="5 12 12 5 19 12" />
+        </svg>
+        `;
+        let pointingDown = true;
+        btn.innerHTML = downArrowSvg;
+        btn.addEventListener("click", function () {
+          if (pointingDown) {
+            document.getElementById("demo-name").scrollIntoView({behavior: "smooth"});
+            btn.innerHTML = upArrowSvg;
+          } else {
+            document.getElementById("page-title").scrollIntoView({behavior: "smooth"});
+            btn.innerHTML = downArrowSvg;
+          }
+          pointingDown = !pointingDown;
+        });
+      }
     });
   </script>
   <main>
     <div id="demo-panel">
-      <h1 id="naturalsimulations">Natural Simulations</h1>
+      <h1 id="page-title">Natural Simulations</h1>
       <p>Natural simulations in Elm based on "Advanced JS: Natural Simulations" from Khan Academy.</p>
       <h2 id="demo-name"></h2>
       <div id="demo-container">
