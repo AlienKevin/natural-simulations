@@ -26,39 +26,6 @@ main > div {
   padding: 15px;
 }
 
-@media only screen and (max-height: 650px) {
-  #demo-panel svg {
-    height: 45vh;
-  }
-}
-
-@media only screen and (min-height: 651px) {
-  #demo-panel svg {
-    height: 60vh;
-  }
-}
-
-@media only screen and (max-width: 650px) {
-  #demo-panel svg {
-    height: 50vh;
-  }
-}
-
-@media only screen and (max-width: 450px) {
-  html, body, a {
-    font-size: 14px;
-  }
-  main {
-    flex-direction: column;
-  }
-  main > div {
-    width: 100%;
-  }
-  #demo-panel svg {
-    height: 40vh;
-  }
-}
-
 h1, h2 {
   font-family: Kalam, Arial, Helvetica, sans-serif;
 }
@@ -87,13 +54,8 @@ a, a:link {
   text-decoration: none;
   background-position-y: -0%;
   background-image: linear-gradient( white 50%, lightgreen 50%);
-  transition: background 300ms ease;
   background-size: 2px;
   background-size: auto 175%;
-}
-
-a:hover {
-  background-position-y: 100%;
 }
 
 .simplebar-scrollbar:before {
@@ -119,4 +81,46 @@ a:hover {
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
+}
+
+@media only screen and (max-height: 650px) {
+  #demo-panel svg {
+    height: 45vh;
+  }
+}
+
+@media only screen and (min-height: 651px) {
+  #demo-panel svg {
+    height: 60vh;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  #demo-panel svg {
+    height: 50vh;
+  }
+}
+
+@media only screen and (min-width: 451px) {
+  a, a:link {
+    transition: background 300ms ease;
+  }
+  a:hover {
+    background-position-y: 100%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  html, body {
+    font-size: 14px;
+  }
+  main {
+    flex-direction: column;
+  }
+  main > div {
+    width: 100%;
+  }
+  #demo-panel svg {
+    height: 40vh;
+  }
 }
