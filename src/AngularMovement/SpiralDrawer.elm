@@ -1,4 +1,4 @@
-module AngularMovement.SpiralDrawer exposing (main)
+module AngularMovement.SpiralDrawer exposing (..)
 
 import Browser
 import Color

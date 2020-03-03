@@ -1,4 +1,4 @@
-module Oscillations.RainbowSlinky exposing (main)
+module Oscillations.RainbowSlinky exposing (..)
 
 import Browser
 import Color

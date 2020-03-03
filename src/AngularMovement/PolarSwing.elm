@@ -1,4 +1,4 @@
-module AngularMovement.PolarSwing exposing (main)
+module AngularMovement.PolarSwing exposing (..)
 
 import Browser
 import Color

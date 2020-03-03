@@ -1,4 +1,4 @@
-module Oscillations.ManyWaves exposing (main)
+module Oscillations.ManyWaves exposing (..)
 
 import Browser
 import Color

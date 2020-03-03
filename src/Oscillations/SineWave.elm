@@ -1,4 +1,4 @@
-module Oscillations.SineWave exposing (main)
+module Oscillations.SineWave exposing (..)
 
 import Browser
 import Color
@@ -9,7 +9,6 @@ import TypedSvg.Attributes as Attributes
 import TypedSvg.Types exposing (Fill(..), Transform(..), px)
 import Time
 import Math.Vector2 as Vector2 exposing (Vec2)
-import Random
 
 type alias Model =
   { firstAngle : Float

@@ -18,9 +18,10 @@
   },
   "homepage": "https://github.com/AlienKevin/natural-simulations#readme",
   "devDependencies": {
+    "@types/node": "^13.7.7",
     "esm": "^3.2.25",
-    "node-elm-compiler": "^5.0.4",
     "showdown": "^1.9.1",
-    "terser": "^4.6.4"
+    "ts-node": "^8.6.2",
+    "typescript": "^3.8.3"
   }
 }

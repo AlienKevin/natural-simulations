@@ -1,4 +1,4 @@
-module AngularMovement.Asteroids exposing (main)
+module AngularMovement.Asteroids exposing (..)
 
 import Playground exposing (..)
 import Set

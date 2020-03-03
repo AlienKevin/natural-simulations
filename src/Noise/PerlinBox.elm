@@ -25,6 +25,9 @@ height : Int
 height =
   100
 
+type Msg =
+  NoOp
+
 main : Program () Model msg
 main =
   Browser.element

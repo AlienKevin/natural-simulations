@@ -19,6 +19,7 @@
             "elm-community/typed-svg": "5.2.0",
             "elm-explorations/linear-algebra": "1.0.3",
             "evancz/elm-playground": "1.0.3",
+            "mdgriffith/elm-ui": "1.1.5",
             "newmana/chroma-elm": "16.0.3",
             "zaboco/elm-draggable": "4.0.5"
         },

@@ -1,4 +1,4 @@
-module AngularMovement.AccelerateTowardsMouse exposing (main)
+module AngularMovement.AccelerateTowardsMouse exposing (..)
 
 import Browser
 import Browser.Events

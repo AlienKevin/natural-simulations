@@ -1,4 +1,4 @@
-module Oscillations.Oscillators exposing (main)
+module Oscillations.Oscillators exposing (..)
 
 import Browser
 import Color

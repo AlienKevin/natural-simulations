@@ -1,4 +1,4 @@
-module Oscillations.StaticSineWave exposing (main)
+module Oscillations.StaticSineWave exposing (..)
 
 import Browser
 import Color

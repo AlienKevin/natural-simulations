@@ -1,4 +1,4 @@
-module Oscillations.SimpleHarmonicMotion exposing (main)
+module Oscillations.SimpleHarmonicMotion exposing (..)
 
 import Browser
 import Color

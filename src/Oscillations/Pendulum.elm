@@ -1,4 +1,4 @@
-module Oscillations.Pendulum exposing (main)
+module Oscillations.Pendulum exposing (..)
 
 import Browser
 import Color
