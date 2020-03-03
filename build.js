@@ -1,6 +1,7 @@
 import { promises, writeFile } from 'fs';
 import { join } from 'path';
 import { compileToString } from "node-elm-compiler";
+import { minify } from "terser";
 
 // Make an async function that gets executed immediately
 async function buildElm(sourceDir, targetDir) {
@@ -23,7 +24,17 @@ async function buildElm(sourceDir, targetDir) {
           compileToString([sourcePath], { optimize: true })
             .then(function (data) {
               const output = data.toString().replace(/\;\}\(this\)\)\;/, ";}(window));")
-              writeFile(targetPath, output,
+              const minimized = minify(output, {
+                compress: {
+                  pure_funcs: ["F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "A2", "A3", "A4", "A5", "A6", "A7", "A8", "A9"],
+                  pure_getters: true,
+                  keep_fargs: false,
+                  unsafe_comps: true,
+                  unsafe: true
+                },
+                mangle: true
+              }).code;
+              writeFile(targetPath, minimized,
                 function (err) {
                   if (err) {
                     return console.log(err);
