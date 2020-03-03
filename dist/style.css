@@ -46,3 +46,7 @@ a, a:link {
 a:hover {
   background-position-y: 100%;
 }
+
+.simplebar-scrollbar:before {
+  background: lightgreen;
+}
