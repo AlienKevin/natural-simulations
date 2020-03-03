@@ -65,7 +65,7 @@ createMountainsHelper numberOfMtns startTime endTime =
   else
     let
       s =
-        lerp 0 (toFloat numberOfMountains) 0 1 (toFloat numberOfMtns)
+        Utils.lerp 0 (toFloat numberOfMountains) 0 1 (toFloat numberOfMtns)
     in
     (List.map
       (\time ->
