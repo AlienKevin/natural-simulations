@@ -25,24 +25,23 @@
           }
         }
       }
+      function runDemo(demoPath, demoName) {
+        import(demoPath)
+          .then((_) => {
+            const pathSegments = demoPath.split("/");
+            const elmModuleName = pathSegments[pathSegments.length - 1].replace(/.js/, "");
+            const elmModuleFolder = pathSegments[pathSegments.length - 2];
+            const containerDiv = document.getElementById("demo-container");
+            containerDiv.innerHTML = '';
+            const demoDiv = document.createElement("div");
+            demoDiv.id = "demo";
+            containerDiv.appendChild(demoDiv);
+            Elm[elmModuleFolder][elmModuleName].init({ node: document.getElementById('demo') });
+            document.getElementById("demo-name").textContent = demoName;
+          });
+      }
+      runDemo("./RandomWalks/Basic.js", "Basic Walker");
     });
-    function runDemo(demoPath, demoName) {
-      import(demoPath)
-        .then((_) => {
-          const pathSegments = demoPath.split("/");
-          const elmModuleName = pathSegments[pathSegments.length - 1].replace(/.js/, "");
-          const elmModuleFolder = pathSegments[pathSegments.length - 2];
-          const containerDiv = document.getElementById("demo-container");
-          containerDiv.innerHTML = '';
-          const demoDiv = document.createElement("div");
-          demoDiv.id = "demo";
-          containerDiv.appendChild(demoDiv);
-          Elm[elmModuleFolder][elmModuleName].init({ node: document.getElementById('demo') });
-          document.getElementById("demo-name").textContent = demoName;
-        });
-    }
-    runDemo("./RandomWalks/Basic.js", "Basic Walker");
-
   </script>
   <main>
     <div id="demo-panel">
