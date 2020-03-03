@@ -45,6 +45,9 @@ main > div {
 }
 
 @media only screen and (max-width: 450px) {
+  html, body, a {
+    font-size: 14px;
+  }
   main {
     flex-direction: column;
   }
