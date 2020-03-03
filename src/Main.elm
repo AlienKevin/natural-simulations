@@ -2229,9 +2229,6 @@ view model =
     ]
     ( ( case model.device of
       Just device ->
-        let
-          _ = Debug.log "AL: device" device
-        in
         case (device.class, device.orientation) of
           (Phone, Portrait) ->
             E.column
