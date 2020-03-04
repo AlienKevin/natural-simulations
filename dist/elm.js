@@ -25610,7 +25610,7 @@ var $author$project$Main$view = function (model) {
 							$mdgriffith$elm_ui$Element$htmlAttribute(
 							A2($elm$html$Html$Attributes$style, 'height', 'calc(100vh - 25px)')),
 							$mdgriffith$elm_ui$Element$htmlAttribute(
-							A2($elm$html$Html$Attributes$style, 'white-space', 'normal')),
+							A2($elm$html$Html$Attributes$style, 'white-space', 'pre-wrap')),
 							$mdgriffith$elm_ui$Element$htmlAttribute(
 							A2($elm$html$Html$Attributes$style, 'word-break', 'break-word')),
 							$mdgriffith$elm_ui$Element$htmlAttribute(
@@ -25753,7 +25753,7 @@ var $author$project$Main$view = function (model) {
 													[
 														$elm$html$Html$text('Directed walker')
 													])),
-												$elm$html$Html$text('that moves to the right')
+												$elm$html$Html$text(' that moves to the right')
 											]))
 									]))),
 							$mdgriffith$elm_ui$Element$html(
@@ -25787,7 +25787,7 @@ var $author$project$Main$view = function (model) {
 													[
 														$elm$html$Html$text('Directed walker')
 													])),
-												$elm$html$Html$text('to make it move up')
+												$elm$html$Html$text(' to make it move up')
 											]))
 									]))),
 							$mdgriffith$elm_ui$Element$html(
@@ -26516,7 +26516,7 @@ var $author$project$Main$view = function (model) {
 										_List_Nil,
 										_List_fromArray(
 											[
-												$elm$html$Html$text('There are no mutable states in Elm so all functions always return new values while keeping old values the    same,    similar to static functions in JavaScript.')
+												$elm$html$Html$text('There are no mutable states in Elm so all functions always return new values while keeping old values the same, similar to static functions in JavaScript.')
 											]))
 									]))),
 							$mdgriffith$elm_ui$Element$html(
@@ -26828,7 +26828,7 @@ var $author$project$Main$view = function (model) {
 													]),
 												_List_fromArray(
 													[
-														$elm$html$Html$text('Ball Blown by Wind obeying gravity with    friction')
+														$elm$html$Html$text('Ball Blown by Wind obeying gravity with friction')
 													]))
 											]))
 									]))),
@@ -27190,7 +27190,7 @@ var $author$project$Main$view = function (model) {
 													]),
 												_List_fromArray(
 													[
-														$elm$html$Html$text('Many Orbits with Dynamic Self-rotation    Depending    on Acceleration in x Direction')
+														$elm$html$Html$text('Many Orbits with Dynamic Self-rotation Depending on Acceleration in x Direction')
 													]))
 											]))
 									]))),

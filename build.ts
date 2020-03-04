@@ -37,7 +37,7 @@ demoSelections = `[ E.html <| Html.h1 []
   [ Html.li []
     [ Html.a [ Html.Events.onClick (Select RandomWalksDirected) ]
       [ Html.text "Directed walker" ]
-    , Html.text "that moves to the right"
+    , Html.text " that moves to the right"
     ]
   ]
 , E.html <| Html.p []
@@ -47,7 +47,7 @@ demoSelections = `[ E.html <| Html.h1 []
     [ Html.text "You can slightly modify the "
     , Html.a [ Html.Events.onClick (Select RandomWalksDirected) ]
       [ Html.text "Directed walker" ]
-    , Html.text "to make it move up"
+    , Html.text " to make it move up"
     ]
   ]
 , E.html <| Html.p []
@@ -228,7 +228,7 @@ demoSelections = `[ E.html <| Html.h1 []
   [ Html.text "Static functions vs. instance methods" ]
 , E.html <| Html.ul []
   [ Html.li []
-    [ Html.text "There are no mutable states in Elm so all functions always return new values while keeping old values the    same,    similar to static functions in JavaScript." ]
+    [ Html.text "There are no mutable states in Elm so all functions always return new values while keeping old values the same, similar to static functions in JavaScript." ]
   ]
 , E.html <| Html.p []
   [ Html.text "Challenge: Static functions" ]
@@ -305,7 +305,7 @@ demoSelections = `[ E.html <| Html.h1 []
     ]
   , Html.li []
     [ Html.a [ Html.Events.onClick (Select ForcesBlowingWindWithGravityAndFriction) ]
-      [ Html.text "Ball Blown by Wind obeying gravity with    friction" ]
+      [ Html.text "Ball Blown by Wind obeying gravity with friction" ]
     ]
   ]
 , E.html <| Html.p []
@@ -395,7 +395,7 @@ demoSelections = `[ E.html <| Html.h1 []
     ]
   , Html.li []
     [ Html.a [ Html.Events.onClick (Select AngularMovementManyOrbitsWithDynamicRotation) ]
-      [ Html.text "Many Orbits with Dynamic Self-rotation    Depending    on Acceleration in x Direction" ]
+      [ Html.text "Many Orbits with Dynamic Self-rotation Depending on Acceleration in x Direction" ]
     ]
   ]
 , E.html <| Html.p []
@@ -896,7 +896,7 @@ view model =
         [ E.scrollbarY
         , E.width E.fill
         , E.htmlAttribute <| Html.Attributes.style "height" "calc(100vh - 25px)"
-        , E.htmlAttribute <| Html.Attributes.style "white-space" "normal"
+        , E.htmlAttribute <| Html.Attributes.style "white-space" "pre-wrap"
         , E.htmlAttribute <| Html.Attributes.style "word-break" "break-word"
         , E.htmlAttribute <| Html.Attributes.classList [ ("scrollable", True) ]
         ]
