@@ -181,6 +181,7 @@ import Element.Font as Font
 import Element.Background as Background
 import Element.Border as Border
 import Html exposing (Html)
+import Html.Attributes
 import TypedSvg as Svg
 import TypedSvg.Core
 import TypedSvg.Attributes as SvgAttributes
@@ -349,6 +350,7 @@ view model =
       ]
       [ E.column
         [ E.height E.fill
+        , E.width E.fill
         , E.spacing 20
         ]
         [ E.el
@@ -363,13 +365,19 @@ view model =
           , Border.rounded 20
           ]
           (E.text "Natural Simulations")
-        , model
-          |> demoView
-          |> E.html
+        , E.el
+          [ E.centerX
+          ]
+          ( model
+            |> demoView
+            |> E.html
+          )
         ]
       , E.column
-        [ E.height E.fill
-        , E.spacing 20
+        [ E.spacing 20
+        , E.scrollbarY
+        , E.width E.fill
+        , E.htmlAttribute <| Html.Attributes.style "height" "calc(100vh - 20px)"
         ]
         [ E.link
           [ onClick (Select RandomWalksBasic)
