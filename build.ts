@@ -133,11 +133,13 @@ async function buildMain(sourceDir: string) {
           demoSelections +=
             group(
               4
-              , [", E.el"
+              , [", E.link"
                 , "  [ onClick (Select " + demoName + ")"
                 , "  , E.pointer"
                 , "  ]"
-                , "  (E.text \"" + fileName + "\")"
+                , "  { url = \"#" + demoName + "\""
+                , "  , label = (E.text \"" + fileName + "\")"
+                , "  }"
               ]
             )
 
@@ -175,6 +177,9 @@ import Task
 import Color
 import Element as E exposing (Device, DeviceClass(..), Orientation(..))
 import Element.Events exposing (onClick)
+import Element.Font as Font
+import Element.Background as Background
+import Element.Border as Border
 import Html exposing (Html)
 import TypedSvg as Svg
 import TypedSvg.Core
@@ -321,12 +326,15 @@ view model =
   E.layout
     [ E.width E.fill
     , E.height E.fill
+    , Font.family
+      [ Font.typeface "Helvetica"
+      , Font.sansSerif
+      ]
+    , E.padding 20
+    , E.spacing 15
     ]
     ( ( case model.device of
       Just device ->
-        let
-          _ = Debug.log "AL: device" device
-        in
         case (device.class, device.orientation) of
           (Phone, Portrait) ->
             E.column
@@ -341,8 +349,21 @@ view model =
       ]
       [ E.column
         [ E.height E.fill
+        , E.spacing 20
         ]
-        [ model
+        [ E.el
+          [ Font.family
+            [ Font.typeface "Kalam"
+            , Font.serif
+            ]
+          , Font.size 30
+          , E.padding 20
+          , Background.color <| toElmUiColor Color.lightGreen
+          , E.width E.fill
+          , Border.rounded 20
+          ]
+          (E.text "Natural Simulations")
+        , model
           |> demoView
           |> E.html
         ]
@@ -350,11 +371,13 @@ view model =
         [ E.height E.fill
         , E.spacing 20
         ]
-        [ E.el
+        [ E.link
           [ onClick (Select RandomWalksBasic)
           , E.pointer
           ]
-          (E.text "Basic Walker")`
+          { url = "#RandomWalksBasic"
+          , label = (E.text "Basic Walker")
+          }`
     + demoSelections
     + `
         ]
@@ -403,5 +426,14 @@ main =
     , update = update
     , subscriptions = subscriptions
     }
+
+
+toElmUiColor : Color.Color -> E.Color
+toElmUiColor color =
+  let
+    {red, green, blue, alpha } =
+      Color.toRgba color
+  in
+  E.rgba red green blue alpha
 `;
 }

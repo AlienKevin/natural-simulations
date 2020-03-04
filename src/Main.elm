@@ -6,6 +6,9 @@ import Task
 import Color
 import Element as E exposing (Device, DeviceClass(..), Orientation(..))
 import Element.Events exposing (onClick)
+import Element.Font as Font
+import Element.Background as Background
+import Element.Border as Border
 import Html exposing (Html)
 import TypedSvg as Svg
 import TypedSvg.Core
@@ -2226,6 +2229,12 @@ view model =
   E.layout
     [ E.width E.fill
     , E.height E.fill
+    , Font.family
+      [ Font.typeface "Helvetica"
+      , Font.sansSerif
+      ]
+    , E.padding 20
+    , E.spacing 15
     ]
     ( ( case model.device of
       Just device ->
@@ -2243,8 +2252,21 @@ view model =
       ]
       [ E.column
         [ E.height E.fill
+        , E.spacing 20
         ]
-        [ model
+        [ E.el
+          [ Font.family
+            [ Font.typeface "Kalam"
+            , Font.serif
+            ]
+          , Font.size 30
+          , E.padding 20
+          , Background.color <| toElmUiColor Color.lightGreen
+          , E.width E.fill
+          , Border.rounded 20
+          ]
+          (E.text "Natural Simulations")
+        , model
           |> demoView
           |> E.html
         ]
@@ -2252,301 +2274,419 @@ view model =
         [ E.height E.fill
         , E.spacing 20
         ]
-        [ E.el
+        [ E.link
           [ onClick (Select RandomWalksBasic)
           , E.pointer
           ]
-          (E.text "Basic Walker")
-        , E.el
+          { url = "#RandomWalksBasic"
+          , label = (E.text "Basic Walker")
+          }
+        , E.link
           [ onClick (Select AngularMovementAccelerateTowardsMouse)
           , E.pointer
           ]
-          (E.text "AccelerateTowardsMouse")
-        , E.el
+          { url = "#AngularMovementAccelerateTowardsMouse"
+          , label = (E.text "AccelerateTowardsMouse")
+          }
+        , E.link
           [ onClick (Select AngularMovementAcceleratingBaton)
           , E.pointer
           ]
-          (E.text "AcceleratingBaton")
-        , E.el
+          { url = "#AngularMovementAcceleratingBaton"
+          , label = (E.text "AcceleratingBaton")
+          }
+        , E.link
           [ onClick (Select ForcesArtworkGenerator)
           , E.pointer
           ]
-          (E.text "ArtworkGenerator")
-        , E.el
+          { url = "#ForcesArtworkGenerator"
+          , label = (E.text "ArtworkGenerator")
+          }
+        , E.link
           [ onClick (Select ForcesBlowingWind)
           , E.pointer
           ]
-          (E.text "BlowingWind")
-        , E.el
+          { url = "#ForcesBlowingWind"
+          , label = (E.text "BlowingWind")
+          }
+        , E.link
           [ onClick (Select AngularMovementFallingBoulder)
           , E.pointer
           ]
-          (E.text "FallingBoulder")
-        , E.el
+          { url = "#AngularMovementFallingBoulder"
+          , label = (E.text "FallingBoulder")
+          }
+        , E.link
           [ onClick (Select ForcesBlowingWindWithGravity)
           , E.pointer
           ]
-          (E.text "BlowingWindWithGravity")
-        , E.el
+          { url = "#ForcesBlowingWindWithGravity"
+          , label = (E.text "BlowingWindWithGravity")
+          }
+        , E.link
           [ onClick (Select NoiseAnimatedBox)
           , E.pointer
           ]
-          (E.text "AnimatedBox")
-        , E.el
+          { url = "#NoiseAnimatedBox"
+          , label = (E.text "AnimatedBox")
+          }
+        , E.link
           [ onClick (Select AngularMovementManyOrbitsWithDynamicRotation)
           , E.pointer
           ]
-          (E.text "ManyOrbitsWithDynamicRotation")
-        , E.el
+          { url = "#AngularMovementManyOrbitsWithDynamicRotation"
+          , label = (E.text "ManyOrbitsWithDynamicRotation")
+          }
+        , E.link
           [ onClick (Select ForcesBlowingWindWithGravityAndFriction)
           , E.pointer
           ]
-          (E.text "BlowingWindWithGravityAndFriction")
-        , E.el
+          { url = "#ForcesBlowingWindWithGravityAndFriction"
+          , label = (E.text "BlowingWindWithGravityAndFriction")
+          }
+        , E.link
           [ onClick (Select NoiseMountainRange)
           , E.pointer
           ]
-          (E.text "MountainRange")
-        , E.el
+          { url = "#NoiseMountainRange"
+          , label = (E.text "MountainRange")
+          }
+        , E.link
           [ onClick (Select OscillationsManyWaves)
           , E.pointer
           ]
-          (E.text "ManyWaves")
-        , E.el
+          { url = "#OscillationsManyWaves"
+          , label = (E.text "ManyWaves")
+          }
+        , E.link
           [ onClick (Select AngularMovementManyOrbitsWithRotation)
           , E.pointer
           ]
-          (E.text "ManyOrbitsWithRotation")
-        , E.el
+          { url = "#AngularMovementManyOrbitsWithRotation"
+          , label = (E.text "ManyOrbitsWithRotation")
+          }
+        , E.link
           [ onClick (Select ForcesFloatingBalloon)
           , E.pointer
           ]
-          (E.text "FloatingBalloon")
-        , E.el
+          { url = "#ForcesFloatingBalloon"
+          , label = (E.text "FloatingBalloon")
+          }
+        , E.link
           [ onClick (Select NoisePerlin)
           , E.pointer
           ]
-          (E.text "Perlin")
-        , E.el
+          { url = "#NoisePerlin"
+          , label = (E.text "Perlin")
+          }
+        , E.link
           [ onClick (Select OscillationsOscillators)
           , E.pointer
           ]
-          (E.text "Oscillators")
-        , E.el
+          { url = "#OscillationsOscillators"
+          , label = (E.text "Oscillators")
+          }
+        , E.link
           [ onClick (Select AngularMovementPolarSwing)
           , E.pointer
           ]
-          (E.text "PolarSwing")
-        , E.el
+          { url = "#AngularMovementPolarSwing"
+          , label = (E.text "PolarSwing")
+          }
+        , E.link
           [ onClick (Select ForcesManyBalls)
           , E.pointer
           ]
-          (E.text "ManyBalls")
-        , E.el
+          { url = "#ForcesManyBalls"
+          , label = (E.text "ManyBalls")
+          }
+        , E.link
           [ onClick (Select NoisePerlinBox)
           , E.pointer
           ]
-          (E.text "PerlinBox")
-        , E.el
+          { url = "#NoisePerlinBox"
+          , label = (E.text "PerlinBox")
+          }
+        , E.link
           [ onClick (Select OscillationsPendulum)
           , E.pointer
           ]
-          (E.text "Pendulum")
-        , E.el
+          { url = "#OscillationsPendulum"
+          , label = (E.text "Pendulum")
+          }
+        , E.link
           [ onClick (Select RandomWalksDirected)
           , E.pointer
           ]
-          (E.text "Directed")
-        , E.el
+          { url = "#RandomWalksDirected"
+          , label = (E.text "Directed")
+          }
+        , E.link
           [ onClick (Select AngularMovementSpinningBaton)
           , E.pointer
           ]
-          (E.text "SpinningBaton")
-        , E.el
+          { url = "#AngularMovementSpinningBaton"
+          , label = (E.text "SpinningBaton")
+          }
+        , E.link
           [ onClick (Select ForcesManyOrbits)
           , E.pointer
           ]
-          (E.text "ManyOrbits")
-        , E.el
+          { url = "#ForcesManyOrbits"
+          , label = (E.text "ManyOrbits")
+          }
+        , E.link
           [ onClick (Select NoisePerlinStepWalker)
           , E.pointer
           ]
-          (E.text "PerlinStepWalker")
-        , E.el
+          { url = "#NoisePerlinStepWalker"
+          , label = (E.text "PerlinStepWalker")
+          }
+        , E.link
           [ onClick (Select OscillationsRainbowSlinky)
           , E.pointer
           ]
-          (E.text "RainbowSlinky")
-        , E.el
+          { url = "#OscillationsRainbowSlinky"
+          , label = (E.text "RainbowSlinky")
+          }
+        , E.link
           [ onClick (Select RandomWalksGaussian)
           , E.pointer
           ]
-          (E.text "Gaussian")
-        , E.el
+          { url = "#RandomWalksGaussian"
+          , label = (E.text "Gaussian")
+          }
+        , E.link
           [ onClick (Select VectorAccelerateTowardsMouse)
           , E.pointer
           ]
-          (E.text "AccelerateTowardsMouse")
-        , E.el
+          { url = "#VectorAccelerateTowardsMouse"
+          , label = (E.text "AccelerateTowardsMouse")
+          }
+        , E.link
           [ onClick (Select AngularMovementSpiralDrawer)
           , E.pointer
           ]
-          (E.text "SpiralDrawer")
-        , E.el
+          { url = "#AngularMovementSpiralDrawer"
+          , label = (E.text "SpiralDrawer")
+          }
+        , E.link
           [ onClick (Select ForcesMutualAttraction)
           , E.pointer
           ]
-          (E.text "MutualAttraction")
-        , E.el
+          { url = "#ForcesMutualAttraction"
+          , label = (E.text "MutualAttraction")
+          }
+        , E.link
           [ onClick (Select NoisePerlinWalker)
           , E.pointer
           ]
-          (E.text "PerlinWalker")
-        , E.el
+          { url = "#NoisePerlinWalker"
+          , label = (E.text "PerlinWalker")
+          }
+        , E.link
           [ onClick (Select OscillationsSimpleHarmonicMotion)
           , E.pointer
           ]
-          (E.text "SimpleHarmonicMotion")
-        , E.el
+          { url = "#OscillationsSimpleHarmonicMotion"
+          , label = (E.text "SimpleHarmonicMotion")
+          }
+        , E.link
           [ onClick (Select RandomWalksImproved)
           , E.pointer
           ]
-          (E.text "Improved")
-        , E.el
+          { url = "#RandomWalksImproved"
+          , label = (E.text "Improved")
+          }
+        , E.link
           [ onClick (Select VectorBouncingBall)
           , E.pointer
           ]
-          (E.text "BouncingBall")
-        , E.el
+          { url = "#VectorBouncingBall"
+          , label = (E.text "BouncingBall")
+          }
+        , E.link
           [ onClick (Select ForcesMutualRepulsion)
           , E.pointer
           ]
-          (E.text "MutualRepulsion")
-        , E.el
+          { url = "#ForcesMutualRepulsion"
+          , label = (E.text "MutualRepulsion")
+          }
+        , E.link
           [ onClick (Select NoiseRandomBox)
           , E.pointer
           ]
-          (E.text "RandomBox")
-        , E.el
+          { url = "#NoiseRandomBox"
+          , label = (E.text "RandomBox")
+          }
+        , E.link
           [ onClick (Select OscillationsSimpleHarmonicMotionWithAngle)
           , E.pointer
           ]
-          (E.text "SimpleHarmonicMotionWithAngle")
-        , E.el
+          { url = "#OscillationsSimpleHarmonicMotionWithAngle"
+          , label = (E.text "SimpleHarmonicMotionWithAngle")
+          }
+        , E.link
           [ onClick (Select RandomWalksLevy)
           , E.pointer
           ]
-          (E.text "Levy")
-        , E.el
+          { url = "#RandomWalksLevy"
+          , label = (E.text "Levy")
+          }
+        , E.link
           [ onClick (Select VectorBouncingBallWithVector)
           , E.pointer
           ]
-          (E.text "BouncingBallWithVector")
-        , E.el
+          { url = "#VectorBouncingBallWithVector"
+          , label = (E.text "BouncingBallWithVector")
+          }
+        , E.link
           [ onClick (Select ForcesResistance)
           , E.pointer
           ]
-          (E.text "Resistance")
-        , E.el
+          { url = "#ForcesResistance"
+          , label = (E.text "Resistance")
+          }
+        , E.link
           [ onClick (Select OscillationsSineWave)
           , E.pointer
           ]
-          (E.text "SineWave")
-        , E.el
+          { url = "#OscillationsSineWave"
+          , label = (E.text "SineWave")
+          }
+        , E.link
           [ onClick (Select RandomWalksMonteCarlo)
           , E.pointer
           ]
-          (E.text "MonteCarlo")
-        , E.el
+          { url = "#RandomWalksMonteCarlo"
+          , label = (E.text "MonteCarlo")
+          }
+        , E.link
           [ onClick (Select VectorBrakingCar)
           , E.pointer
           ]
-          (E.text "BrakingCar")
-        , E.el
+          { url = "#VectorBrakingCar"
+          , label = (E.text "BrakingCar")
+          }
+        , E.link
           [ onClick (Select ForcesSingleOrbit)
           , E.pointer
           ]
-          (E.text "SingleOrbit")
-        , E.el
+          { url = "#ForcesSingleOrbit"
+          , label = (E.text "SingleOrbit")
+          }
+        , E.link
           [ onClick (Select OscillationsStaticSineWave)
           , E.pointer
           ]
-          (E.text "StaticSineWave")
-        , E.el
+          { url = "#OscillationsStaticSineWave"
+          , label = (E.text "StaticSineWave")
+          }
+        , E.link
           [ onClick (Select RandomWalksNormalDistribution)
           , E.pointer
           ]
-          (E.text "NormalDistribution")
-        , E.el
+          { url = "#RandomWalksNormalDistribution"
+          , label = (E.text "NormalDistribution")
+          }
+        , E.link
           [ onClick (Select VectorConstantAcceleration)
           , E.pointer
           ]
-          (E.text "ConstantAcceleration")
-        , E.el
+          { url = "#VectorConstantAcceleration"
+          , label = (E.text "ConstantAcceleration")
+          }
+        , E.link
           [ onClick (Select ForcesSinkingLogs)
           , E.pointer
           ]
-          (E.text "SinkingLogs")
-        , E.el
+          { url = "#ForcesSinkingLogs"
+          , label = (E.text "SinkingLogs")
+          }
+        , E.link
           [ onClick (Select RandomWalksPaintSplatter)
           , E.pointer
           ]
-          (E.text "PaintSplatter")
-        , E.el
+          { url = "#RandomWalksPaintSplatter"
+          , label = (E.text "PaintSplatter")
+          }
+        , E.link
           [ onClick (Select VectorConstantVelocity)
           , E.pointer
           ]
-          (E.text "ConstantVelocity")
-        , E.el
+          { url = "#VectorConstantVelocity"
+          , label = (E.text "ConstantVelocity")
+          }
+        , E.link
           [ onClick (Select ForcesWallBalls)
           , E.pointer
           ]
-          (E.text "WallBalls")
-        , E.el
+          { url = "#ForcesWallBalls"
+          , label = (E.text "WallBalls")
+          }
+        , E.link
           [ onClick (Select VectorGroupAccelerateTowardsMouse)
           , E.pointer
           ]
-          (E.text "GroupAccelerateTowardsMouse")
-        , E.el
+          { url = "#VectorGroupAccelerateTowardsMouse"
+          , label = (E.text "GroupAccelerateTowardsMouse")
+          }
+        , E.link
           [ onClick (Select VectorMouseStalker)
           , E.pointer
           ]
-          (E.text "MouseStalker")
-        , E.el
+          { url = "#VectorMouseStalker"
+          , label = (E.text "MouseStalker")
+          }
+        , E.link
           [ onClick (Select VectorMouseTracing)
           , E.pointer
           ]
-          (E.text "MouseTracing")
-        , E.el
+          { url = "#VectorMouseTracing"
+          , label = (E.text "MouseTracing")
+          }
+        , E.link
           [ onClick (Select VectorMouseTracingNormalized)
           , E.pointer
           ]
-          (E.text "MouseTracingNormalized")
-        , E.el
+          { url = "#VectorMouseTracingNormalized"
+          , label = (E.text "MouseTracingNormalized")
+          }
+        , E.link
           [ onClick (Select VectorMouseTracingScaled)
           , E.pointer
           ]
-          (E.text "MouseTracingScaled")
-        , E.el
+          { url = "#VectorMouseTracingScaled"
+          , label = (E.text "MouseTracingScaled")
+          }
+        , E.link
           [ onClick (Select VectorMouseTracingWithMagnitude)
           , E.pointer
           ]
-          (E.text "MouseTracingWithMagnitude")
-        , E.el
+          { url = "#VectorMouseTracingWithMagnitude"
+          , label = (E.text "MouseTracingWithMagnitude")
+          }
+        , E.link
           [ onClick (Select VectorRandomAcceleration)
           , E.pointer
           ]
-          (E.text "RandomAcceleration")
-        , E.el
+          { url = "#VectorRandomAcceleration"
+          , label = (E.text "RandomAcceleration")
+          }
+        , E.link
           [ onClick (Select VectorScalingSaber)
           , E.pointer
           ]
-          (E.text "ScalingSaber")
-        , E.el
+          { url = "#VectorScalingSaber"
+          , label = (E.text "ScalingSaber")
+          }
+        , E.link
           [ onClick (Select VectorWalkerWithVector)
           , E.pointer
           ]
-          (E.text "WalkerWithVector")
+          { url = "#VectorWalkerWithVector"
+          , label = (E.text "WalkerWithVector")
+          }
         ]
       ]
     )
@@ -2823,3 +2963,12 @@ main =
     , update = update
     , subscriptions = subscriptions
     }
+
+
+toElmUiColor : Color.Color -> E.Color
+toElmUiColor color =
+  let
+    {red, green, blue, alpha } =
+      Color.toRgba color
+  in
+  E.rgba red green blue alpha

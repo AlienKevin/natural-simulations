@@ -4,7 +4,8 @@
   "description": "Natural simulations in Elm based on \"Advanced JS: Natural Simulations\" from Khan Academy.",
   "main": "index.js",
   "scripts": {
-    "build": "elm make src/Main.elm --output=dist/elm.js --optimize;terser dist/elm.js --compress 'pure_funcs=\"F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9\",pure_getters,keep_fargs=false,unsafe_comps,unsafe' --mangle --output=dist/elm.min.js"
+    "build": "npx chokidar \"**/*.elm\" \"build.ts\" --ignore \"**/Main.elm\" -c \"npx ts-node -r esm build.ts; elm make src/Main.elm --output=dist/elm.js\"",
+    "dist": "npx ts-node -r esm build.ts; elm make src/Main.elm --output=dist/elm.js --optimize;terser dist/elm.js --compress 'pure_funcs=\"F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9\",pure_getters,keep_fargs=false,unsafe_comps,unsafe' --mangle --output=dist/elm.min.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/AlienKevin/natural-simulations#readme",
   "devDependencies": {
     "@types/node": "^13.7.7",
+    "chokidar-cli": "^2.1.0",
     "esm": "^3.2.25",
     "showdown": "^1.9.1",
     "terser": "^4.6.6",
