@@ -1,6 +1,7 @@
 module AngularMovement.FallingBoulder exposing (..)
 
 import Browser
+import Browser.Events
 import Color
 import Html exposing (Html)
 import Html.Events
@@ -167,7 +168,7 @@ viewPusher ballRadius position =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-  Time.every 10 Move
+  Browser.Events.onAnimationFrame Move
 
 
 applyForce : Vec2 -> Float -> Vec2 -> Vec2

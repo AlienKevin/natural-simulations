@@ -1,6 +1,7 @@
 module Forces.MutualRepulsion exposing (..)
 
 import Browser
+import Browser.Events
 import Color
 import Html exposing (Html)
 import TypedSvg as Svg
@@ -132,7 +133,7 @@ viewPoint attributes radius position =
 subscriptions : Model -> Sub Msg
 subscriptions _ =
   Sub.batch
-    [ Time.every 10 Move
+    [ Browser.Events.onAnimationFrame Move
     ]
 
 

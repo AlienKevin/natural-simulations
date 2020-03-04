@@ -1,6 +1,7 @@
 module Forces.SinkingLogs exposing (..)
 
 import Browser
+import Browser.Events
 import Color
 import Html exposing (Html)
 import TypedSvg as Svg
@@ -155,7 +156,7 @@ viewLog l =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-  Time.every 20 Move
+  Browser.Events.onAnimationFrame Move
 
 
 applyForce : Vec2 -> Float -> Vec2 -> Vec2

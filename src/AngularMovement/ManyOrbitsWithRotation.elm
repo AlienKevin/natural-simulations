@@ -1,6 +1,7 @@
 module AngularMovement.ManyOrbitsWithRotation exposing (..)
 
 import Browser
+import Browser.Events
 import Color
 import Html exposing (Html)
 import TypedSvg as Svg
@@ -192,7 +193,7 @@ viewPoint attributes radius position angle =
 subscriptions : Model -> Sub Msg
 subscriptions { drag } =
   Sub.batch
-    [ Time.every 10 Move
+    [ Browser.Events.onAnimationFrame Move
     , Draggable.subscriptions DragMsg drag
     ]
 

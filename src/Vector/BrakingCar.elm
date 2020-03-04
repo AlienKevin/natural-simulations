@@ -104,7 +104,7 @@ subscriptions : Model -> Sub Msg
 subscriptions _ =
   Sub.batch
     [ Browser.Events.onKeyDown keyDecoder
-    , Time.every 20 Move
+    , Browser.Events.onAnimationFrame Move
     ]
 
 

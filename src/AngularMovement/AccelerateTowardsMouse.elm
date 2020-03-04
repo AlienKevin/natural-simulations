@@ -111,7 +111,7 @@ viewBar w h position angle =
 subscriptions : Model -> Sub Msg
 subscriptions _ =
   Sub.batch
-    [ Time.every 20 Move
+    [ Browser.Events.onAnimationFrame Move
     , Browser.Events.onMouseMove
       ( Decode.map2 GetMouseLocation
         (Decode.field "pageX" Decode.int)

@@ -1,6 +1,7 @@
 module Forces.WallBalls exposing (..)
 
 import Browser
+import Browser.Events
 import Color
 import Html exposing (Html)
 import TypedSvg as Svg
@@ -118,7 +119,7 @@ ball { mass, position } =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-  Time.every 20 Move
+  Browser.Events.onAnimationFrame Move
 
 
 ballRadiusFromMass : Float -> Float

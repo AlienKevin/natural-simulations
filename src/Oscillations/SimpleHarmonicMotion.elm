@@ -1,6 +1,7 @@
 module Oscillations.SimpleHarmonicMotion exposing (..)
 
 import Browser
+import Browser.Events
 import Color
 import Html exposing (Html)
 import TypedSvg as Svg
@@ -109,7 +110,7 @@ viewBall ballRadius ballPosition =
 
 subscriptions : Model -> Sub Msg
 subscriptions _ =
-  Time.every 10 Move
+  Browser.Events.onAnimationFrame Move
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
