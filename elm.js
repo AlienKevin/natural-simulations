@@ -25670,23 +25670,23 @@ var $author$project$Main$view = function (model) {
 												_List_fromArray(
 													[
 														$elm$html$Html$text('Basic walker')
-													])),
+													]))
+											])),
+										A2(
+										$elm$html$Html$li,
+										_List_Nil,
+										_List_fromArray(
+											[
 												A2(
-												$elm$html$Html$li,
-												_List_Nil,
+												$elm$html$Html$a,
 												_List_fromArray(
 													[
-														A2(
-														$elm$html$Html$a,
-														_List_fromArray(
-															[
-																$elm$html$Html$Events$onClick(
-																$author$project$Main$Select($author$project$Main$RandomWalksImproved))
-															]),
-														_List_fromArray(
-															[
-																$elm$html$Html$text('Improved walker')
-															]))
+														$elm$html$Html$Events$onClick(
+														$author$project$Main$Select($author$project$Main$RandomWalksImproved))
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text('Improved walker')
 													]))
 											]))
 									]))),

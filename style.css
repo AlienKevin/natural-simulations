@@ -21,6 +21,16 @@ li {
   margin-bottom: 10px;
 }
 
+h1, h2 {
+  font-family: Kalam, cursive;
+}
+
+h1, h2 {
+  margin: 0.5em;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+}
+
 a, a:link {
   color: black;
   text-decoration: none;
@@ -28,6 +38,7 @@ a, a:link {
   background-image: linear-gradient( white 50%, lightgreen 50%);
   background-size: 2px;
   background-size: auto 175%;
+  cursor: pointer;
 }
 
 @media only screen and (min-width: 451px) {
