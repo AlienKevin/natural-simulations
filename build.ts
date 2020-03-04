@@ -333,6 +333,7 @@ view model =
       ]
     , E.padding 20
     , E.spacing 15
+    , E.clipY
     ]
     ( ( case model.device of
       Just device ->
@@ -377,7 +378,9 @@ view model =
         [ E.spacing 20
         , E.scrollbarY
         , E.width E.fill
-        , E.htmlAttribute <| Html.Attributes.style "height" "calc(100vh - 20px)"
+        , E.htmlAttribute <| Html.Attributes.style "height" "calc(100vh - 25px)"
+        , E.htmlAttribute <| Html.Attributes.id "text-panel"
+        , E.htmlAttribute <| Html.Attributes.classList [ ("scrollable", True) ]
         ]
         [ E.link
           [ onClick (Select RandomWalksBasic)
