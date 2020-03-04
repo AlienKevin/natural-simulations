@@ -2274,6 +2274,7 @@ view model =
             , Font.serif
             ]
           , Font.size 30
+          , Font.bold
           , E.padding 20
           , Background.color <| toElmUiColor Color.lightGreen
           , E.width E.fill
