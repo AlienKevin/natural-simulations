@@ -173,6 +173,7 @@ function outputMain() {
 
 import Browser
 import Browser.Dom exposing (Viewport)
+import Browser.Events
 import Task
 import Color
 import Element as E exposing (Device, DeviceClass(..), Orientation(..))
@@ -209,7 +210,13 @@ init _ =
   , Cmd.batch
     [ subCmd
       |> Cmd.map BasicWalkerMsg
-    , Task.perform GotViewport Browser.Dom.getViewport
+    , Task.perform
+      (\\{viewport} ->
+        GotViewport
+          (round viewport.width)
+          (round viewport.height)
+      )
+      Browser.Dom.getViewport
     ]
   )
 
@@ -239,7 +246,7 @@ type Animation
 
 type Msg
   = Select Animation
-  | GotViewport Viewport
+  | GotViewport Int Int
   | BasicWalkerMsg RandomWalksBasic.Msg`
     + demoMsgDefinitions
     + `
@@ -280,14 +287,14 @@ update msg model =
 `
     + demoUpdates
     + `
-    ( GotViewport {viewport}, _ ) ->
+    ( GotViewport w h, _ ) ->
       ({ model |
         device =
           Just <| E.classifyDevice
             { width =
-              round viewport.width
+              w
             , height =
-              round viewport.height
+              h
             }
       }
       , Cmd.none
@@ -302,11 +309,11 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions anim =
   Sub.batch
-  [ Task.perform GotViewport Browser.Dom.getViewport
+  [ Browser.Events.onResize GotViewport
   , case anim.demoModel of
     RandomWalksBasicAnim subModel ->
       RandomWalksBasic.subscriptions subModel
-        |> Sub.map BasicWalkerMsgi
+        |> Sub.map BasicWalkerMsg
 `
     + demoSubscriptions
     + `
@@ -369,6 +376,10 @@ view model =
           , Border.rounded 20
           ]
           (E.text "Natural Simulations")
+        , E.paragraph
+          []
+          [ E.text "Natural simulations in Elm based on \\"Advanced JS: Natural Simulations\\" from Khan Academy."
+          ]
         , E.el
           [ E.centerX
           ]
