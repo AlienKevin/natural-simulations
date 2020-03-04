@@ -10,8 +10,9 @@ import Element.Events exposing (onClick)
 import Element.Font as Font
 import Element.Background as Background
 import Element.Border as Border
-import Html exposing (Html)
+import Html exposing (Html, ul, li, a)
 import Html.Attributes
+import Html.Events
 import TypedSvg as Svg
 import TypedSvg.Core
 import TypedSvg.Attributes as SvgAttributes
@@ -2292,428 +2293,533 @@ view model =
           )
         ]
       , E.column
-        [ E.spacing 20
-        , E.scrollbarY
+        [ E.scrollbarY
         , E.width E.fill
         , E.htmlAttribute <| Html.Attributes.style "height" "calc(100vh - 25px)"
-        , E.htmlAttribute <| Html.Attributes.id "text-panel"
+        , E.htmlAttribute <| Html.Attributes.style "white-space" "normal"
+        , E.htmlAttribute <| Html.Attributes.style "word-break" "break-word"
         , E.htmlAttribute <| Html.Attributes.classList [ ("scrollable", True) ]
         ]
-        [ E.link
-          [ onClick (Select RandomWalksBasic)
-          , E.pointer
+        [ E.html <| Html.h1 []
+          [ Html.text "Table of Contents" ]
+        , E.html <| Html.h1 [ Html.Attributes.id "randomness" ]
+          [ Html.text "Randomness" ]
+        , E.html <| Html.p []
+          [ Html.text "Random walks" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select RandomWalksBasic) ]
+              [ Html.text "Basic walker" ]
+            , Html.li []
+              [ Html.a [ Html.Events.onClick (Select RandomWalksImproved) ]
+                [ Html.text "Improved walker" ]
+              ]
+            ]
           ]
-          { url = "#RandomWalksBasic"
-          , label = (E.text "Basic Walker")
-          }
-        , E.link
-          [ onClick (Select AngularMovementAccelerateTowardsMouse)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Random blobber" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Same as "
+            , Html.a [ Html.Events.onClick (Select RandomWalksImproved) ]
+              [ Html.text "Improved walker" ]
+            ]
           ]
-          { url = "#AngularMovementAccelerateTowardsMouse"
-          , label = (E.text "AccelerateTowardsMouse")
-          }
-        , E.link
-          [ onClick (Select AngularMovementAcceleratingBaton)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Probability & non-uniform distributions" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select RandomWalksDirected) ]
+              [ Html.text "Directed walker" ]
+            , Html.text "that moves to the right"
+            ]
           ]
-          { url = "#AngularMovementAcceleratingBaton"
-          , label = (E.text "AcceleratingBaton")
-          }
-        , E.link
-          [ onClick (Select ForcesArtworkGenerator)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Up walker" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "You can slightly modify the "
+            , Html.a [ Html.Events.onClick (Select RandomWalksDirected) ]
+              [ Html.text "Directed walker" ]
+            , Html.text "to make it move up"
+            ]
           ]
-          { url = "#ForcesArtworkGenerator"
-          , label = (E.text "ArtworkGenerator")
-          }
-        , E.link
-          [ onClick (Select ForcesBlowingWind)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Normal distribution of random numbers" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select RandomWalksNormalDistribution) ]
+              [ Html.text "Normal Distribution" ]
+            ]
           ]
-          { url = "#ForcesBlowingWind"
-          , label = (E.text "BlowingWind")
-          }
-        , E.link
-          [ onClick (Select AngularMovementFallingBoulder)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Gaussian walk" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select RandomWalksGaussian) ]
+              [ Html.text "Gaussian walker" ]
+            ]
           ]
-          { url = "#AngularMovementFallingBoulder"
-          , label = (E.text "FallingBoulder")
-          }
-        , E.link
-          [ onClick (Select ForcesBlowingWindWithGravity)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Custom distribution of random numbers" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select RandomWalksMonteCarlo) ]
+              [ Html.text "Monte Carlo" ]
+            ]
           ]
-          { url = "#ForcesBlowingWindWithGravity"
-          , label = (E.text "BlowingWindWithGravity")
-          }
-        , E.link
-          [ onClick (Select NoiseAnimatedBox)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Lévy walker" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select RandomWalksLevy) ]
+              [ Html.text "Lévy Walker" ]
+            ]
           ]
-          { url = "#NoiseAnimatedBox"
-          , label = (E.text "AnimatedBox")
-          }
-        , E.link
-          [ onClick (Select AngularMovementManyOrbitsWithDynamicRotation)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Project: Paint splatter" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select RandomWalksPaintSplatter) ]
+              [ Html.text "Paint Splatter" ]
+            ]
           ]
-          { url = "#AngularMovementManyOrbitsWithDynamicRotation"
-          , label = (E.text "ManyOrbitsWithDynamicRotation")
-          }
-        , E.link
-          [ onClick (Select ForcesBlowingWindWithGravityAndFriction)
-          , E.pointer
+        , E.html <| Html.h1 [ Html.Attributes.id "noise" ]
+          [ Html.text "Noise" ]
+        , E.html <| Html.p []
+          [ Html.text "Perlin noise" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select NoisePerlin) ]
+              [ Html.text "Perlin Mountains" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select NoisePerlinWalker) ]
+              [ Html.text "Perlin Walker" ]
+            ]
           ]
-          { url = "#ForcesBlowingWindWithGravityAndFriction"
-          , label = (E.text "BlowingWindWithGravityAndFriction")
-          }
-        , E.link
-          [ onClick (Select NoiseMountainRange)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Noisy step walker" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select NoisePerlinStepWalker) ]
+              [ Html.text "Perlin Step Walker" ]
+            ]
           ]
-          { url = "#NoiseMountainRange"
-          , label = (E.text "MountainRange")
-          }
-        , E.link
-          [ onClick (Select OscillationsManyWaves)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Two dimensional noise" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select NoiseRandomBox) ]
+              [ Html.text "Random Box" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select NoisePerlinBox) ]
+              [ Html.text "Perlin Box" ]
+            ]
           ]
-          { url = "#OscillationsManyWaves"
-          , label = (E.text "ManyWaves")
-          }
-        , E.link
-          [ onClick (Select AngularMovementManyOrbitsWithRotation)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Animated noise" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select NoiseAnimatedBox) ]
+              [ Html.text "Animated Box" ]
+            ]
           ]
-          { url = "#AngularMovementManyOrbitsWithRotation"
-          , label = (E.text "ManyOrbitsWithRotation")
-          }
-        , E.link
-          [ onClick (Select ForcesFloatingBalloon)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Project: Mountain range" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select NoiseMountainRange) ]
+              [ Html.text "Mountain Range" ]
+            ]
           ]
-          { url = "#ForcesFloatingBalloon"
-          , label = (E.text "FloatingBalloon")
-          }
-        , E.link
-          [ onClick (Select NoisePerlin)
-          , E.pointer
+        , E.html <| Html.h1 [ Html.Attributes.id "vector" ]
+          [ Html.text "Vector" ]
+        , E.html <| Html.p []
+          [ Html.text "Intro to vectors" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorBouncingBall) ]
+              [ Html.text "Bouncing Ball" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorBouncingBallWithVector) ]
+              [ Html.text "Bouncing Ball With Vector" ]
+            ]
           ]
-          { url = "#NoisePerlin"
-          , label = (E.text "Perlin")
-          }
-        , E.link
-          [ onClick (Select OscillationsOscillators)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Vector walker" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorWalkerWithVector) ]
+              [ Html.text "Walker With Vector" ]
+            ]
           ]
-          { url = "#OscillationsOscillators"
-          , label = (E.text "Oscillators")
-          }
-        , E.link
-          [ onClick (Select AngularMovementPolarSwing)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "More vector math" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorMouseTracing) ]
+              [ Html.text "Mouse Tracing" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorMouseTracingScaled) ]
+              [ Html.text "Mouse Tracing Halfed" ]
+            ]
           ]
-          { url = "#AngularMovementPolarSwing"
-          , label = (E.text "PolarSwing")
-          }
-        , E.link
-          [ onClick (Select ForcesManyBalls)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Lightsaber" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorScalingSaber) ]
+              [ Html.text "Scaling saber" ]
+            ]
           ]
-          { url = "#ForcesManyBalls"
-          , label = (E.text "ManyBalls")
-          }
-        , E.link
-          [ onClick (Select NoisePerlinBox)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Vector magnitude and normalization" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorMouseTracingWithMagnitude) ]
+              [ Html.text "Mouse Tracing Showing Magnitude" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorMouseTracingNormalized) ]
+              [ Html.text "Mouse Tracing Normalized" ]
+            ]
           ]
-          { url = "#NoisePerlinBox"
-          , label = (E.text "PerlinBox")
-          }
-        , E.link
-          [ onClick (Select OscillationsPendulum)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: magnitude visualizer" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Try create it yourself!" ]
           ]
-          { url = "#OscillationsPendulum"
-          , label = (E.text "Pendulum")
-          }
-        , E.link
-          [ onClick (Select RandomWalksDirected)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Vector motion" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorConstantVelocity) ]
+              [ Html.text "Constant Velocity" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorConstantAcceleration) ]
+              [ Html.text "Constant Acceleration" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorRandomAcceleration) ]
+              [ Html.text "Random Acceleration" ]
+            ]
           ]
-          { url = "#RandomWalksDirected"
-          , label = (E.text "Directed")
-          }
-        , E.link
-          [ onClick (Select AngularMovementSpinningBaton)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Braking car" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorBrakingCar) ]
+              [ Html.text "Braking Car" ]
+            ]
           ]
-          { url = "#AngularMovementSpinningBaton"
-          , label = (E.text "SpinningBaton")
-          }
-        , E.link
-          [ onClick (Select ForcesManyOrbits)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Static functions vs. instance methods" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "There are no mutable states in Elm so all functions always return new values while keeping old values the    same,    similar to static functions in JavaScript." ]
           ]
-          { url = "#ForcesManyOrbits"
-          , label = (E.text "ManyOrbits")
-          }
-        , E.link
-          [ onClick (Select NoisePerlinStepWalker)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Static functions" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "We always use static functions in Elm. So nothing to do here." ]
           ]
-          { url = "#NoisePerlinStepWalker"
-          , label = (E.text "PerlinStepWalker")
-          }
-        , E.link
-          [ onClick (Select OscillationsRainbowSlinky)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Interactive vector motion" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorAccelerateTowardsMouse) ]
+              [ Html.text "Single Ball Accelerates Towards Mouse" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorGroupAccelerateTowardsMouse) ]
+              [ Html.text "Swarm of Balls Accelerates Towards Mouse" ]
+            ]
           ]
-          { url = "#OscillationsRainbowSlinky"
-          , label = (E.text "RainbowSlinky")
-          }
-        , E.link
-          [ onClick (Select RandomWalksGaussian)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: mouse stalker" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select VectorMouseStalker) ]
+              [ Html.text "Mouse Stalker" ]
+            ]
           ]
-          { url = "#RandomWalksGaussian"
-          , label = (E.text "Gaussian")
-          }
-        , E.link
-          [ onClick (Select VectorAccelerateTowardsMouse)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Project: Computational creatures" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Try create it yourself!" ]
           ]
-          { url = "#VectorAccelerateTowardsMouse"
-          , label = (E.text "AccelerateTowardsMouse")
-          }
-        , E.link
-          [ onClick (Select AngularMovementSpiralDrawer)
-          , E.pointer
+        , E.html <| Html.h1 [ Html.Attributes.id "forces" ]
+          [ Html.text "Forces" ]
+        , E.html <| Html.p []
+          [ Html.text "Newton's laws of motion" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesBlowingWind) ]
+              [ Html.text "Ball Blown by Wind" ]
+            ]
           ]
-          { url = "#AngularMovementSpiralDrawer"
-          , label = (E.text "SpiralDrawer")
-          }
-        , E.link
-          [ onClick (Select ForcesMutualAttraction)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Floating balloon" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesFloatingBalloon) ]
+              [ Html.text "Floating Balloon" ]
+            ]
           ]
-          { url = "#ForcesMutualAttraction"
-          , label = (E.text "MutualAttraction")
-          }
-        , E.link
-          [ onClick (Select NoisePerlinWalker)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Motion of many objects" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesManyBalls) ]
+              [ Html.text "Many Balls" ]
+            ]
           ]
-          { url = "#NoisePerlinWalker"
-          , label = (E.text "PerlinWalker")
-          }
-        , E.link
-          [ onClick (Select OscillationsSimpleHarmonicMotion)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Wall balls" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesWallBalls) ]
+              [ Html.text "Wall Balls" ]
+            ]
           ]
-          { url = "#OscillationsSimpleHarmonicMotion"
-          , label = (E.text "SimpleHarmonicMotion")
-          }
-        , E.link
-          [ onClick (Select RandomWalksImproved)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Modeling gravity and friction" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesBlowingWindWithGravity) ]
+              [ Html.text "Ball Blown by Wind obeying gravity" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesBlowingWindWithGravityAndFriction) ]
+              [ Html.text "Ball Blown by Wind obeying gravity with    friction" ]
+            ]
           ]
-          { url = "#RandomWalksImproved"
-          , label = (E.text "Improved")
-          }
-        , E.link
-          [ onClick (Select VectorBouncingBall)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Speed bumps" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Try it yourself!" ]
           ]
-          { url = "#VectorBouncingBall"
-          , label = (E.text "BouncingBall")
-          }
-        , E.link
-          [ onClick (Select ForcesMutualRepulsion)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Air and fluid resistance" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesResistance) ]
+              [ Html.text "Fluid Resistance" ]
+            ]
           ]
-          { url = "#ForcesMutualRepulsion"
-          , label = (E.text "MutualRepulsion")
-          }
-        , E.link
-          [ onClick (Select NoiseRandomBox)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Sinking logs" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesSinkingLogs) ]
+              [ Html.text "Sinking Logs" ]
+            ]
           ]
-          { url = "#NoiseRandomBox"
-          , label = (E.text "RandomBox")
-          }
-        , E.link
-          [ onClick (Select OscillationsSimpleHarmonicMotionWithAngle)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Gravitational attraction" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesSingleOrbit) ]
+              [ Html.text "Single Orbit" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesManyOrbits) ]
+              [ Html.text "Many Orbits" ]
+            ]
           ]
-          { url = "#OscillationsSimpleHarmonicMotionWithAngle"
-          , label = (E.text "SimpleHarmonicMotionWithAngle")
-          }
-        , E.link
-          [ onClick (Select RandomWalksLevy)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Artwork generator" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesArtworkGenerator) ]
+              [ Html.text "Artwork Generator with color gradients depending on speed" ]
+            ]
           ]
-          { url = "#RandomWalksLevy"
-          , label = (E.text "Levy")
-          }
-        , E.link
-          [ onClick (Select VectorBouncingBallWithVector)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Mutual attraction" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesMutualAttraction) ]
+              [ Html.text "Mutual Attraction" ]
+            ]
           ]
-          { url = "#VectorBouncingBallWithVector"
-          , label = (E.text "BouncingBallWithVector")
-          }
-        , E.link
-          [ onClick (Select ForcesResistance)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Mutual repulsion" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ForcesMutualRepulsion) ]
+              [ Html.text "Mutual Repulsion" ]
+            ]
           ]
-          { url = "#ForcesResistance"
-          , label = (E.text "Resistance")
-          }
-        , E.link
-          [ onClick (Select OscillationsSineWave)
-          , E.pointer
+        , E.html <| Html.h1 [ Html.Attributes.id "angularmovements" ]
+          [ Html.text "Angular Movements" ]
+        , E.html <| Html.p []
+          [ Html.text "Angles and Units" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "No code examples" ]
           ]
-          { url = "#OscillationsSineWave"
-          , label = (E.text "SineWave")
-          }
-        , E.link
-          [ onClick (Select RandomWalksMonteCarlo)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Spinning baton" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select AngularMovementSpinningBaton) ]
+              [ Html.text "Spinning Baton" ]
+            ]
           ]
-          { url = "#RandomWalksMonteCarlo"
-          , label = (E.text "MonteCarlo")
-          }
-        , E.link
-          [ onClick (Select VectorBrakingCar)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Angular velocity" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select AngularMovementAcceleratingBaton) ]
+              [ Html.text "Accelerating Baton" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select AngularMovementManyOrbitsWithRotation) ]
+              [ Html.text "Many Orbits with Self-rotation" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select AngularMovementManyOrbitsWithDynamicRotation) ]
+              [ Html.text "Many Orbits with Dynamic Self-rotation    Depending    on Acceleration in x Direction" ]
+            ]
           ]
-          { url = "#VectorBrakingCar"
-          , label = (E.text "BrakingCar")
-          }
-        , E.link
-          [ onClick (Select ForcesSingleOrbit)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Falling boulder" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select AngularMovementFallingBoulder) ]
+              [ Html.text "Falling Boulder" ]
+            ]
           ]
-          { url = "#ForcesSingleOrbit"
-          , label = (E.text "SingleOrbit")
-          }
-        , E.link
-          [ onClick (Select OscillationsStaticSineWave)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Trigonometry" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "No code examples" ]
           ]
-          { url = "#OscillationsStaticSineWave"
-          , label = (E.text "StaticSineWave")
-          }
-        , E.link
-          [ onClick (Select RandomWalksNormalDistribution)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Practice: Trigonometric ratios in right triangles" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "No code examples" ]
           ]
-          { url = "#RandomWalksNormalDistribution"
-          , label = (E.text "NormalDistribution")
-          }
-        , E.link
-          [ onClick (Select VectorConstantAcceleration)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Pointing towards movement" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select AngularMovementAccelerateTowardsMouse) ]
+              [ Html.text "Accelerate Towards Mouse" ]
+            ]
           ]
-          { url = "#VectorConstantAcceleration"
-          , label = (E.text "ConstantAcceleration")
-          }
-        , E.link
-          [ onClick (Select ForcesSinkingLogs)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Turning car" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Try it yourself!" ]
           ]
-          { url = "#ForcesSinkingLogs"
-          , label = (E.text "SinkingLogs")
-          }
-        , E.link
-          [ onClick (Select RandomWalksPaintSplatter)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Polar coordinates" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select AngularMovementPolarSwing) ]
+              [ Html.text "Polar Swing" ]
+            ]
           ]
-          { url = "#RandomWalksPaintSplatter"
-          , label = (E.text "PaintSplatter")
-          }
-        , E.link
-          [ onClick (Select VectorConstantVelocity)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: spiral drawer" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select AngularMovementSpiralDrawer) ]
+              [ Html.text "Spiral Drawer" ]
+            ]
           ]
-          { url = "#VectorConstantVelocity"
-          , label = (E.text "ConstantVelocity")
-          }
-        , E.link
-          [ onClick (Select ForcesWallBalls)
-          , E.pointer
+        , E.html <| Html.h1 [ Html.Attributes.id "oscillations" ]
+          [ Html.text "Oscillations" ]
+        , E.html <| Html.p []
+          [ Html.text "Oscillation amplitude and period" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select OscillationsSimpleHarmonicMotion) ]
+              [ Html.text "Simple Harmonic Motion" ]
+            ]
           ]
-          { url = "#ForcesWallBalls"
-          , label = (E.text "WallBalls")
-          }
-        , E.link
-          [ onClick (Select VectorGroupAccelerateTowardsMouse)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Rainbow slinky" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select OscillationsRainbowSlinky) ]
+              [ Html.text "Rainbow Slinky" ]
+            ]
           ]
-          { url = "#VectorGroupAccelerateTowardsMouse"
-          , label = (E.text "GroupAccelerateTowardsMouse")
-          }
-        , E.link
-          [ onClick (Select VectorMouseStalker)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Oscillation with angular velocity" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select OscillationsSimpleHarmonicMotionWithAngle) ]
+              [ Html.text "Simple Harmonic Motion with Angle" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select OscillationsOscillators) ]
+              [ Html.text "Group of Oscillators" ]
+            ]
           ]
-          { url = "#VectorMouseStalker"
-          , label = (E.text "MouseStalker")
-          }
-        , E.link
-          [ onClick (Select VectorMouseTracing)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Spaceship ride" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Try it yourself!" ]
           ]
-          { url = "#VectorMouseTracing"
-          , label = (E.text "MouseTracing")
-          }
-        , E.link
-          [ onClick (Select VectorMouseTracingNormalized)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Waves" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select OscillationsSineWave) ]
+              [ Html.text "Sine Wave" ]
+            ]
+          , Html.li []
+            [ Html.a [ Html.Events.onClick (Select OscillationsStaticSineWave) ]
+              [ Html.text "Static Sine Wave" ]
+            ]
           ]
-          { url = "#VectorMouseTracingNormalized"
-          , label = (E.text "MouseTracingNormalized")
-          }
-        , E.link
-          [ onClick (Select VectorMouseTracingScaled)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Many waves" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select OscillationsManyWaves) ]
+              [ Html.text "Many Waves" ]
+            ]
           ]
-          { url = "#VectorMouseTracingScaled"
-          , label = (E.text "MouseTracingScaled")
-          }
-        , E.link
-          [ onClick (Select VectorMouseTracingWithMagnitude)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Trig and forces: the pendulum" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select OscillationsPendulum) ]
+              [ Html.text "Simple Pendulum" ]
+            ]
           ]
-          { url = "#VectorMouseTracingWithMagnitude"
-          , label = (E.text "MouseTracingWithMagnitude")
-          }
-        , E.link
-          [ onClick (Select VectorRandomAcceleration)
-          , E.pointer
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Pendulum puppet" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Try it yourself! This one is very tricky." ]
           ]
-          { url = "#VectorRandomAcceleration"
-          , label = (E.text "RandomAcceleration")
-          }
-        , E.link
-          [ onClick (Select VectorScalingSaber)
-          , E.pointer
-          ]
-          { url = "#VectorScalingSaber"
-          , label = (E.text "ScalingSaber")
-          }
-        , E.link
-          [ onClick (Select VectorWalkerWithVector)
-          , E.pointer
-          ]
-          { url = "#VectorWalkerWithVector"
-          , label = (E.text "WalkerWithVector")
-          }
+        , E.html <| Html.h1 [ Html.Attributes.id "licenses" ]
+          [ Html.text "Licenses" ]
+        , E.html <| Html.p []
+          [ Html.text "All code are made available under the following license: MIT license." ]
+        , E.html <| Html.p []
+          [ Html.text "All non-code (such as writing, drawings, images, etc.) are also owned by their respective author and made  available  under the following license: Creative Commons Attribution License." ]
         ]
-      ]
+        ]
     )
 
 
