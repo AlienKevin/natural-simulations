@@ -6657,6 +6657,7 @@ var $author$project$Main$VectorScalingSaberMsg = function (a) {
 var $author$project$Main$VectorWalkerWithVectorMsg = function (a) {
 	return {$: 'VectorWalkerWithVectorMsg', a: a};
 };
+var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$map = _Platform_map;
 var $author$project$AngularMovement$AccelerateTowardsMouse$GetMouseLocation = F2(
 	function (a, b) {
@@ -6665,7 +6666,6 @@ var $author$project$AngularMovement$AccelerateTowardsMouse$GetMouseLocation = F2
 var $author$project$AngularMovement$AccelerateTowardsMouse$Move = function (a) {
 	return {$: 'Move', a: a};
 };
-var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$time$Time$Every = F2(
 	function (a, b) {
 		return {$: 'Every', a: a, b: b};
@@ -7836,363 +7836,369 @@ var $author$project$Vector$WalkerWithVector$subscriptions = function (_v0) {
 	return A2($elm$time$Time$every, 100, $author$project$Vector$WalkerWithVector$GetStep);
 };
 var $author$project$Main$subscriptions = function (anim) {
-	var _v0 = anim.demoModel;
-	switch (_v0.$) {
-		case 'RandomWalksBasicAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$BasicWalkerMsg,
-				$author$project$RandomWalks$Basic$subscriptions(subModel));
-		case 'AngularMovementAccelerateTowardsMouseAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$AngularMovementAccelerateTowardsMouseMsg,
-				$author$project$AngularMovement$AccelerateTowardsMouse$subscriptions(subModel));
-		case 'AngularMovementAcceleratingBatonAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$AngularMovementAcceleratingBatonMsg,
-				$author$project$AngularMovement$AcceleratingBaton$subscriptions(subModel));
-		case 'ForcesArtworkGeneratorAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesArtworkGeneratorMsg,
-				$author$project$Forces$ArtworkGenerator$subscriptions(subModel));
-		case 'ForcesBlowingWindAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesBlowingWindMsg,
-				$author$project$Forces$BlowingWind$subscriptions(subModel));
-		case 'AngularMovementFallingBoulderAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$AngularMovementFallingBoulderMsg,
-				$author$project$AngularMovement$FallingBoulder$subscriptions(subModel));
-		case 'ForcesBlowingWindWithGravityAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesBlowingWindWithGravityMsg,
-				$author$project$Forces$BlowingWindWithGravity$subscriptions(subModel));
-		case 'NoiseAnimatedBoxAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$NoiseAnimatedBoxMsg,
-				$author$project$Noise$AnimatedBox$subscriptions(subModel));
-		case 'AngularMovementManyOrbitsWithDynamicRotationAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$AngularMovementManyOrbitsWithDynamicRotationMsg,
-				$author$project$AngularMovement$ManyOrbitsWithDynamicRotation$subscriptions(subModel));
-		case 'ForcesBlowingWindWithGravityAndFrictionAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesBlowingWindWithGravityAndFrictionMsg,
-				$author$project$Forces$BlowingWindWithGravityAndFriction$subscriptions(subModel));
-		case 'NoiseMountainRangeAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$NoiseMountainRangeMsg,
-				$author$project$Noise$MountainRange$subscriptions(subModel));
-		case 'OscillationsManyWavesAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$OscillationsManyWavesMsg,
-				$author$project$Oscillations$ManyWaves$subscriptions(subModel));
-		case 'AngularMovementManyOrbitsWithRotationAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$AngularMovementManyOrbitsWithRotationMsg,
-				$author$project$AngularMovement$ManyOrbitsWithRotation$subscriptions(subModel));
-		case 'ForcesFloatingBalloonAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesFloatingBalloonMsg,
-				$author$project$Forces$FloatingBalloon$subscriptions(subModel));
-		case 'NoisePerlinAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$NoisePerlinMsg,
-				$author$project$Noise$Perlin$subscriptions(subModel));
-		case 'OscillationsOscillatorsAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$OscillationsOscillatorsMsg,
-				$author$project$Oscillations$Oscillators$subscriptions(subModel));
-		case 'AngularMovementPolarSwingAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$AngularMovementPolarSwingMsg,
-				$author$project$AngularMovement$PolarSwing$subscriptions(subModel));
-		case 'ForcesManyBallsAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesManyBallsMsg,
-				$author$project$Forces$ManyBalls$subscriptions(subModel));
-		case 'NoisePerlinBoxAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$NoisePerlinBoxMsg,
-				$author$project$Noise$PerlinBox$subscriptions(subModel));
-		case 'OscillationsPendulumAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$OscillationsPendulumMsg,
-				$author$project$Oscillations$Pendulum$subscriptions(subModel));
-		case 'RandomWalksDirectedAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$RandomWalksDirectedMsg,
-				$author$project$RandomWalks$Directed$subscriptions(subModel));
-		case 'AngularMovementSpinningBatonAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$AngularMovementSpinningBatonMsg,
-				$author$project$AngularMovement$SpinningBaton$subscriptions(subModel));
-		case 'ForcesManyOrbitsAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesManyOrbitsMsg,
-				$author$project$Forces$ManyOrbits$subscriptions(subModel));
-		case 'NoisePerlinStepWalkerAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$NoisePerlinStepWalkerMsg,
-				$author$project$Noise$PerlinStepWalker$subscriptions(subModel));
-		case 'OscillationsRainbowSlinkyAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$OscillationsRainbowSlinkyMsg,
-				$author$project$Oscillations$RainbowSlinky$subscriptions(subModel));
-		case 'RandomWalksGaussianAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$RandomWalksGaussianMsg,
-				$author$project$RandomWalks$Gaussian$subscriptions(subModel));
-		case 'VectorAccelerateTowardsMouseAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorAccelerateTowardsMouseMsg,
-				$author$project$Vector$AccelerateTowardsMouse$subscriptions(subModel));
-		case 'AngularMovementSpiralDrawerAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$AngularMovementSpiralDrawerMsg,
-				$author$project$AngularMovement$SpiralDrawer$subscriptions(subModel));
-		case 'ForcesMutualAttractionAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesMutualAttractionMsg,
-				$author$project$Forces$MutualAttraction$subscriptions(subModel));
-		case 'NoisePerlinWalkerAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$NoisePerlinWalkerMsg,
-				$author$project$Noise$PerlinWalker$subscriptions(subModel));
-		case 'OscillationsSimpleHarmonicMotionAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$OscillationsSimpleHarmonicMotionMsg,
-				$author$project$Oscillations$SimpleHarmonicMotion$subscriptions(subModel));
-		case 'RandomWalksImprovedAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$RandomWalksImprovedMsg,
-				$author$project$RandomWalks$Improved$subscriptions(subModel));
-		case 'VectorBouncingBallAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorBouncingBallMsg,
-				$author$project$Vector$BouncingBall$subscriptions(subModel));
-		case 'ForcesMutualRepulsionAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesMutualRepulsionMsg,
-				$author$project$Forces$MutualRepulsion$subscriptions(subModel));
-		case 'NoiseRandomBoxAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$NoiseRandomBoxMsg,
-				$author$project$Noise$RandomBox$subscriptions(subModel));
-		case 'OscillationsSimpleHarmonicMotionWithAngleAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$OscillationsSimpleHarmonicMotionWithAngleMsg,
-				$author$project$Oscillations$SimpleHarmonicMotionWithAngle$subscriptions(subModel));
-		case 'RandomWalksLevyAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$RandomWalksLevyMsg,
-				$author$project$RandomWalks$Levy$subscriptions(subModel));
-		case 'VectorBouncingBallWithVectorAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorBouncingBallWithVectorMsg,
-				$author$project$Vector$BouncingBallWithVector$subscriptions(subModel));
-		case 'ForcesResistanceAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesResistanceMsg,
-				$author$project$Forces$Resistance$subscriptions(subModel));
-		case 'OscillationsSineWaveAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$OscillationsSineWaveMsg,
-				$author$project$Oscillations$SineWave$subscriptions(subModel));
-		case 'RandomWalksMonteCarloAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$RandomWalksMonteCarloMsg,
-				$author$project$RandomWalks$MonteCarlo$subscriptions(subModel));
-		case 'VectorBrakingCarAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorBrakingCarMsg,
-				$author$project$Vector$BrakingCar$subscriptions(subModel));
-		case 'ForcesSingleOrbitAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesSingleOrbitMsg,
-				$author$project$Forces$SingleOrbit$subscriptions(subModel));
-		case 'OscillationsStaticSineWaveAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$OscillationsStaticSineWaveMsg,
-				$author$project$Oscillations$StaticSineWave$subscriptions(subModel));
-		case 'RandomWalksNormalDistributionAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$RandomWalksNormalDistributionMsg,
-				$author$project$RandomWalks$NormalDistribution$subscriptions(subModel));
-		case 'VectorConstantAccelerationAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorConstantAccelerationMsg,
-				$author$project$Vector$ConstantAcceleration$subscriptions(subModel));
-		case 'ForcesSinkingLogsAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesSinkingLogsMsg,
-				$author$project$Forces$SinkingLogs$subscriptions(subModel));
-		case 'RandomWalksPaintSplatterAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$RandomWalksPaintSplatterMsg,
-				$author$project$RandomWalks$PaintSplatter$subscriptions(subModel));
-		case 'VectorConstantVelocityAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorConstantVelocityMsg,
-				$author$project$Vector$ConstantVelocity$subscriptions(subModel));
-		case 'ForcesWallBallsAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$ForcesWallBallsMsg,
-				$author$project$Forces$WallBalls$subscriptions(subModel));
-		case 'VectorGroupAccelerateTowardsMouseAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorGroupAccelerateTowardsMouseMsg,
-				$author$project$Vector$GroupAccelerateTowardsMouse$subscriptions(subModel));
-		case 'VectorMouseStalkerAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorMouseStalkerMsg,
-				$author$project$Vector$MouseStalker$subscriptions(subModel));
-		case 'VectorMouseTracingAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorMouseTracingMsg,
-				$author$project$Vector$MouseTracing$subscriptions(subModel));
-		case 'VectorMouseTracingNormalizedAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorMouseTracingNormalizedMsg,
-				$author$project$Vector$MouseTracingNormalized$subscriptions(subModel));
-		case 'VectorMouseTracingScaledAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorMouseTracingScaledMsg,
-				$author$project$Vector$MouseTracingScaled$subscriptions(subModel));
-		case 'VectorMouseTracingWithMagnitudeAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorMouseTracingWithMagnitudeMsg,
-				$author$project$Vector$MouseTracingWithMagnitude$subscriptions(subModel));
-		case 'VectorRandomAccelerationAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorRandomAccelerationMsg,
-				$author$project$Vector$RandomAcceleration$subscriptions(subModel));
-		case 'VectorScalingSaberAnim':
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorScalingSaberMsg,
-				$author$project$Vector$ScalingSaber$subscriptions(subModel));
-		default:
-			var subModel = _v0.a;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$VectorWalkerWithVectorMsg,
-				$author$project$Vector$WalkerWithVector$subscriptions(subModel));
-	}
+	return $elm$core$Platform$Sub$batch(
+		_List_fromArray(
+			[
+				function () {
+				var _v0 = anim.demoModel;
+				switch (_v0.$) {
+					case 'RandomWalksBasicAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$BasicWalkerMsg,
+							$author$project$RandomWalks$Basic$subscriptions(subModel));
+					case 'AngularMovementAccelerateTowardsMouseAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$AngularMovementAccelerateTowardsMouseMsg,
+							$author$project$AngularMovement$AccelerateTowardsMouse$subscriptions(subModel));
+					case 'AngularMovementAcceleratingBatonAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$AngularMovementAcceleratingBatonMsg,
+							$author$project$AngularMovement$AcceleratingBaton$subscriptions(subModel));
+					case 'ForcesArtworkGeneratorAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesArtworkGeneratorMsg,
+							$author$project$Forces$ArtworkGenerator$subscriptions(subModel));
+					case 'ForcesBlowingWindAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesBlowingWindMsg,
+							$author$project$Forces$BlowingWind$subscriptions(subModel));
+					case 'AngularMovementFallingBoulderAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$AngularMovementFallingBoulderMsg,
+							$author$project$AngularMovement$FallingBoulder$subscriptions(subModel));
+					case 'ForcesBlowingWindWithGravityAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesBlowingWindWithGravityMsg,
+							$author$project$Forces$BlowingWindWithGravity$subscriptions(subModel));
+					case 'NoiseAnimatedBoxAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$NoiseAnimatedBoxMsg,
+							$author$project$Noise$AnimatedBox$subscriptions(subModel));
+					case 'AngularMovementManyOrbitsWithDynamicRotationAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$AngularMovementManyOrbitsWithDynamicRotationMsg,
+							$author$project$AngularMovement$ManyOrbitsWithDynamicRotation$subscriptions(subModel));
+					case 'ForcesBlowingWindWithGravityAndFrictionAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesBlowingWindWithGravityAndFrictionMsg,
+							$author$project$Forces$BlowingWindWithGravityAndFriction$subscriptions(subModel));
+					case 'NoiseMountainRangeAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$NoiseMountainRangeMsg,
+							$author$project$Noise$MountainRange$subscriptions(subModel));
+					case 'OscillationsManyWavesAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$OscillationsManyWavesMsg,
+							$author$project$Oscillations$ManyWaves$subscriptions(subModel));
+					case 'AngularMovementManyOrbitsWithRotationAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$AngularMovementManyOrbitsWithRotationMsg,
+							$author$project$AngularMovement$ManyOrbitsWithRotation$subscriptions(subModel));
+					case 'ForcesFloatingBalloonAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesFloatingBalloonMsg,
+							$author$project$Forces$FloatingBalloon$subscriptions(subModel));
+					case 'NoisePerlinAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$NoisePerlinMsg,
+							$author$project$Noise$Perlin$subscriptions(subModel));
+					case 'OscillationsOscillatorsAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$OscillationsOscillatorsMsg,
+							$author$project$Oscillations$Oscillators$subscriptions(subModel));
+					case 'AngularMovementPolarSwingAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$AngularMovementPolarSwingMsg,
+							$author$project$AngularMovement$PolarSwing$subscriptions(subModel));
+					case 'ForcesManyBallsAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesManyBallsMsg,
+							$author$project$Forces$ManyBalls$subscriptions(subModel));
+					case 'NoisePerlinBoxAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$NoisePerlinBoxMsg,
+							$author$project$Noise$PerlinBox$subscriptions(subModel));
+					case 'OscillationsPendulumAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$OscillationsPendulumMsg,
+							$author$project$Oscillations$Pendulum$subscriptions(subModel));
+					case 'RandomWalksDirectedAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$RandomWalksDirectedMsg,
+							$author$project$RandomWalks$Directed$subscriptions(subModel));
+					case 'AngularMovementSpinningBatonAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$AngularMovementSpinningBatonMsg,
+							$author$project$AngularMovement$SpinningBaton$subscriptions(subModel));
+					case 'ForcesManyOrbitsAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesManyOrbitsMsg,
+							$author$project$Forces$ManyOrbits$subscriptions(subModel));
+					case 'NoisePerlinStepWalkerAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$NoisePerlinStepWalkerMsg,
+							$author$project$Noise$PerlinStepWalker$subscriptions(subModel));
+					case 'OscillationsRainbowSlinkyAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$OscillationsRainbowSlinkyMsg,
+							$author$project$Oscillations$RainbowSlinky$subscriptions(subModel));
+					case 'RandomWalksGaussianAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$RandomWalksGaussianMsg,
+							$author$project$RandomWalks$Gaussian$subscriptions(subModel));
+					case 'VectorAccelerateTowardsMouseAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorAccelerateTowardsMouseMsg,
+							$author$project$Vector$AccelerateTowardsMouse$subscriptions(subModel));
+					case 'AngularMovementSpiralDrawerAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$AngularMovementSpiralDrawerMsg,
+							$author$project$AngularMovement$SpiralDrawer$subscriptions(subModel));
+					case 'ForcesMutualAttractionAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesMutualAttractionMsg,
+							$author$project$Forces$MutualAttraction$subscriptions(subModel));
+					case 'NoisePerlinWalkerAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$NoisePerlinWalkerMsg,
+							$author$project$Noise$PerlinWalker$subscriptions(subModel));
+					case 'OscillationsSimpleHarmonicMotionAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$OscillationsSimpleHarmonicMotionMsg,
+							$author$project$Oscillations$SimpleHarmonicMotion$subscriptions(subModel));
+					case 'RandomWalksImprovedAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$RandomWalksImprovedMsg,
+							$author$project$RandomWalks$Improved$subscriptions(subModel));
+					case 'VectorBouncingBallAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorBouncingBallMsg,
+							$author$project$Vector$BouncingBall$subscriptions(subModel));
+					case 'ForcesMutualRepulsionAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesMutualRepulsionMsg,
+							$author$project$Forces$MutualRepulsion$subscriptions(subModel));
+					case 'NoiseRandomBoxAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$NoiseRandomBoxMsg,
+							$author$project$Noise$RandomBox$subscriptions(subModel));
+					case 'OscillationsSimpleHarmonicMotionWithAngleAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$OscillationsSimpleHarmonicMotionWithAngleMsg,
+							$author$project$Oscillations$SimpleHarmonicMotionWithAngle$subscriptions(subModel));
+					case 'RandomWalksLevyAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$RandomWalksLevyMsg,
+							$author$project$RandomWalks$Levy$subscriptions(subModel));
+					case 'VectorBouncingBallWithVectorAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorBouncingBallWithVectorMsg,
+							$author$project$Vector$BouncingBallWithVector$subscriptions(subModel));
+					case 'ForcesResistanceAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesResistanceMsg,
+							$author$project$Forces$Resistance$subscriptions(subModel));
+					case 'OscillationsSineWaveAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$OscillationsSineWaveMsg,
+							$author$project$Oscillations$SineWave$subscriptions(subModel));
+					case 'RandomWalksMonteCarloAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$RandomWalksMonteCarloMsg,
+							$author$project$RandomWalks$MonteCarlo$subscriptions(subModel));
+					case 'VectorBrakingCarAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorBrakingCarMsg,
+							$author$project$Vector$BrakingCar$subscriptions(subModel));
+					case 'ForcesSingleOrbitAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesSingleOrbitMsg,
+							$author$project$Forces$SingleOrbit$subscriptions(subModel));
+					case 'RandomWalksNormalDistributionAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$RandomWalksNormalDistributionMsg,
+							$author$project$RandomWalks$NormalDistribution$subscriptions(subModel));
+					case 'OscillationsStaticSineWaveAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$OscillationsStaticSineWaveMsg,
+							$author$project$Oscillations$StaticSineWave$subscriptions(subModel));
+					case 'VectorConstantAccelerationAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorConstantAccelerationMsg,
+							$author$project$Vector$ConstantAcceleration$subscriptions(subModel));
+					case 'ForcesSinkingLogsAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesSinkingLogsMsg,
+							$author$project$Forces$SinkingLogs$subscriptions(subModel));
+					case 'RandomWalksPaintSplatterAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$RandomWalksPaintSplatterMsg,
+							$author$project$RandomWalks$PaintSplatter$subscriptions(subModel));
+					case 'VectorConstantVelocityAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorConstantVelocityMsg,
+							$author$project$Vector$ConstantVelocity$subscriptions(subModel));
+					case 'ForcesWallBallsAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$ForcesWallBallsMsg,
+							$author$project$Forces$WallBalls$subscriptions(subModel));
+					case 'VectorGroupAccelerateTowardsMouseAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorGroupAccelerateTowardsMouseMsg,
+							$author$project$Vector$GroupAccelerateTowardsMouse$subscriptions(subModel));
+					case 'VectorMouseStalkerAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorMouseStalkerMsg,
+							$author$project$Vector$MouseStalker$subscriptions(subModel));
+					case 'VectorMouseTracingAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorMouseTracingMsg,
+							$author$project$Vector$MouseTracing$subscriptions(subModel));
+					case 'VectorMouseTracingNormalizedAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorMouseTracingNormalizedMsg,
+							$author$project$Vector$MouseTracingNormalized$subscriptions(subModel));
+					case 'VectorMouseTracingScaledAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorMouseTracingScaledMsg,
+							$author$project$Vector$MouseTracingScaled$subscriptions(subModel));
+					case 'VectorMouseTracingWithMagnitudeAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorMouseTracingWithMagnitudeMsg,
+							$author$project$Vector$MouseTracingWithMagnitude$subscriptions(subModel));
+					case 'VectorRandomAccelerationAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorRandomAccelerationMsg,
+							$author$project$Vector$RandomAcceleration$subscriptions(subModel));
+					case 'VectorScalingSaberAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorScalingSaberMsg,
+							$author$project$Vector$ScalingSaber$subscriptions(subModel));
+					default:
+						var subModel = _v0.a;
+						return A2(
+							$elm$core$Platform$Sub$map,
+							$author$project$Main$VectorWalkerWithVectorMsg,
+							$author$project$Vector$WalkerWithVector$subscriptions(subModel));
+				}
+			}()
+			]));
 };
 var $author$project$Main$AngularMovementAccelerateTowardsMouseAnim = function (a) {
 	return {$: 'AngularMovementAccelerateTowardsMouseAnim', a: a};
@@ -13477,21 +13483,10 @@ var $author$project$Main$update = F2(
 										demoModel: $author$project$Main$ForcesSingleOrbitAnim(subModel)
 									}),
 								A2($elm$core$Platform$Cmd$map, $author$project$Main$ForcesSingleOrbitMsg, subCmd));
-						case 'OscillationsStaticSineWave':
-							var _v45 = $author$project$Oscillations$StaticSineWave$init(_Utils_Tuple0);
+						case 'RandomWalksNormalDistribution':
+							var _v45 = $author$project$RandomWalks$NormalDistribution$init(_Utils_Tuple0);
 							var subModel = _v45.a;
 							var subCmd = _v45.b;
-							return _Utils_Tuple2(
-								_Utils_update(
-									model,
-									{
-										demoModel: $author$project$Main$OscillationsStaticSineWaveAnim(subModel)
-									}),
-								A2($elm$core$Platform$Cmd$map, $author$project$Main$OscillationsStaticSineWaveMsg, subCmd));
-						case 'RandomWalksNormalDistribution':
-							var _v46 = $author$project$RandomWalks$NormalDistribution$init(_Utils_Tuple0);
-							var subModel = _v46.a;
-							var subCmd = _v46.b;
 							return _Utils_Tuple2(
 								_Utils_update(
 									model,
@@ -13499,6 +13494,17 @@ var $author$project$Main$update = F2(
 										demoModel: $author$project$Main$RandomWalksNormalDistributionAnim(subModel)
 									}),
 								A2($elm$core$Platform$Cmd$map, $author$project$Main$RandomWalksNormalDistributionMsg, subCmd));
+						case 'OscillationsStaticSineWave':
+							var _v46 = $author$project$Oscillations$StaticSineWave$init(_Utils_Tuple0);
+							var subModel = _v46.a;
+							var subCmd = _v46.b;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										demoModel: $author$project$Main$OscillationsStaticSineWaveAnim(subModel)
+									}),
+								A2($elm$core$Platform$Cmd$map, $author$project$Main$OscillationsStaticSineWaveMsg, subCmd));
 						case 'VectorConstantAcceleration':
 							var _v47 = $author$project$Vector$ConstantAcceleration$init(_Utils_Tuple0);
 							var subModel = _v47.a;
@@ -14385,30 +14391,13 @@ var $author$project$Main$update = F2(
 					} else {
 						break _v0$61;
 					}
-				case 'OscillationsStaticSineWaveMsg':
-					if (_v0.b.$ === 'OscillationsStaticSineWaveAnim') {
-						var subMsg = _v0.a.a;
-						var subModel = _v0.b.a;
-						var _v104 = A2($author$project$Oscillations$StaticSineWave$update, subMsg, subModel);
-						var newSubModel = _v104.a;
-						var subCmd = _v104.b;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{
-									demoModel: $author$project$Main$OscillationsStaticSineWaveAnim(newSubModel)
-								}),
-							A2($elm$core$Platform$Cmd$map, $author$project$Main$OscillationsStaticSineWaveMsg, subCmd));
-					} else {
-						break _v0$61;
-					}
 				case 'RandomWalksNormalDistributionMsg':
 					if (_v0.b.$ === 'RandomWalksNormalDistributionAnim') {
 						var subMsg = _v0.a.a;
 						var subModel = _v0.b.a;
-						var _v105 = A2($author$project$RandomWalks$NormalDistribution$update, subMsg, subModel);
-						var newSubModel = _v105.a;
-						var subCmd = _v105.b;
+						var _v104 = A2($author$project$RandomWalks$NormalDistribution$update, subMsg, subModel);
+						var newSubModel = _v104.a;
+						var subCmd = _v104.b;
 						return _Utils_Tuple2(
 							_Utils_update(
 								model,
@@ -14416,6 +14405,23 @@ var $author$project$Main$update = F2(
 									demoModel: $author$project$Main$RandomWalksNormalDistributionAnim(newSubModel)
 								}),
 							A2($elm$core$Platform$Cmd$map, $author$project$Main$RandomWalksNormalDistributionMsg, subCmd));
+					} else {
+						break _v0$61;
+					}
+				case 'OscillationsStaticSineWaveMsg':
+					if (_v0.b.$ === 'OscillationsStaticSineWaveAnim') {
+						var subMsg = _v0.a.a;
+						var subModel = _v0.b.a;
+						var _v105 = A2($author$project$Oscillations$StaticSineWave$update, subMsg, subModel);
+						var newSubModel = _v105.a;
+						var subCmd = _v105.b;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									demoModel: $author$project$Main$OscillationsStaticSineWaveAnim(newSubModel)
+								}),
+							A2($elm$core$Platform$Cmd$map, $author$project$Main$OscillationsStaticSineWaveMsg, subCmd));
 					} else {
 						break _v0$61;
 					}
@@ -24651,18 +24657,18 @@ var $author$project$Main$demoView = function (model) {
 							$elm$html$Html$map,
 							$author$project$Main$ForcesSingleOrbitMsg,
 							$author$project$Forces$SingleOrbit$view(subModel));
-					case 'OscillationsStaticSineWaveAnim':
-						var subModel = _v0.a;
-						return A2(
-							$elm$html$Html$map,
-							$author$project$Main$OscillationsStaticSineWaveMsg,
-							$author$project$Oscillations$StaticSineWave$view(subModel));
 					case 'RandomWalksNormalDistributionAnim':
 						var subModel = _v0.a;
 						return A2(
 							$elm$html$Html$map,
 							$author$project$Main$RandomWalksNormalDistributionMsg,
 							$author$project$RandomWalks$NormalDistribution$view(subModel));
+					case 'OscillationsStaticSineWaveAnim':
+						var subModel = _v0.a;
+						return A2(
+							$elm$html$Html$map,
+							$author$project$Main$OscillationsStaticSineWaveMsg,
+							$author$project$Oscillations$StaticSineWave$view(subModel));
 					case 'VectorConstantAccelerationAnim':
 						var subModel = _v0.a;
 						return A2(
@@ -25996,24 +26002,24 @@ var $author$project$Main$view = function (model) {
 							_List_fromArray(
 								[
 									$mdgriffith$elm_ui$Element$Events$onClick(
-									$author$project$Main$Select($author$project$Main$OscillationsStaticSineWave)),
-									$mdgriffith$elm_ui$Element$pointer
-								]),
-							{
-								label: $mdgriffith$elm_ui$Element$text('StaticSineWave'),
-								url: '#OscillationsStaticSineWave'
-							}),
-							A2(
-							$mdgriffith$elm_ui$Element$link,
-							_List_fromArray(
-								[
-									$mdgriffith$elm_ui$Element$Events$onClick(
 									$author$project$Main$Select($author$project$Main$RandomWalksNormalDistribution)),
 									$mdgriffith$elm_ui$Element$pointer
 								]),
 							{
 								label: $mdgriffith$elm_ui$Element$text('NormalDistribution'),
 								url: '#RandomWalksNormalDistribution'
+							}),
+							A2(
+							$mdgriffith$elm_ui$Element$link,
+							_List_fromArray(
+								[
+									$mdgriffith$elm_ui$Element$Events$onClick(
+									$author$project$Main$Select($author$project$Main$OscillationsStaticSineWave)),
+									$mdgriffith$elm_ui$Element$pointer
+								]),
+							{
+								label: $mdgriffith$elm_ui$Element$text('StaticSineWave'),
+								url: '#OscillationsStaticSineWave'
 							}),
 							A2(
 							$mdgriffith$elm_ui$Element$link,

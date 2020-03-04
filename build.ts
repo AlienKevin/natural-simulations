@@ -301,13 +301,16 @@ update msg model =
 
 subscriptions : Model -> Sub Msg
 subscriptions anim =
-  case anim.demoModel of
+  Sub.batch
+  [ Task.perform GotViewport Browser.Dom.getViewport
+  , case anim.demoModel of
     RandomWalksBasicAnim subModel ->
       RandomWalksBasic.subscriptions subModel
-        |> Sub.map BasicWalkerMsg
+        |> Sub.map BasicWalkerMsgi
 `
     + demoSubscriptions
     + `
+  ]
 
 -- VIEW
 
