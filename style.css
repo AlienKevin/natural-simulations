@@ -9,6 +9,18 @@
   --scrollbar-color-active: green;
 }
 
+p {
+  margin: 0.5em;
+}
+
+ul {
+  margin: 0.5em;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
 a, a:link {
   color: black;
   text-decoration: none;
