@@ -50,6 +50,20 @@ a, a:link {
   }
 }
 
+@media only screen and (max-width: 450px) {
+  p {
+    margin: 0.25em;
+  }
+  
+  ul {
+    margin: 0.25em;
+  }
+  
+  li {
+    margin-bottom: 5px;
+  }
+}
+
 /* This class controls what elements have the new fancy scrollbar CSS */
 .scrollable {
   scrollbar-color: var(--scrollbar-color) var(--scrollbar-track-color);
@@ -76,4 +90,8 @@ a, a:link {
 }
 .scrollable::-webkit-scrollbar-thumb:horizontal {
   min-width: var(--scrollbar-minlength);
+}
+
+svg {
+  width: 100%;
 }

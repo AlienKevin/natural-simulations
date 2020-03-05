@@ -838,6 +838,39 @@ defaultHeight =
 
 view : Model -> Html Msg
 view model =
+  let
+    (demoPanelDimensions, textPanelDimensions, fontSize) =
+      let
+        small =
+          ([ E.width E.fill
+          , E.htmlAttribute <| Html.Attributes.style "height" "70%"
+          ]
+          , [ E.width E.fill
+            , E.htmlAttribute <| Html.Attributes.style "height" "30%"
+            ]
+          , Font.size 14
+          )
+        big =
+          ([ E.height E.fill
+          , E.width E.fill
+          ]
+          , [ E.height E.fill
+            , E.width E.fill
+            ]
+          , Font.size 16
+          )
+      in
+      ( case model.device of
+        Just device ->
+          case (device.class, device.orientation) of
+            (Phone, Portrait) ->
+              small
+            (_, _) ->
+              big
+        Nothing ->
+          big
+        )
+  in
   E.layout
     [ E.width E.fill
     , E.height E.fill
@@ -845,6 +878,7 @@ view model =
       [ Font.typeface "Helvetica"
       , Font.sansSerif
       ]
+    , fontSize
     , E.padding 20
     , E.spacing 15
     , E.clipY
@@ -864,10 +898,9 @@ view model =
       , E.spacing 20
       ]
       [ E.column
-        [ E.height E.fill
-        , E.width E.fill
-        , E.spacing 20
-        ]
+        ([ E.spacing 20
+        ] ++ demoPanelDimensions
+        )
         [ E.el
           [ Font.family
             [ Font.typeface "Kalam"
@@ -886,7 +919,8 @@ view model =
           [ E.text "Natural simulations in Elm based on \\"Advanced JS: Natural Simulations\\" from Khan Academy."
           ]
         , E.el
-          [ E.centerX
+          [ E.htmlAttribute <| Html.Attributes.style "width" "100%"
+          , E.htmlAttribute <| Html.Attributes.style "height" "50vh"
           ]
           ( model
             |> demoView
@@ -894,13 +928,13 @@ view model =
           )
         ]
       , E.column
-        [ E.scrollbarY
-        , E.width E.fill
+        ([ E.scrollbarY
         , E.htmlAttribute <| Html.Attributes.style "height" "calc(100vh - 25px)"
         , E.htmlAttribute <| Html.Attributes.style "white-space" "pre-wrap"
         , E.htmlAttribute <| Html.Attributes.style "word-break" "break-word"
         , E.htmlAttribute <| Html.Attributes.classList [ ("scrollable", True) ]
-        ]
+        ] ++ textPanelDimensions
+        )
         `
     + demoSelections
     + `]
