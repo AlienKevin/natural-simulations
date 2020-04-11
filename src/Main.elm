@@ -34,40 +34,43 @@ import AngularMovement.ManyOrbitsWithRotation as AngularMovementManyOrbitsWithRo
 import Forces.FloatingBalloon as ForcesFloatingBalloon
 import Noise.Perlin as NoisePerlin
 import Oscillations.Oscillators as OscillationsOscillators
+import ParticleSystems.FishBubbles as ParticleSystemsFishBubbles
 import AngularMovement.PolarSwing as AngularMovementPolarSwing
 import Forces.ManyBalls as ForcesManyBalls
 import Noise.PerlinBox as NoisePerlinBox
 import Oscillations.Pendulum as OscillationsPendulum
-import RandomWalks.Directed as RandomWalksDirected
+import ParticleSystems.ManyParticles as ParticleSystemsManyParticles
 import AngularMovement.SpinningBaton as AngularMovementSpinningBaton
 import Forces.ManyOrbits as ForcesManyOrbits
 import Noise.PerlinStepWalker as NoisePerlinStepWalker
 import Oscillations.RainbowSlinky as OscillationsRainbowSlinky
-import RandomWalks.Gaussian as RandomWalksGaussian
-import Vector.AccelerateTowardsMouse as VectorAccelerateTowardsMouse
+import ParticleSystems.SingleParticle as ParticleSystemsSingleParticle
+import RandomWalks.Directed as RandomWalksDirected
 import AngularMovement.SpiralDrawer as AngularMovementSpiralDrawer
 import Forces.MutualAttraction as ForcesMutualAttraction
 import Noise.PerlinWalker as NoisePerlinWalker
 import Oscillations.SimpleHarmonicMotion as OscillationsSimpleHarmonicMotion
-import RandomWalks.Improved as RandomWalksImproved
-import Vector.BouncingBall as VectorBouncingBall
+import RandomWalks.Gaussian as RandomWalksGaussian
+import Vector.AccelerateTowardsMouse as VectorAccelerateTowardsMouse
 import Forces.MutualRepulsion as ForcesMutualRepulsion
 import Noise.RandomBox as NoiseRandomBox
 import Oscillations.SimpleHarmonicMotionWithAngle as OscillationsSimpleHarmonicMotionWithAngle
-import RandomWalks.Levy as RandomWalksLevy
-import Vector.BouncingBallWithVector as VectorBouncingBallWithVector
+import RandomWalks.Improved as RandomWalksImproved
+import Vector.BouncingBall as VectorBouncingBall
 import Forces.Resistance as ForcesResistance
 import Oscillations.SineWave as OscillationsSineWave
-import RandomWalks.MonteCarlo as RandomWalksMonteCarlo
-import Vector.BrakingCar as VectorBrakingCar
+import RandomWalks.Levy as RandomWalksLevy
+import Vector.BouncingBallWithVector as VectorBouncingBallWithVector
 import Forces.SingleOrbit as ForcesSingleOrbit
 import Oscillations.StaticSineWave as OscillationsStaticSineWave
+import RandomWalks.MonteCarlo as RandomWalksMonteCarlo
+import Vector.BrakingCar as VectorBrakingCar
+import Forces.SinkingLogs as ForcesSinkingLogs
 import RandomWalks.NormalDistribution as RandomWalksNormalDistribution
 import Vector.ConstantAcceleration as VectorConstantAcceleration
-import Forces.SinkingLogs as ForcesSinkingLogs
+import Forces.WallBalls as ForcesWallBalls
 import RandomWalks.PaintSplatter as RandomWalksPaintSplatter
 import Vector.ConstantVelocity as VectorConstantVelocity
-import Forces.WallBalls as ForcesWallBalls
 import Vector.GroupAccelerateTowardsMouse as VectorGroupAccelerateTowardsMouse
 import Vector.MouseStalker as VectorMouseStalker
 import Vector.MouseTracing as VectorMouseTracing
@@ -77,8 +80,7 @@ import Vector.MouseTracingWithMagnitude as VectorMouseTracingWithMagnitude
 import Vector.RandomAcceleration as VectorRandomAcceleration
 import Vector.ScalingSaber as VectorScalingSaber
 import Vector.WalkerWithVector as VectorWalkerWithVector
-import ParticleSystems.SingleParticle as ParticleSystemsSingleParticle
-import ParticleSystems.ManyParticles as ParticleSystemsManyParticles
+
 
 -- INIT
 
@@ -118,6 +120,7 @@ type alias Model =
 
 type DemoModel
   = RandomWalksBasicAnim RandomWalksBasic.Model
+
   | AngularMovementAccelerateTowardsMouseAnim AngularMovementAccelerateTowardsMouse.Model
   | AngularMovementAcceleratingBatonAnim AngularMovementAcceleratingBaton.Model
   | ForcesArtworkGeneratorAnim ForcesArtworkGenerator.Model
@@ -133,40 +136,43 @@ type DemoModel
   | ForcesFloatingBalloonAnim ForcesFloatingBalloon.Model
   | NoisePerlinAnim NoisePerlin.Model
   | OscillationsOscillatorsAnim OscillationsOscillators.Model
+  | ParticleSystemsFishBubblesAnim ParticleSystemsFishBubbles.Model
   | AngularMovementPolarSwingAnim AngularMovementPolarSwing.Model
   | ForcesManyBallsAnim ForcesManyBalls.Model
   | NoisePerlinBoxAnim NoisePerlinBox.Model
   | OscillationsPendulumAnim OscillationsPendulum.Model
-  | RandomWalksDirectedAnim RandomWalksDirected.Model
+  | ParticleSystemsManyParticlesAnim ParticleSystemsManyParticles.Model
   | AngularMovementSpinningBatonAnim AngularMovementSpinningBaton.Model
   | ForcesManyOrbitsAnim ForcesManyOrbits.Model
   | NoisePerlinStepWalkerAnim NoisePerlinStepWalker.Model
   | OscillationsRainbowSlinkyAnim OscillationsRainbowSlinky.Model
-  | RandomWalksGaussianAnim RandomWalksGaussian.Model
-  | VectorAccelerateTowardsMouseAnim VectorAccelerateTowardsMouse.Model
+  | ParticleSystemsSingleParticleAnim ParticleSystemsSingleParticle.Model
+  | RandomWalksDirectedAnim RandomWalksDirected.Model
   | AngularMovementSpiralDrawerAnim AngularMovementSpiralDrawer.Model
   | ForcesMutualAttractionAnim ForcesMutualAttraction.Model
   | NoisePerlinWalkerAnim NoisePerlinWalker.Model
   | OscillationsSimpleHarmonicMotionAnim OscillationsSimpleHarmonicMotion.Model
-  | RandomWalksImprovedAnim RandomWalksImproved.Model
-  | VectorBouncingBallAnim VectorBouncingBall.Model
+  | RandomWalksGaussianAnim RandomWalksGaussian.Model
+  | VectorAccelerateTowardsMouseAnim VectorAccelerateTowardsMouse.Model
   | ForcesMutualRepulsionAnim ForcesMutualRepulsion.Model
   | NoiseRandomBoxAnim NoiseRandomBox.Model
   | OscillationsSimpleHarmonicMotionWithAngleAnim OscillationsSimpleHarmonicMotionWithAngle.Model
-  | RandomWalksLevyAnim RandomWalksLevy.Model
-  | VectorBouncingBallWithVectorAnim VectorBouncingBallWithVector.Model
+  | RandomWalksImprovedAnim RandomWalksImproved.Model
+  | VectorBouncingBallAnim VectorBouncingBall.Model
   | ForcesResistanceAnim ForcesResistance.Model
   | OscillationsSineWaveAnim OscillationsSineWave.Model
-  | RandomWalksMonteCarloAnim RandomWalksMonteCarlo.Model
-  | VectorBrakingCarAnim VectorBrakingCar.Model
+  | RandomWalksLevyAnim RandomWalksLevy.Model
+  | VectorBouncingBallWithVectorAnim VectorBouncingBallWithVector.Model
   | ForcesSingleOrbitAnim ForcesSingleOrbit.Model
   | OscillationsStaticSineWaveAnim OscillationsStaticSineWave.Model
+  | RandomWalksMonteCarloAnim RandomWalksMonteCarlo.Model
+  | VectorBrakingCarAnim VectorBrakingCar.Model
+  | ForcesSinkingLogsAnim ForcesSinkingLogs.Model
   | RandomWalksNormalDistributionAnim RandomWalksNormalDistribution.Model
   | VectorConstantAccelerationAnim VectorConstantAcceleration.Model
-  | ForcesSinkingLogsAnim ForcesSinkingLogs.Model
+  | ForcesWallBallsAnim ForcesWallBalls.Model
   | RandomWalksPaintSplatterAnim RandomWalksPaintSplatter.Model
   | VectorConstantVelocityAnim VectorConstantVelocity.Model
-  | ForcesWallBallsAnim ForcesWallBalls.Model
   | VectorGroupAccelerateTowardsMouseAnim VectorGroupAccelerateTowardsMouse.Model
   | VectorMouseStalkerAnim VectorMouseStalker.Model
   | VectorMouseTracingAnim VectorMouseTracing.Model
@@ -176,11 +182,10 @@ type DemoModel
   | VectorRandomAccelerationAnim VectorRandomAcceleration.Model
   | VectorScalingSaberAnim VectorScalingSaber.Model
   | VectorWalkerWithVectorAnim VectorWalkerWithVector.Model
-  | ParticleSystemsSingleParticleAnim ParticleSystemsSingleParticle.Model
-  | ParticleSystemsManyParticlesAnim ParticleSystemsManyParticles.Model
 
 type Animation
   = RandomWalksBasic
+
   | AngularMovementAccelerateTowardsMouse
   | AngularMovementAcceleratingBaton
   | ForcesArtworkGenerator
@@ -196,40 +201,43 @@ type Animation
   | ForcesFloatingBalloon
   | NoisePerlin
   | OscillationsOscillators
+  | ParticleSystemsFishBubbles
   | AngularMovementPolarSwing
   | ForcesManyBalls
   | NoisePerlinBox
   | OscillationsPendulum
-  | RandomWalksDirected
+  | ParticleSystemsManyParticles
   | AngularMovementSpinningBaton
   | ForcesManyOrbits
   | NoisePerlinStepWalker
   | OscillationsRainbowSlinky
-  | RandomWalksGaussian
-  | VectorAccelerateTowardsMouse
+  | ParticleSystemsSingleParticle
+  | RandomWalksDirected
   | AngularMovementSpiralDrawer
   | ForcesMutualAttraction
   | NoisePerlinWalker
   | OscillationsSimpleHarmonicMotion
-  | RandomWalksImproved
-  | VectorBouncingBall
+  | RandomWalksGaussian
+  | VectorAccelerateTowardsMouse
   | ForcesMutualRepulsion
   | NoiseRandomBox
   | OscillationsSimpleHarmonicMotionWithAngle
-  | RandomWalksLevy
-  | VectorBouncingBallWithVector
+  | RandomWalksImproved
+  | VectorBouncingBall
   | ForcesResistance
   | OscillationsSineWave
-  | RandomWalksMonteCarlo
-  | VectorBrakingCar
+  | RandomWalksLevy
+  | VectorBouncingBallWithVector
   | ForcesSingleOrbit
   | OscillationsStaticSineWave
+  | RandomWalksMonteCarlo
+  | VectorBrakingCar
+  | ForcesSinkingLogs
   | RandomWalksNormalDistribution
   | VectorConstantAcceleration
-  | ForcesSinkingLogs
+  | ForcesWallBalls
   | RandomWalksPaintSplatter
   | VectorConstantVelocity
-  | ForcesWallBalls
   | VectorGroupAccelerateTowardsMouse
   | VectorMouseStalker
   | VectorMouseTracing
@@ -239,8 +247,6 @@ type Animation
   | VectorRandomAcceleration
   | VectorScalingSaber
   | VectorWalkerWithVector
-  | ParticleSystemsSingleParticle
-  | ParticleSystemsManyParticles
 
 -- UPDATE
 
@@ -264,40 +270,43 @@ type Msg
   | ForcesFloatingBalloonMsg ForcesFloatingBalloon.Msg
   | NoisePerlinMsg NoisePerlin.Msg
   | OscillationsOscillatorsMsg OscillationsOscillators.Msg
+  | ParticleSystemsFishBubblesMsg ParticleSystemsFishBubbles.Msg
   | AngularMovementPolarSwingMsg AngularMovementPolarSwing.Msg
   | ForcesManyBallsMsg ForcesManyBalls.Msg
   | NoisePerlinBoxMsg NoisePerlinBox.Msg
   | OscillationsPendulumMsg OscillationsPendulum.Msg
-  | RandomWalksDirectedMsg RandomWalksDirected.Msg
+  | ParticleSystemsManyParticlesMsg ParticleSystemsManyParticles.Msg
   | AngularMovementSpinningBatonMsg AngularMovementSpinningBaton.Msg
   | ForcesManyOrbitsMsg ForcesManyOrbits.Msg
   | NoisePerlinStepWalkerMsg NoisePerlinStepWalker.Msg
   | OscillationsRainbowSlinkyMsg OscillationsRainbowSlinky.Msg
-  | RandomWalksGaussianMsg RandomWalksGaussian.Msg
-  | VectorAccelerateTowardsMouseMsg VectorAccelerateTowardsMouse.Msg
+  | ParticleSystemsSingleParticleMsg ParticleSystemsSingleParticle.Msg
+  | RandomWalksDirectedMsg RandomWalksDirected.Msg
   | AngularMovementSpiralDrawerMsg AngularMovementSpiralDrawer.Msg
   | ForcesMutualAttractionMsg ForcesMutualAttraction.Msg
   | NoisePerlinWalkerMsg NoisePerlinWalker.Msg
   | OscillationsSimpleHarmonicMotionMsg OscillationsSimpleHarmonicMotion.Msg
-  | RandomWalksImprovedMsg RandomWalksImproved.Msg
-  | VectorBouncingBallMsg VectorBouncingBall.Msg
+  | RandomWalksGaussianMsg RandomWalksGaussian.Msg
+  | VectorAccelerateTowardsMouseMsg VectorAccelerateTowardsMouse.Msg
   | ForcesMutualRepulsionMsg ForcesMutualRepulsion.Msg
   | NoiseRandomBoxMsg NoiseRandomBox.Msg
   | OscillationsSimpleHarmonicMotionWithAngleMsg OscillationsSimpleHarmonicMotionWithAngle.Msg
-  | RandomWalksLevyMsg RandomWalksLevy.Msg
-  | VectorBouncingBallWithVectorMsg VectorBouncingBallWithVector.Msg
+  | RandomWalksImprovedMsg RandomWalksImproved.Msg
+  | VectorBouncingBallMsg VectorBouncingBall.Msg
   | ForcesResistanceMsg ForcesResistance.Msg
   | OscillationsSineWaveMsg OscillationsSineWave.Msg
-  | RandomWalksMonteCarloMsg RandomWalksMonteCarlo.Msg
-  | VectorBrakingCarMsg VectorBrakingCar.Msg
+  | RandomWalksLevyMsg RandomWalksLevy.Msg
+  | VectorBouncingBallWithVectorMsg VectorBouncingBallWithVector.Msg
   | ForcesSingleOrbitMsg ForcesSingleOrbit.Msg
   | OscillationsStaticSineWaveMsg OscillationsStaticSineWave.Msg
+  | RandomWalksMonteCarloMsg RandomWalksMonteCarlo.Msg
+  | VectorBrakingCarMsg VectorBrakingCar.Msg
+  | ForcesSinkingLogsMsg ForcesSinkingLogs.Msg
   | RandomWalksNormalDistributionMsg RandomWalksNormalDistribution.Msg
   | VectorConstantAccelerationMsg VectorConstantAcceleration.Msg
-  | ForcesSinkingLogsMsg ForcesSinkingLogs.Msg
+  | ForcesWallBallsMsg ForcesWallBalls.Msg
   | RandomWalksPaintSplatterMsg RandomWalksPaintSplatter.Msg
   | VectorConstantVelocityMsg VectorConstantVelocity.Msg
-  | ForcesWallBallsMsg ForcesWallBalls.Msg
   | VectorGroupAccelerateTowardsMouseMsg VectorGroupAccelerateTowardsMouse.Msg
   | VectorMouseStalkerMsg VectorMouseStalker.Msg
   | VectorMouseTracingMsg VectorMouseTracing.Msg
@@ -307,8 +316,6 @@ type Msg
   | VectorRandomAccelerationMsg VectorRandomAcceleration.Msg
   | VectorScalingSaberMsg VectorScalingSaber.Msg
   | VectorWalkerWithVectorMsg VectorWalkerWithVector.Msg
-  | ParticleSystemsSingleParticleMsg ParticleSystemsSingleParticle.Msg
-  | ParticleSystemsManyParticlesMsg ParticleSystemsManyParticles.Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -538,6 +545,20 @@ update msg model =
             |> Cmd.map OscillationsOscillatorsMsg
           )
         
+        ParticleSystemsFishBubbles ->
+          let
+            ( subModel, subCmd ) =
+              ParticleSystemsFishBubbles.init ()
+          in
+          ( { model |
+            demoModel =
+              ParticleSystemsFishBubblesAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map ParticleSystemsFishBubblesMsg
+          )
+        
         AngularMovementPolarSwing ->
           let
             ( subModel, subCmd ) =
@@ -594,18 +615,18 @@ update msg model =
             |> Cmd.map OscillationsPendulumMsg
           )
         
-        RandomWalksDirected ->
+        ParticleSystemsManyParticles ->
           let
             ( subModel, subCmd ) =
-              RandomWalksDirected.init ()
+              ParticleSystemsManyParticles.init ()
           in
           ( { model |
             demoModel =
-              RandomWalksDirectedAnim <|
+              ParticleSystemsManyParticlesAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map RandomWalksDirectedMsg
+            |> Cmd.map ParticleSystemsManyParticlesMsg
           )
         
         AngularMovementSpinningBaton ->
@@ -664,32 +685,32 @@ update msg model =
             |> Cmd.map OscillationsRainbowSlinkyMsg
           )
         
-        RandomWalksGaussian ->
+        ParticleSystemsSingleParticle ->
           let
             ( subModel, subCmd ) =
-              RandomWalksGaussian.init ()
+              ParticleSystemsSingleParticle.init ()
           in
           ( { model |
             demoModel =
-              RandomWalksGaussianAnim <|
+              ParticleSystemsSingleParticleAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map RandomWalksGaussianMsg
+            |> Cmd.map ParticleSystemsSingleParticleMsg
           )
         
-        VectorAccelerateTowardsMouse ->
+        RandomWalksDirected ->
           let
             ( subModel, subCmd ) =
-              VectorAccelerateTowardsMouse.init ()
+              RandomWalksDirected.init ()
           in
           ( { model |
             demoModel =
-              VectorAccelerateTowardsMouseAnim <|
+              RandomWalksDirectedAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map VectorAccelerateTowardsMouseMsg
+            |> Cmd.map RandomWalksDirectedMsg
           )
         
         AngularMovementSpiralDrawer ->
@@ -748,32 +769,32 @@ update msg model =
             |> Cmd.map OscillationsSimpleHarmonicMotionMsg
           )
         
-        RandomWalksImproved ->
+        RandomWalksGaussian ->
           let
             ( subModel, subCmd ) =
-              RandomWalksImproved.init ()
+              RandomWalksGaussian.init ()
           in
           ( { model |
             demoModel =
-              RandomWalksImprovedAnim <|
+              RandomWalksGaussianAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map RandomWalksImprovedMsg
+            |> Cmd.map RandomWalksGaussianMsg
           )
         
-        VectorBouncingBall ->
+        VectorAccelerateTowardsMouse ->
           let
             ( subModel, subCmd ) =
-              VectorBouncingBall.init ()
+              VectorAccelerateTowardsMouse.init ()
           in
           ( { model |
             demoModel =
-              VectorBouncingBallAnim <|
+              VectorAccelerateTowardsMouseAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map VectorBouncingBallMsg
+            |> Cmd.map VectorAccelerateTowardsMouseMsg
           )
         
         ForcesMutualRepulsion ->
@@ -818,32 +839,32 @@ update msg model =
             |> Cmd.map OscillationsSimpleHarmonicMotionWithAngleMsg
           )
         
-        RandomWalksLevy ->
+        RandomWalksImproved ->
           let
             ( subModel, subCmd ) =
-              RandomWalksLevy.init ()
+              RandomWalksImproved.init ()
           in
           ( { model |
             demoModel =
-              RandomWalksLevyAnim <|
+              RandomWalksImprovedAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map RandomWalksLevyMsg
+            |> Cmd.map RandomWalksImprovedMsg
           )
         
-        VectorBouncingBallWithVector ->
+        VectorBouncingBall ->
           let
             ( subModel, subCmd ) =
-              VectorBouncingBallWithVector.init ()
+              VectorBouncingBall.init ()
           in
           ( { model |
             demoModel =
-              VectorBouncingBallWithVectorAnim <|
+              VectorBouncingBallAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map VectorBouncingBallWithVectorMsg
+            |> Cmd.map VectorBouncingBallMsg
           )
         
         ForcesResistance ->
@@ -874,32 +895,32 @@ update msg model =
             |> Cmd.map OscillationsSineWaveMsg
           )
         
-        RandomWalksMonteCarlo ->
+        RandomWalksLevy ->
           let
             ( subModel, subCmd ) =
-              RandomWalksMonteCarlo.init ()
+              RandomWalksLevy.init ()
           in
           ( { model |
             demoModel =
-              RandomWalksMonteCarloAnim <|
+              RandomWalksLevyAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map RandomWalksMonteCarloMsg
+            |> Cmd.map RandomWalksLevyMsg
           )
         
-        VectorBrakingCar ->
+        VectorBouncingBallWithVector ->
           let
             ( subModel, subCmd ) =
-              VectorBrakingCar.init ()
+              VectorBouncingBallWithVector.init ()
           in
           ( { model |
             demoModel =
-              VectorBrakingCarAnim <|
+              VectorBouncingBallWithVectorAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map VectorBrakingCarMsg
+            |> Cmd.map VectorBouncingBallWithVectorMsg
           )
         
         ForcesSingleOrbit ->
@@ -930,6 +951,48 @@ update msg model =
             |> Cmd.map OscillationsStaticSineWaveMsg
           )
         
+        RandomWalksMonteCarlo ->
+          let
+            ( subModel, subCmd ) =
+              RandomWalksMonteCarlo.init ()
+          in
+          ( { model |
+            demoModel =
+              RandomWalksMonteCarloAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map RandomWalksMonteCarloMsg
+          )
+        
+        VectorBrakingCar ->
+          let
+            ( subModel, subCmd ) =
+              VectorBrakingCar.init ()
+          in
+          ( { model |
+            demoModel =
+              VectorBrakingCarAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map VectorBrakingCarMsg
+          )
+        
+        ForcesSinkingLogs ->
+          let
+            ( subModel, subCmd ) =
+              ForcesSinkingLogs.init ()
+          in
+          ( { model |
+            demoModel =
+              ForcesSinkingLogsAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map ForcesSinkingLogsMsg
+          )
+        
         RandomWalksNormalDistribution ->
           let
             ( subModel, subCmd ) =
@@ -958,18 +1021,18 @@ update msg model =
             |> Cmd.map VectorConstantAccelerationMsg
           )
         
-        ForcesSinkingLogs ->
+        ForcesWallBalls ->
           let
             ( subModel, subCmd ) =
-              ForcesSinkingLogs.init ()
+              ForcesWallBalls.init ()
           in
           ( { model |
             demoModel =
-              ForcesSinkingLogsAnim <|
+              ForcesWallBallsAnim <|
               subModel
           }
           , subCmd
-            |> Cmd.map ForcesSinkingLogsMsg
+            |> Cmd.map ForcesWallBallsMsg
           )
         
         RandomWalksPaintSplatter ->
@@ -998,20 +1061,6 @@ update msg model =
           }
           , subCmd
             |> Cmd.map VectorConstantVelocityMsg
-          )
-        
-        ForcesWallBalls ->
-          let
-            ( subModel, subCmd ) =
-              ForcesWallBalls.init ()
-          in
-          ( { model |
-            demoModel =
-              ForcesWallBallsAnim <|
-              subModel
-          }
-          , subCmd
-            |> Cmd.map ForcesWallBallsMsg
           )
         
         VectorGroupAccelerateTowardsMouse ->
@@ -1138,34 +1187,6 @@ update msg model =
           }
           , subCmd
             |> Cmd.map VectorWalkerWithVectorMsg
-          )
-        
-        ParticleSystemsSingleParticle ->
-          let
-            ( subModel, subCmd ) =
-              ParticleSystemsSingleParticle.init ()
-          in
-          ( { model |
-            demoModel =
-              ParticleSystemsSingleParticleAnim <|
-              subModel
-          }
-          , subCmd
-            |> Cmd.map ParticleSystemsSingleParticleMsg
-          )
-
-        ParticleSystemsManyParticles ->
-          let
-            ( subModel, subCmd ) =
-              ParticleSystemsManyParticles.init ()
-          in
-          ( { model |
-            demoModel =
-              ParticleSystemsManyParticlesAnim <|
-              subModel
-          }
-          , subCmd
-            |> Cmd.map ParticleSystemsManyParticlesMsg
           )
         
     ( BasicWalkerMsg subMsg, RandomWalksBasicAnim subModel ) ->
@@ -1392,6 +1413,20 @@ update msg model =
         |> Cmd.map OscillationsOscillatorsMsg
       )
     
+    ( ParticleSystemsFishBubblesMsg subMsg, ParticleSystemsFishBubblesAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> ParticleSystemsFishBubbles.update subMsg
+      in
+      ( { model |
+        demoModel =
+          ParticleSystemsFishBubblesAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map ParticleSystemsFishBubblesMsg
+      )
+    
     ( AngularMovementPolarSwingMsg subMsg, AngularMovementPolarSwingAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
@@ -1448,18 +1483,18 @@ update msg model =
         |> Cmd.map OscillationsPendulumMsg
       )
     
-    ( RandomWalksDirectedMsg subMsg, RandomWalksDirectedAnim subModel ) ->
+    ( ParticleSystemsManyParticlesMsg subMsg, ParticleSystemsManyParticlesAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> RandomWalksDirected.update subMsg
+            |> ParticleSystemsManyParticles.update subMsg
       in
       ( { model |
         demoModel =
-          RandomWalksDirectedAnim newSubModel
+          ParticleSystemsManyParticlesAnim newSubModel
       }
       , subCmd
-        |> Cmd.map RandomWalksDirectedMsg
+        |> Cmd.map ParticleSystemsManyParticlesMsg
       )
     
     ( AngularMovementSpinningBatonMsg subMsg, AngularMovementSpinningBatonAnim subModel ) ->
@@ -1518,32 +1553,32 @@ update msg model =
         |> Cmd.map OscillationsRainbowSlinkyMsg
       )
     
-    ( RandomWalksGaussianMsg subMsg, RandomWalksGaussianAnim subModel ) ->
+    ( ParticleSystemsSingleParticleMsg subMsg, ParticleSystemsSingleParticleAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> RandomWalksGaussian.update subMsg
+            |> ParticleSystemsSingleParticle.update subMsg
       in
       ( { model |
         demoModel =
-          RandomWalksGaussianAnim newSubModel
+          ParticleSystemsSingleParticleAnim newSubModel
       }
       , subCmd
-        |> Cmd.map RandomWalksGaussianMsg
+        |> Cmd.map ParticleSystemsSingleParticleMsg
       )
     
-    ( VectorAccelerateTowardsMouseMsg subMsg, VectorAccelerateTowardsMouseAnim subModel ) ->
+    ( RandomWalksDirectedMsg subMsg, RandomWalksDirectedAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> VectorAccelerateTowardsMouse.update subMsg
+            |> RandomWalksDirected.update subMsg
       in
       ( { model |
         demoModel =
-          VectorAccelerateTowardsMouseAnim newSubModel
+          RandomWalksDirectedAnim newSubModel
       }
       , subCmd
-        |> Cmd.map VectorAccelerateTowardsMouseMsg
+        |> Cmd.map RandomWalksDirectedMsg
       )
     
     ( AngularMovementSpiralDrawerMsg subMsg, AngularMovementSpiralDrawerAnim subModel ) ->
@@ -1602,32 +1637,32 @@ update msg model =
         |> Cmd.map OscillationsSimpleHarmonicMotionMsg
       )
     
-    ( RandomWalksImprovedMsg subMsg, RandomWalksImprovedAnim subModel ) ->
+    ( RandomWalksGaussianMsg subMsg, RandomWalksGaussianAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> RandomWalksImproved.update subMsg
+            |> RandomWalksGaussian.update subMsg
       in
       ( { model |
         demoModel =
-          RandomWalksImprovedAnim newSubModel
+          RandomWalksGaussianAnim newSubModel
       }
       , subCmd
-        |> Cmd.map RandomWalksImprovedMsg
+        |> Cmd.map RandomWalksGaussianMsg
       )
     
-    ( VectorBouncingBallMsg subMsg, VectorBouncingBallAnim subModel ) ->
+    ( VectorAccelerateTowardsMouseMsg subMsg, VectorAccelerateTowardsMouseAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> VectorBouncingBall.update subMsg
+            |> VectorAccelerateTowardsMouse.update subMsg
       in
       ( { model |
         demoModel =
-          VectorBouncingBallAnim newSubModel
+          VectorAccelerateTowardsMouseAnim newSubModel
       }
       , subCmd
-        |> Cmd.map VectorBouncingBallMsg
+        |> Cmd.map VectorAccelerateTowardsMouseMsg
       )
     
     ( ForcesMutualRepulsionMsg subMsg, ForcesMutualRepulsionAnim subModel ) ->
@@ -1672,32 +1707,32 @@ update msg model =
         |> Cmd.map OscillationsSimpleHarmonicMotionWithAngleMsg
       )
     
-    ( RandomWalksLevyMsg subMsg, RandomWalksLevyAnim subModel ) ->
+    ( RandomWalksImprovedMsg subMsg, RandomWalksImprovedAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> RandomWalksLevy.update subMsg
+            |> RandomWalksImproved.update subMsg
       in
       ( { model |
         demoModel =
-          RandomWalksLevyAnim newSubModel
+          RandomWalksImprovedAnim newSubModel
       }
       , subCmd
-        |> Cmd.map RandomWalksLevyMsg
+        |> Cmd.map RandomWalksImprovedMsg
       )
     
-    ( VectorBouncingBallWithVectorMsg subMsg, VectorBouncingBallWithVectorAnim subModel ) ->
+    ( VectorBouncingBallMsg subMsg, VectorBouncingBallAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> VectorBouncingBallWithVector.update subMsg
+            |> VectorBouncingBall.update subMsg
       in
       ( { model |
         demoModel =
-          VectorBouncingBallWithVectorAnim newSubModel
+          VectorBouncingBallAnim newSubModel
       }
       , subCmd
-        |> Cmd.map VectorBouncingBallWithVectorMsg
+        |> Cmd.map VectorBouncingBallMsg
       )
     
     ( ForcesResistanceMsg subMsg, ForcesResistanceAnim subModel ) ->
@@ -1728,32 +1763,32 @@ update msg model =
         |> Cmd.map OscillationsSineWaveMsg
       )
     
-    ( RandomWalksMonteCarloMsg subMsg, RandomWalksMonteCarloAnim subModel ) ->
+    ( RandomWalksLevyMsg subMsg, RandomWalksLevyAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> RandomWalksMonteCarlo.update subMsg
+            |> RandomWalksLevy.update subMsg
       in
       ( { model |
         demoModel =
-          RandomWalksMonteCarloAnim newSubModel
+          RandomWalksLevyAnim newSubModel
       }
       , subCmd
-        |> Cmd.map RandomWalksMonteCarloMsg
+        |> Cmd.map RandomWalksLevyMsg
       )
     
-    ( VectorBrakingCarMsg subMsg, VectorBrakingCarAnim subModel ) ->
+    ( VectorBouncingBallWithVectorMsg subMsg, VectorBouncingBallWithVectorAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> VectorBrakingCar.update subMsg
+            |> VectorBouncingBallWithVector.update subMsg
       in
       ( { model |
         demoModel =
-          VectorBrakingCarAnim newSubModel
+          VectorBouncingBallWithVectorAnim newSubModel
       }
       , subCmd
-        |> Cmd.map VectorBrakingCarMsg
+        |> Cmd.map VectorBouncingBallWithVectorMsg
       )
     
     ( ForcesSingleOrbitMsg subMsg, ForcesSingleOrbitAnim subModel ) ->
@@ -1784,6 +1819,48 @@ update msg model =
         |> Cmd.map OscillationsStaticSineWaveMsg
       )
     
+    ( RandomWalksMonteCarloMsg subMsg, RandomWalksMonteCarloAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> RandomWalksMonteCarlo.update subMsg
+      in
+      ( { model |
+        demoModel =
+          RandomWalksMonteCarloAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map RandomWalksMonteCarloMsg
+      )
+    
+    ( VectorBrakingCarMsg subMsg, VectorBrakingCarAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> VectorBrakingCar.update subMsg
+      in
+      ( { model |
+        demoModel =
+          VectorBrakingCarAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map VectorBrakingCarMsg
+      )
+    
+    ( ForcesSinkingLogsMsg subMsg, ForcesSinkingLogsAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> ForcesSinkingLogs.update subMsg
+      in
+      ( { model |
+        demoModel =
+          ForcesSinkingLogsAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map ForcesSinkingLogsMsg
+      )
+    
     ( RandomWalksNormalDistributionMsg subMsg, RandomWalksNormalDistributionAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
@@ -1812,18 +1889,18 @@ update msg model =
         |> Cmd.map VectorConstantAccelerationMsg
       )
     
-    ( ForcesSinkingLogsMsg subMsg, ForcesSinkingLogsAnim subModel ) ->
+    ( ForcesWallBallsMsg subMsg, ForcesWallBallsAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
           subModel
-            |> ForcesSinkingLogs.update subMsg
+            |> ForcesWallBalls.update subMsg
       in
       ( { model |
         demoModel =
-          ForcesSinkingLogsAnim newSubModel
+          ForcesWallBallsAnim newSubModel
       }
       , subCmd
-        |> Cmd.map ForcesSinkingLogsMsg
+        |> Cmd.map ForcesWallBallsMsg
       )
     
     ( RandomWalksPaintSplatterMsg subMsg, RandomWalksPaintSplatterAnim subModel ) ->
@@ -1852,20 +1929,6 @@ update msg model =
       }
       , subCmd
         |> Cmd.map VectorConstantVelocityMsg
-      )
-    
-    ( ForcesWallBallsMsg subMsg, ForcesWallBallsAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> ForcesWallBalls.update subMsg
-      in
-      ( { model |
-        demoModel =
-          ForcesWallBallsAnim newSubModel
-      }
-      , subCmd
-        |> Cmd.map ForcesWallBallsMsg
       )
     
     ( VectorGroupAccelerateTowardsMouseMsg subMsg, VectorGroupAccelerateTowardsMouseAnim subModel ) ->
@@ -1993,34 +2056,6 @@ update msg model =
       , subCmd
         |> Cmd.map VectorWalkerWithVectorMsg
       )
-
-    ( ParticleSystemsSingleParticleMsg subMsg, ParticleSystemsSingleParticleAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> ParticleSystemsSingleParticle.update subMsg
-      in
-      ( { model |
-        demoModel =
-          ParticleSystemsSingleParticleAnim newSubModel
-      }
-      , subCmd
-        |> Cmd.map ParticleSystemsSingleParticleMsg
-      )
-
-    ( ParticleSystemsManyParticlesMsg subMsg, ParticleSystemsManyParticlesAnim subModel ) ->
-      let
-        ( newSubModel, subCmd ) =
-          subModel
-            |> ParticleSystemsManyParticles.update subMsg
-      in
-      ( { model |
-        demoModel =
-          ParticleSystemsManyParticlesAnim newSubModel
-      }
-      , subCmd
-        |> Cmd.map ParticleSystemsManyParticlesMsg
-      )
     
     ( GotViewport w h, _ ) ->
       ({ model |
@@ -2110,6 +2145,10 @@ subscriptions anim =
       OscillationsOscillators.subscriptions subModel
         |> Sub.map OscillationsOscillatorsMsg
     
+    ParticleSystemsFishBubblesAnim subModel ->
+      ParticleSystemsFishBubbles.subscriptions subModel
+        |> Sub.map ParticleSystemsFishBubblesMsg
+    
     AngularMovementPolarSwingAnim subModel ->
       AngularMovementPolarSwing.subscriptions subModel
         |> Sub.map AngularMovementPolarSwingMsg
@@ -2126,9 +2165,9 @@ subscriptions anim =
       OscillationsPendulum.subscriptions subModel
         |> Sub.map OscillationsPendulumMsg
     
-    RandomWalksDirectedAnim subModel ->
-      RandomWalksDirected.subscriptions subModel
-        |> Sub.map RandomWalksDirectedMsg
+    ParticleSystemsManyParticlesAnim subModel ->
+      ParticleSystemsManyParticles.subscriptions subModel
+        |> Sub.map ParticleSystemsManyParticlesMsg
     
     AngularMovementSpinningBatonAnim subModel ->
       AngularMovementSpinningBaton.subscriptions subModel
@@ -2146,13 +2185,13 @@ subscriptions anim =
       OscillationsRainbowSlinky.subscriptions subModel
         |> Sub.map OscillationsRainbowSlinkyMsg
     
-    RandomWalksGaussianAnim subModel ->
-      RandomWalksGaussian.subscriptions subModel
-        |> Sub.map RandomWalksGaussianMsg
+    ParticleSystemsSingleParticleAnim subModel ->
+      ParticleSystemsSingleParticle.subscriptions subModel
+        |> Sub.map ParticleSystemsSingleParticleMsg
     
-    VectorAccelerateTowardsMouseAnim subModel ->
-      VectorAccelerateTowardsMouse.subscriptions subModel
-        |> Sub.map VectorAccelerateTowardsMouseMsg
+    RandomWalksDirectedAnim subModel ->
+      RandomWalksDirected.subscriptions subModel
+        |> Sub.map RandomWalksDirectedMsg
     
     AngularMovementSpiralDrawerAnim subModel ->
       AngularMovementSpiralDrawer.subscriptions subModel
@@ -2170,13 +2209,13 @@ subscriptions anim =
       OscillationsSimpleHarmonicMotion.subscriptions subModel
         |> Sub.map OscillationsSimpleHarmonicMotionMsg
     
-    RandomWalksImprovedAnim subModel ->
-      RandomWalksImproved.subscriptions subModel
-        |> Sub.map RandomWalksImprovedMsg
+    RandomWalksGaussianAnim subModel ->
+      RandomWalksGaussian.subscriptions subModel
+        |> Sub.map RandomWalksGaussianMsg
     
-    VectorBouncingBallAnim subModel ->
-      VectorBouncingBall.subscriptions subModel
-        |> Sub.map VectorBouncingBallMsg
+    VectorAccelerateTowardsMouseAnim subModel ->
+      VectorAccelerateTowardsMouse.subscriptions subModel
+        |> Sub.map VectorAccelerateTowardsMouseMsg
     
     ForcesMutualRepulsionAnim subModel ->
       ForcesMutualRepulsion.subscriptions subModel
@@ -2190,13 +2229,13 @@ subscriptions anim =
       OscillationsSimpleHarmonicMotionWithAngle.subscriptions subModel
         |> Sub.map OscillationsSimpleHarmonicMotionWithAngleMsg
     
-    RandomWalksLevyAnim subModel ->
-      RandomWalksLevy.subscriptions subModel
-        |> Sub.map RandomWalksLevyMsg
+    RandomWalksImprovedAnim subModel ->
+      RandomWalksImproved.subscriptions subModel
+        |> Sub.map RandomWalksImprovedMsg
     
-    VectorBouncingBallWithVectorAnim subModel ->
-      VectorBouncingBallWithVector.subscriptions subModel
-        |> Sub.map VectorBouncingBallWithVectorMsg
+    VectorBouncingBallAnim subModel ->
+      VectorBouncingBall.subscriptions subModel
+        |> Sub.map VectorBouncingBallMsg
     
     ForcesResistanceAnim subModel ->
       ForcesResistance.subscriptions subModel
@@ -2206,13 +2245,13 @@ subscriptions anim =
       OscillationsSineWave.subscriptions subModel
         |> Sub.map OscillationsSineWaveMsg
     
-    RandomWalksMonteCarloAnim subModel ->
-      RandomWalksMonteCarlo.subscriptions subModel
-        |> Sub.map RandomWalksMonteCarloMsg
+    RandomWalksLevyAnim subModel ->
+      RandomWalksLevy.subscriptions subModel
+        |> Sub.map RandomWalksLevyMsg
     
-    VectorBrakingCarAnim subModel ->
-      VectorBrakingCar.subscriptions subModel
-        |> Sub.map VectorBrakingCarMsg
+    VectorBouncingBallWithVectorAnim subModel ->
+      VectorBouncingBallWithVector.subscriptions subModel
+        |> Sub.map VectorBouncingBallWithVectorMsg
     
     ForcesSingleOrbitAnim subModel ->
       ForcesSingleOrbit.subscriptions subModel
@@ -2222,6 +2261,18 @@ subscriptions anim =
       OscillationsStaticSineWave.subscriptions subModel
         |> Sub.map OscillationsStaticSineWaveMsg
     
+    RandomWalksMonteCarloAnim subModel ->
+      RandomWalksMonteCarlo.subscriptions subModel
+        |> Sub.map RandomWalksMonteCarloMsg
+    
+    VectorBrakingCarAnim subModel ->
+      VectorBrakingCar.subscriptions subModel
+        |> Sub.map VectorBrakingCarMsg
+    
+    ForcesSinkingLogsAnim subModel ->
+      ForcesSinkingLogs.subscriptions subModel
+        |> Sub.map ForcesSinkingLogsMsg
+    
     RandomWalksNormalDistributionAnim subModel ->
       RandomWalksNormalDistribution.subscriptions subModel
         |> Sub.map RandomWalksNormalDistributionMsg
@@ -2230,9 +2281,9 @@ subscriptions anim =
       VectorConstantAcceleration.subscriptions subModel
         |> Sub.map VectorConstantAccelerationMsg
     
-    ForcesSinkingLogsAnim subModel ->
-      ForcesSinkingLogs.subscriptions subModel
-        |> Sub.map ForcesSinkingLogsMsg
+    ForcesWallBallsAnim subModel ->
+      ForcesWallBalls.subscriptions subModel
+        |> Sub.map ForcesWallBallsMsg
     
     RandomWalksPaintSplatterAnim subModel ->
       RandomWalksPaintSplatter.subscriptions subModel
@@ -2241,10 +2292,6 @@ subscriptions anim =
     VectorConstantVelocityAnim subModel ->
       VectorConstantVelocity.subscriptions subModel
         |> Sub.map VectorConstantVelocityMsg
-    
-    ForcesWallBallsAnim subModel ->
-      ForcesWallBalls.subscriptions subModel
-        |> Sub.map ForcesWallBallsMsg
     
     VectorGroupAccelerateTowardsMouseAnim subModel ->
       VectorGroupAccelerateTowardsMouse.subscriptions subModel
@@ -2282,14 +2329,6 @@ subscriptions anim =
       VectorWalkerWithVector.subscriptions subModel
         |> Sub.map VectorWalkerWithVectorMsg
     
-    ParticleSystemsSingleParticleAnim subModel ->
-      ParticleSystemsSingleParticle.subscriptions subModel
-        |> Sub.map ParticleSystemsSingleParticleMsg
-
-    ParticleSystemsManyParticlesAnim subModel ->
-      ParticleSystemsManyParticles.subscriptions subModel
-        |> Sub.map ParticleSystemsManyParticlesMsg
-
   ]
 
 -- VIEW
@@ -2916,36 +2955,6 @@ view model =
           [ Html.li []
             [ Html.text "Try it yourself! This one is very tricky." ]
           ]
-        , E.html <| Html.h1 [ Html.Attributes.id "particlesystems" ]
-          [ Html.text "Particle Systems" ]
-        , E.html <| Html.p []
-          [ Html.text "Intro to Particle Systems" ]
-        , E.html <| Html.ul []
-          [ Html.li []
-            [ Html.text "No code examples" ]
-          ]
-        , E.html <| Html.p []
-          [ Html.text "A single particle" ]
-        , E.html <| Html.ul []
-          [ Html.li []
-            [ Html.a [ Html.Events.onClick (Select ParticleSystemsSingleParticle) ]
-              [ Html.text "Single Particle" ]
-            ]
-          ]
-        , E.html <| Html.p []
-          [ Html.text "Challenge: Falling leaves" ]
-        , E.html <| Html.ul []
-          [ Html.li []
-            [ Html.text "Try it yourself!" ]
-          ]
-        , E.html <| Html.p []
-          [ Html.text "A particle system" ]
-        , E.html <| Html.ul []
-          [ Html.li []
-            [ Html.a [ Html.Events.onClick (Select ParticleSystemsManyParticles) ]
-              [ Html.text "Particle System" ]
-            ]
-          ]
         , E.html <| Html.h1 [ Html.Attributes.id "licenses" ]
           [ Html.text "Licenses" ]
         , E.html <| Html.p []
@@ -3030,6 +3039,10 @@ demoView model =
         OscillationsOscillators.view subModel
           |> Html.map OscillationsOscillatorsMsg
       
+      ParticleSystemsFishBubblesAnim subModel ->
+        ParticleSystemsFishBubbles.view subModel
+          |> Html.map ParticleSystemsFishBubblesMsg
+      
       AngularMovementPolarSwingAnim subModel ->
         AngularMovementPolarSwing.view subModel
           |> Html.map AngularMovementPolarSwingMsg
@@ -3046,9 +3059,9 @@ demoView model =
         OscillationsPendulum.view subModel
           |> Html.map OscillationsPendulumMsg
       
-      RandomWalksDirectedAnim subModel ->
-        RandomWalksDirected.view subModel
-          |> Html.map RandomWalksDirectedMsg
+      ParticleSystemsManyParticlesAnim subModel ->
+        ParticleSystemsManyParticles.view subModel
+          |> Html.map ParticleSystemsManyParticlesMsg
       
       AngularMovementSpinningBatonAnim subModel ->
         AngularMovementSpinningBaton.view subModel
@@ -3066,13 +3079,13 @@ demoView model =
         OscillationsRainbowSlinky.view subModel
           |> Html.map OscillationsRainbowSlinkyMsg
       
-      RandomWalksGaussianAnim subModel ->
-        RandomWalksGaussian.view subModel
-          |> Html.map RandomWalksGaussianMsg
+      ParticleSystemsSingleParticleAnim subModel ->
+        ParticleSystemsSingleParticle.view subModel
+          |> Html.map ParticleSystemsSingleParticleMsg
       
-      VectorAccelerateTowardsMouseAnim subModel ->
-        VectorAccelerateTowardsMouse.view subModel
-          |> Html.map VectorAccelerateTowardsMouseMsg
+      RandomWalksDirectedAnim subModel ->
+        RandomWalksDirected.view subModel
+          |> Html.map RandomWalksDirectedMsg
       
       AngularMovementSpiralDrawerAnim subModel ->
         AngularMovementSpiralDrawer.view subModel
@@ -3090,13 +3103,13 @@ demoView model =
         OscillationsSimpleHarmonicMotion.view subModel
           |> Html.map OscillationsSimpleHarmonicMotionMsg
       
-      RandomWalksImprovedAnim subModel ->
-        RandomWalksImproved.view subModel
-          |> Html.map RandomWalksImprovedMsg
+      RandomWalksGaussianAnim subModel ->
+        RandomWalksGaussian.view subModel
+          |> Html.map RandomWalksGaussianMsg
       
-      VectorBouncingBallAnim subModel ->
-        VectorBouncingBall.view subModel
-          |> Html.map VectorBouncingBallMsg
+      VectorAccelerateTowardsMouseAnim subModel ->
+        VectorAccelerateTowardsMouse.view subModel
+          |> Html.map VectorAccelerateTowardsMouseMsg
       
       ForcesMutualRepulsionAnim subModel ->
         ForcesMutualRepulsion.view subModel
@@ -3110,13 +3123,13 @@ demoView model =
         OscillationsSimpleHarmonicMotionWithAngle.view subModel
           |> Html.map OscillationsSimpleHarmonicMotionWithAngleMsg
       
-      RandomWalksLevyAnim subModel ->
-        RandomWalksLevy.view subModel
-          |> Html.map RandomWalksLevyMsg
+      RandomWalksImprovedAnim subModel ->
+        RandomWalksImproved.view subModel
+          |> Html.map RandomWalksImprovedMsg
       
-      VectorBouncingBallWithVectorAnim subModel ->
-        VectorBouncingBallWithVector.view subModel
-          |> Html.map VectorBouncingBallWithVectorMsg
+      VectorBouncingBallAnim subModel ->
+        VectorBouncingBall.view subModel
+          |> Html.map VectorBouncingBallMsg
       
       ForcesResistanceAnim subModel ->
         ForcesResistance.view subModel
@@ -3126,13 +3139,13 @@ demoView model =
         OscillationsSineWave.view subModel
           |> Html.map OscillationsSineWaveMsg
       
-      RandomWalksMonteCarloAnim subModel ->
-        RandomWalksMonteCarlo.view subModel
-          |> Html.map RandomWalksMonteCarloMsg
+      RandomWalksLevyAnim subModel ->
+        RandomWalksLevy.view subModel
+          |> Html.map RandomWalksLevyMsg
       
-      VectorBrakingCarAnim subModel ->
-        VectorBrakingCar.view subModel
-          |> Html.map VectorBrakingCarMsg
+      VectorBouncingBallWithVectorAnim subModel ->
+        VectorBouncingBallWithVector.view subModel
+          |> Html.map VectorBouncingBallWithVectorMsg
       
       ForcesSingleOrbitAnim subModel ->
         ForcesSingleOrbit.view subModel
@@ -3142,6 +3155,18 @@ demoView model =
         OscillationsStaticSineWave.view subModel
           |> Html.map OscillationsStaticSineWaveMsg
       
+      RandomWalksMonteCarloAnim subModel ->
+        RandomWalksMonteCarlo.view subModel
+          |> Html.map RandomWalksMonteCarloMsg
+      
+      VectorBrakingCarAnim subModel ->
+        VectorBrakingCar.view subModel
+          |> Html.map VectorBrakingCarMsg
+      
+      ForcesSinkingLogsAnim subModel ->
+        ForcesSinkingLogs.view subModel
+          |> Html.map ForcesSinkingLogsMsg
+      
       RandomWalksNormalDistributionAnim subModel ->
         RandomWalksNormalDistribution.view subModel
           |> Html.map RandomWalksNormalDistributionMsg
@@ -3150,9 +3175,9 @@ demoView model =
         VectorConstantAcceleration.view subModel
           |> Html.map VectorConstantAccelerationMsg
       
-      ForcesSinkingLogsAnim subModel ->
-        ForcesSinkingLogs.view subModel
-          |> Html.map ForcesSinkingLogsMsg
+      ForcesWallBallsAnim subModel ->
+        ForcesWallBalls.view subModel
+          |> Html.map ForcesWallBallsMsg
       
       RandomWalksPaintSplatterAnim subModel ->
         RandomWalksPaintSplatter.view subModel
@@ -3161,10 +3186,6 @@ demoView model =
       VectorConstantVelocityAnim subModel ->
         VectorConstantVelocity.view subModel
           |> Html.map VectorConstantVelocityMsg
-      
-      ForcesWallBallsAnim subModel ->
-        ForcesWallBalls.view subModel
-          |> Html.map ForcesWallBallsMsg
       
       VectorGroupAccelerateTowardsMouseAnim subModel ->
         VectorGroupAccelerateTowardsMouse.view subModel
@@ -3201,14 +3222,6 @@ demoView model =
       VectorWalkerWithVectorAnim subModel ->
         VectorWalkerWithVector.view subModel
           |> Html.map VectorWalkerWithVectorMsg
-
-      ParticleSystemsSingleParticleAnim subModel ->
-        ParticleSystemsSingleParticle.view subModel
-          |> Html.map ParticleSystemsSingleParticleMsg
-
-      ParticleSystemsManyParticlesAnim subModel ->
-        ParticleSystemsManyParticles.view subModel
-          |> Html.map ParticleSystemsManyParticlesMsg
       
     ]
 
