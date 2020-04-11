@@ -2423,14 +2423,10 @@ view model =
           ]
           (E.text "Natural Simulations")
         , E.paragraph
-          []
+          [ E.htmlAttribute <| Html.Attributes.style "margin-bottom" "20px" ]
           [ E.text "Natural simulations in Elm based on \"Advanced JS: Natural Simulations\" from Khan Academy."
           ]
-        , E.el
-          [ E.htmlAttribute <| Html.Attributes.style "width" "100%"
-          , E.htmlAttribute <| Html.Attributes.style "height" "50vh"
-          ]
-          ( model
+        , ( model
             |> demoView
             |> E.html
           )
@@ -2955,6 +2951,44 @@ view model =
           [ Html.li []
             [ Html.text "Try it yourself! This one is very tricky." ]
           ]
+        , E.html <| Html.h1 [ Html.Attributes.id "particlesystems" ]
+          [ Html.text "Particle Systems" ]
+        , E.html <| Html.p []
+          [ Html.text "Intro to Particle Systems" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "No code examples" ]
+          ]
+        , E.html <| Html.p []
+          [ Html.text "A single particle" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ParticleSystemsSingleParticle) ]
+              [ Html.text "Single Particle" ]
+            ]
+          ]
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Falling leaves" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Try it yourself!" ]
+          ]
+        , E.html <| Html.p []
+          [ Html.text "A particle system" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ParticleSystemsManyParticles) ]
+              [ Html.text "Particle System" ]
+            ]
+          ]
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Fish bubbles" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ParticleSystemsFishBubbles) ]
+              [ Html.text "Fish Bubbles" ]
+            ]
+          ]
         , E.html <| Html.h1 [ Html.Attributes.id "licenses" ]
           [ Html.text "Licenses" ]
         , E.html <| Html.p []
@@ -2968,14 +3002,7 @@ view model =
 
 demoView : Model -> Html Msg
 demoView model =
-  Svg.svg
-    [ SvgAttributes.width (SvgTypes.px defaultWidth)
-    , SvgAttributes.height (SvgTypes.px defaultHeight)
-    , SvgAttributes.viewBox 0 0 defaultWidth defaultHeight
-    ]
-  <|
-    [ border
-    , case model.demoModel of
+  case model.demoModel of
       RandomWalksBasicAnim subModel ->
         RandomWalksBasic.view subModel
           |> Html.map BasicWalkerMsg
@@ -3223,19 +3250,6 @@ demoView model =
         VectorWalkerWithVector.view subModel
           |> Html.map VectorWalkerWithVectorMsg
       
-    ]
-
-
-border : TypedSvg.Core.Svg Msg
-border =
-  Svg.rect
-    [ SvgAttributes.width (SvgTypes.px defaultWidth)
-    , SvgAttributes.height (SvgTypes.px defaultHeight)
-    , SvgAttributes.noFill
-    , SvgAttributes.stroke Color.black
-    , SvgAttributes.strokeWidth (SvgTypes.px 3)
-    ]
-    []
 
 
 -- MAIN
