@@ -77,7 +77,7 @@ import Vector.MouseTracingWithMagnitude as VectorMouseTracingWithMagnitude
 import Vector.RandomAcceleration as VectorRandomAcceleration
 import Vector.ScalingSaber as VectorScalingSaber
 import Vector.WalkerWithVector as VectorWalkerWithVector
-
+import ParticleSystems.SingleParticle as ParticleSystemsSingleParticle
 
 -- INIT
 
@@ -117,7 +117,6 @@ type alias Model =
 
 type DemoModel
   = RandomWalksBasicAnim RandomWalksBasic.Model
-
   | AngularMovementAccelerateTowardsMouseAnim AngularMovementAccelerateTowardsMouse.Model
   | AngularMovementAcceleratingBatonAnim AngularMovementAcceleratingBaton.Model
   | ForcesArtworkGeneratorAnim ForcesArtworkGenerator.Model
@@ -176,10 +175,10 @@ type DemoModel
   | VectorRandomAccelerationAnim VectorRandomAcceleration.Model
   | VectorScalingSaberAnim VectorScalingSaber.Model
   | VectorWalkerWithVectorAnim VectorWalkerWithVector.Model
+  | ParticleSystemsSingleParticleAnim ParticleSystemsSingleParticle.Model
 
 type Animation
   = RandomWalksBasic
-
   | AngularMovementAccelerateTowardsMouse
   | AngularMovementAcceleratingBaton
   | ForcesArtworkGenerator
@@ -238,6 +237,7 @@ type Animation
   | VectorRandomAcceleration
   | VectorScalingSaber
   | VectorWalkerWithVector
+  | ParticleSystemsSingleParticle
 
 -- UPDATE
 
@@ -304,6 +304,7 @@ type Msg
   | VectorRandomAccelerationMsg VectorRandomAcceleration.Msg
   | VectorScalingSaberMsg VectorScalingSaber.Msg
   | VectorWalkerWithVectorMsg VectorWalkerWithVector.Msg
+  | ParticleSystemsSingleParticleMsg ParticleSystemsSingleParticle.Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -1135,6 +1136,20 @@ update msg model =
             |> Cmd.map VectorWalkerWithVectorMsg
           )
         
+        ParticleSystemsSingleParticle ->
+          let
+            ( subModel, subCmd ) =
+              ParticleSystemsSingleParticle.init ()
+          in
+          ( { model |
+            demoModel =
+              ParticleSystemsSingleParticleAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map ParticleSystemsSingleParticleMsg
+          )
+        
     ( BasicWalkerMsg subMsg, RandomWalksBasicAnim subModel ) ->
       let
         ( newSubModel, subCmd ) =
@@ -1960,6 +1975,20 @@ update msg model =
       , subCmd
         |> Cmd.map VectorWalkerWithVectorMsg
       )
+
+    ( ParticleSystemsSingleParticleMsg subMsg, ParticleSystemsSingleParticleAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> ParticleSystemsSingleParticle.update subMsg
+      in
+      ( { model |
+        demoModel =
+          ParticleSystemsSingleParticleAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map ParticleSystemsSingleParticleMsg
+      )
     
     ( GotViewport w h, _ ) ->
       ({ model |
@@ -2221,6 +2250,10 @@ subscriptions anim =
       VectorWalkerWithVector.subscriptions subModel
         |> Sub.map VectorWalkerWithVectorMsg
     
+    ParticleSystemsSingleParticleAnim subModel ->
+      ParticleSystemsSingleParticle.subscriptions subModel
+        |> Sub.map ParticleSystemsSingleParticleMsg
+
   ]
 
 -- VIEW
@@ -2847,6 +2880,22 @@ view model =
           [ Html.li []
             [ Html.text "Try it yourself! This one is very tricky." ]
           ]
+        , E.html <| Html.h1 [ Html.Attributes.id "particlesystems" ]
+          [ Html.text "Particle Systems" ]
+        , E.html <| Html.p []
+          [ Html.text "Intro to Particle Systems" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "No code examples" ]
+          ]
+        , E.html <| Html.p []
+          [ Html.text "A single particle" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ParticleSystemsSingleParticle) ]
+              [ Html.text "Single Particle" ]
+            ]
+          ]
         , E.html <| Html.h1 [ Html.Attributes.id "licenses" ]
           [ Html.text "Licenses" ]
         , E.html <| Html.p []
@@ -3102,6 +3151,10 @@ demoView model =
       VectorWalkerWithVectorAnim subModel ->
         VectorWalkerWithVector.view subModel
           |> Html.map VectorWalkerWithVectorMsg
+
+      ParticleSystemsSingleParticleAnim subModel ->
+        ParticleSystemsSingleParticle.view subModel
+          |> Html.map ParticleSystemsSingleParticleMsg
       
     ]
 
