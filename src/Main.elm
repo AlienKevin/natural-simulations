@@ -78,6 +78,7 @@ import Vector.RandomAcceleration as VectorRandomAcceleration
 import Vector.ScalingSaber as VectorScalingSaber
 import Vector.WalkerWithVector as VectorWalkerWithVector
 import ParticleSystems.SingleParticle as ParticleSystemsSingleParticle
+import ParticleSystems.ManyParticles as ParticleSystemsManyParticles
 
 -- INIT
 
@@ -176,6 +177,7 @@ type DemoModel
   | VectorScalingSaberAnim VectorScalingSaber.Model
   | VectorWalkerWithVectorAnim VectorWalkerWithVector.Model
   | ParticleSystemsSingleParticleAnim ParticleSystemsSingleParticle.Model
+  | ParticleSystemsManyParticlesAnim ParticleSystemsManyParticles.Model
 
 type Animation
   = RandomWalksBasic
@@ -238,6 +240,7 @@ type Animation
   | VectorScalingSaber
   | VectorWalkerWithVector
   | ParticleSystemsSingleParticle
+  | ParticleSystemsManyParticles
 
 -- UPDATE
 
@@ -305,6 +308,7 @@ type Msg
   | VectorScalingSaberMsg VectorScalingSaber.Msg
   | VectorWalkerWithVectorMsg VectorWalkerWithVector.Msg
   | ParticleSystemsSingleParticleMsg ParticleSystemsSingleParticle.Msg
+  | ParticleSystemsManyParticlesMsg ParticleSystemsManyParticles.Msg
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -1149,6 +1153,20 @@ update msg model =
           , subCmd
             |> Cmd.map ParticleSystemsSingleParticleMsg
           )
+
+        ParticleSystemsManyParticles ->
+          let
+            ( subModel, subCmd ) =
+              ParticleSystemsManyParticles.init ()
+          in
+          ( { model |
+            demoModel =
+              ParticleSystemsManyParticlesAnim <|
+              subModel
+          }
+          , subCmd
+            |> Cmd.map ParticleSystemsManyParticlesMsg
+          )
         
     ( BasicWalkerMsg subMsg, RandomWalksBasicAnim subModel ) ->
       let
@@ -1989,6 +2007,20 @@ update msg model =
       , subCmd
         |> Cmd.map ParticleSystemsSingleParticleMsg
       )
+
+    ( ParticleSystemsManyParticlesMsg subMsg, ParticleSystemsManyParticlesAnim subModel ) ->
+      let
+        ( newSubModel, subCmd ) =
+          subModel
+            |> ParticleSystemsManyParticles.update subMsg
+      in
+      ( { model |
+        demoModel =
+          ParticleSystemsManyParticlesAnim newSubModel
+      }
+      , subCmd
+        |> Cmd.map ParticleSystemsManyParticlesMsg
+      )
     
     ( GotViewport w h, _ ) ->
       ({ model |
@@ -2253,6 +2285,10 @@ subscriptions anim =
     ParticleSystemsSingleParticleAnim subModel ->
       ParticleSystemsSingleParticle.subscriptions subModel
         |> Sub.map ParticleSystemsSingleParticleMsg
+
+    ParticleSystemsManyParticlesAnim subModel ->
+      ParticleSystemsManyParticles.subscriptions subModel
+        |> Sub.map ParticleSystemsManyParticlesMsg
 
   ]
 
@@ -2896,6 +2932,20 @@ view model =
               [ Html.text "Single Particle" ]
             ]
           ]
+        , E.html <| Html.p []
+          [ Html.text "Challenge: Falling leaves" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.text "Try it yourself!" ]
+          ]
+        , E.html <| Html.p []
+          [ Html.text "A particle system" ]
+        , E.html <| Html.ul []
+          [ Html.li []
+            [ Html.a [ Html.Events.onClick (Select ParticleSystemsManyParticles) ]
+              [ Html.text "Particle System" ]
+            ]
+          ]
         , E.html <| Html.h1 [ Html.Attributes.id "licenses" ]
           [ Html.text "Licenses" ]
         , E.html <| Html.p []
@@ -3155,6 +3205,10 @@ demoView model =
       ParticleSystemsSingleParticleAnim subModel ->
         ParticleSystemsSingleParticle.view subModel
           |> Html.map ParticleSystemsSingleParticleMsg
+
+      ParticleSystemsManyParticlesAnim subModel ->
+        ParticleSystemsManyParticles.view subModel
+          |> Html.map ParticleSystemsManyParticlesMsg
       
     ]
 
